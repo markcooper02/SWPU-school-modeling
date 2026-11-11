@@ -1,7 +1,6 @@
 # SWPU-school-modeling
 一个**单文件、零外部运行依赖**的校园三维可视化页面：使用原生 **WebGL2 + JavaScript + CSS** 程序化生成西南石油大学成都校区的示意性空间模型，支持建筑导览、实时光影调节、相机漫游与视图导出。
 
-> 交付文件：[`swpu-chengdu-campus-3d.html`](./swpu-chengdu-campus-3d.html)
 > 直接用浏览器打开即可运行，无需安装、无需构建、无需联网。
 
 ***
@@ -10,7 +9,7 @@
 
 ### 方式一：直接打开
 
-双击 `swpu-chengdu-campus-3d.html`，或使用浏览器打开该文件。
+双击 `index.html`，或使用浏览器打开该文件。
 
 ### 方式二：本地静态服务（可选）
 

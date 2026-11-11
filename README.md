@@ -7,22 +7,7 @@
 
 ## 1. 快速开始
 
-### 方式一：直接打开
-
-双击 `index.html`，或使用浏览器打开该文件。
-
-### 方式二：本地静态服务（可选）
-
-```bash
-# 任选一种静态服务器
-python3 -m http.server 8080
-# 或
-npx serve .
-```
-
-然后访问 `http://localhost:8080/swpu-chengdu-campus-3d.html`。
-
-### 浏览器要求
+浏览器要求
 
 * 推荐：近期版本的 Chrome / Edge / Firefox / Safari，并开启硬件加速。
 

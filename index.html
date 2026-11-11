@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -365,7 +364,7 @@ input[type=range]:focus-visible{outline:2px solid var(--jade);outline-offset:2px
           <button class="btn btn-ghost btn-sm" id="detail-overview">返回全景</button>
         </div>
       </div>
-      <div class="explorer-foot">依据公开校园导览图重建相对布局；高度、立面与景观为示意表达，非测绘 / BIM 成果。</div>
+      <div class="explorer-foot">布局依据公开导览图与校方总平面图；水系岸线按校方《学校总平面图》描摹。高度、立面与景观为示意表达，非测绘 / BIM 成果。</div>
     </aside>
 
     <section id="viewport" aria-label="三维校园视图">
@@ -508,8 +507,10 @@ input[type=range]:focus-visible{outline:2px solid var(--jade);outline-offset:2px
         <li><span class="num">2</span><span>图书馆利用指南：成都总馆位于南大门正对面，分馆位于校园西北侧明辨楼 F 区；创业广场、思学楼、行政楼等相对位置见馆舍位置图。<a href="https://lib.swpu.edu.cn/1858.80/marx/guide.html" target="_blank" rel="noopener">lib.swpu.edu.cn</a></span></li>
         <li><span class="num">3</span><span>公开校园导览图（A/B/C 分区、道路、水系、场馆与公寓编号）用于相对布局与功能分区。<a href="https://www.gaokao.cn/gk/39189" target="_blank" rel="noopener">校园平面图来源</a></span></li>
         <li><span class="num">4</span><span>图书馆与思学楼外观照片用于立面材质与体量参考（浅色石材、玻璃幕墙、入口灰空间）。<a href="https://baike.baidu.com/item/%E8%A5%BF%E5%8D%97%E7%9F%B3%E6%B2%B9%E5%A4%A7%E5%AD%A6%E5%9B%BE%E4%B9%A6%E9%A6%86/689896" target="_blank" rel="noopener">外观参考</a></span></li>
+        <li><span class="num">5</span><span>校方标识系统规划资料《学校总平面图》《景观分析图》：梦溪湖水系岸线、湖面位置与环创业广场南湾水环据此描摹（用户提供图纸）。</span></li>
+        <li><span class="num">6</span><span>水系名称「梦溪湖」见校友网校园风物与科学网水质检测报道。<a href="https://news.sciencenet.cn/htmlnews/2021/12/470152.shtm" target="_blank" rel="noopener">科学网报道</a></span></li>
       </ul>
-      <div class="notice">精度声明：本模型为基于公开导览图的<b>示意性空间重建</b>，建筑相对位置、道路骨架与功能分区力求贴近原图；建筑高度、层数、立面细节、树木与景观小品为艺术化表达，不代表测绘数据，不可用于导航、工程或管理决策。</div>
+      <div class="notice">精度声明：本模型为基于公开导览图与校方规划图纸的<b>示意性空间重建</b>，建筑相对位置、道路骨架、功能分区与水系形态力求贴近原图；建筑高度、层数、立面细节、树木与景观小品为艺术化表达，不代表测绘数据，不可用于导航、工程或管理决策。</div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-ghost" id="btn-download-html"><svg><use href="#i-download"/></svg>下载离线 HTML</button>
@@ -578,7 +579,7 @@ B('A1','行政楼','Administration Building','public','A',[
   '创业广场东南侧行政办公建筑，导览图中以暖色标识，与图书馆、思学楼共同围合南门核心空间。',{label:true});
 B('B7','博学楼','Boxue Building','teach','A',[P(540,1210,82,56,5)],
   '博学广场东侧教学楼，邻近体育馆与东一门，承担大量公共课程与学术报告。',{label:true});
-B('—','研究生院 / 网信中心','Graduate School & Network Center','public','A',[P(376,1252,58,30,5)],
+B('—','研究生院 / 网信中心','Graduate School & Network Center','public','A',[P(410,1252,58,30,5)],
   '图书馆总馆东北侧的研究生教育与网络信息服务节点。');
 B('C1','校医院','Campus Hospital','public','C',[P(160,1155,42,52,3)],
   '为学路西侧校医院，服务师生日常医疗与健康管理。');
@@ -646,7 +647,7 @@ for(const [name,x,y,w,h,dir] of gates){
 
 /* ---- 广场（环境节点，可搜索聚焦） ---- */
 const plazas=[
- {id:'plaza-chuangye',name:'创业广场',code:'A',cat:'public',zone:'A',x:285,y:1352,r:52,desc:'南大门正对的核心圆形广场，图书馆、思学楼、行政楼围合，中央绿地与能源主题雕塑构成校园仪式空间。'},
+ {id:'plaza-chuangye',name:'创业广场',code:'A',cat:'public',zone:'A',x:292,y:1326,r:24,desc:'南大门正对的核心圆形广场，图书馆、思学楼、行政楼围合，梦溪湖南湾水环环抱其外，中央绿地与能源主题雕塑构成校园仪式空间。'},
  {id:'plaza-boxue',name:'博学广场',code:'A',cat:'public',zone:'A',x:432,y:1212,r:34,desc:'博学楼前广场，连接体育馆、思学楼与东一门。'},
  {id:'plaza-jingxin',name:'净心广场',code:'W',cat:'public',zone:'W',x:104,y:1152,r:30,desc:'教工住宅区中心广场，为西侧生活组团提供休憩空间。'}];
 
@@ -657,7 +658,7 @@ const listGroups=[
 
 /* ---- 道路（map 坐标折线，宽度 world） ---- */
 const roads=[
- {pts:[[285,1520],[285,1352]],w:9,name:'创业路'},
+ {pts:[[285,1520],[285,1390],[292,1326]],w:9,name:'创业路'},
  {pts:[[350,1240],[350,1352]],w:7,name:'创新路'},
  {pts:[[330,352],[330,560],[318,640],[330,720],[330,900]],w:7,name:'飞翔路'},
  {pts:[[480,600],[480,900]],w:7,name:'中环东路'},
@@ -669,7 +670,7 @@ const roads=[
  {pts:[[130,580],[330,580]],w:6,name:'桂湖路'},
  {pts:[[200,900],[480,900]],w:7,name:'中环南路'},
  {pts:[[280,1052],[380,1052]],w:6,name:'梦溪路'},
- {pts:[[150,352],[340,352]],w:6,name:'中环路北段'},
+ {pts:[[150,352],[356,352]],w:6,name:'中环路北段'},
  {pts:[[340,302],[340,352]],w:7},
  {pts:[[10,542],[130,542]],w:6},
  {pts:[[580,842],[480,842]],w:6},
@@ -684,7 +685,7 @@ const roads=[
  {pts:[[480,720],[580,720]],w:5},
  {pts:[[480,960],[580,960]],w:5},
  {pts:[[420,1080],[480,1080]],w:5},
- {pts:[[200,1352],[285,1352]],w:6}
+ {pts:[[200,1320],[285,1320]],w:6}
 ];
 /* 南环路弧线 */
 const ringSouth=[];
@@ -694,9 +695,30 @@ const ringNorth=[];
 for(let i=0;i<=20;i++){const a=Math.PI*(1.05+0.9*i/20);ringNorth.push([285+168*Math.cos(a),1352+118*Math.sin(a)]);}
 roads.push({pts:ringNorth,w:7});
 
-/* ---- 水系 ---- */
-const riverMap=[[318,352],[300,430],[296,520],[316,600],[300,680],[268,760],[246,840],[232,920],[226,1000],[238,1080],[252,1160],[268,1220],[300,1262],[338,1300],[352,1340]];
-const ponds=[{x:240,y:1352,rx:34,ry:22},{x:330,y:1352,rx:30,ry:20}];
+/* ---- 水系：梦溪湖（依据校方《学校总平面图》《景观分析图》描摹：北湖—中湖—南湖—环创业广场南湾） ----
+   map 坐标；reaches 为变宽溪流中心线 [x,y,半宽]，lakes 为闭合岸线多边形 */
+const WATER={
+ reaches:[
+  {pts:[[342,296,2.2],[348,340,2.2],[348,380,2.4],[344,412,2.6],[330,436,2.8],[316,452,3.0]]},
+  {pts:[[302,556,3.0],[308,580,2.6],[322,600,2.8],[344,610,3.0]]},
+  {pts:[[360,682,2.6],[340,720,2.4],[312,755,2.4],[300,795,2.6],[288,845,3.0],[268,885,4.5],[246,925,3.0],[228,965,2.4],[224,1005,2.4],[230,1042,4.0],[242,1078,2.6],[256,1112,2.8],[264,1146,3.2],[262,1170,3.4]]},
+  {pts:[[330,1214,2.6],[362,1246,2.4],[370,1280,2.4],[371,1320,2.6],[366,1360,2.8],[350,1388,3.2],[320,1392,3.4],[292,1390,3.4],[268,1386,3.2],[236,1384,3.0]]}
+ ],
+ lakes:[
+  // 北湖（梦溪湖主湖，西北支湾）
+  [[312,446],[318,470],[316,498],[308,522],[308,545],[296,558],[280,562],[262,556],[248,540],[240,518],[238,494],[242,472],[232,452],[214,450],[206,442],[214,434],[232,436],[246,444],[258,440],[272,436],[292,436],[310,438]],
+  // 中湖
+  [[348,606],[366,610],[382,624],[388,646],[382,668],[368,680],[352,682],[340,670],[336,648],[338,626],[342,614]],
+  // 南湖（图书馆北侧东西向湖面）
+  [[262,1168],[286,1160],[312,1158],[334,1164],[346,1178],[344,1198],[332,1214],[310,1224],[286,1228],[264,1222],[250,1208],[248,1188],[252,1176]],
+  // 南湾西池（环创业广场水环的西端死水湾）
+  [[238,1336],[242,1352],[240,1372],[232,1388],[220,1392],[214,1378],[216,1358],[222,1342],[230,1334]]
+ ]
+};
+const waterLakes=[
+ {id:'lake-mengxi',name:'梦溪湖',code:'水',cat:'public',zone:'B',x:283,y:498,r:44,desc:'校园水系主湖，依据校方总平面图描摹：北门入水蜿蜒南下，于此扩为不规则湖面，西北设支湾，湖岸叠石植苇，是教学区核心的生态景观水面。'},
+ {id:'lake-nanwan',name:'梦溪湖 · 南湾',code:'水',cat:'public',zone:'A',x:300,y:1390,r:40,desc:'南湖与环创业广场的 U 形水环：溪流自南湖东南出，沿图书馆东侧南流，折向西绕过广场南缘，再北上收为西池，形成环抱南大门核心区的连续水景。'}];
+for(const w of waterLakes)plazas.push(w);
 
 /* ---- 外部市政道路 ---- */
 const outerRoads=[
@@ -710,7 +732,9 @@ const SOURCES=[
  {t:'西南石油大学官网',u:'https://www.swpu.edu.cn/'},
  {t:'图书馆利用指南 · 馆舍位置',u:'https://lib.swpu.edu.cn/1858.80/marx/guide.html'},
  {t:'公开校园导览图',u:'https://www.gaokao.cn/gk/39189'},
- {t:'图书馆 / 思学楼外观参考',u:'https://baike.baidu.com/item/西南石油大学图书馆/689896'}
+ {t:'图书馆 / 思学楼外观参考',u:'https://baike.baidu.com/item/西南石油大学图书馆/689896'},
+ {t:'校方《学校总平面图》《景观分析图》（标识系统规划资料，水系岸线描摹依据）',u:''},
+ {t:'梦溪湖名称 · 校友网 / 科学网报道',u:'https://news.sciencenet.cn/htmlnews/2021/12/470152.shtm'}
 ];
 
 'use strict';
@@ -833,7 +857,7 @@ function buildBuilding(mb,b){
     const roofCol=p.roof==='red'?COL.roofRed:COL.roof;
     if(p.roof==='arch'){addArchRoof(mb,cx,cz,w,d,h,roofCol,bld);}
     else{mb.box(cx,h,cz,w+0.5,0.4,d+0.5,roofCol,0,bld);
-      mb.box(cx,h+0.4,cz-w/2-0.1,w+0.5,0.5,0.25,COL.stone2,0,bld);mb.box(cx,h+0.4,cz+w/2+0.1,w+0.5,0.5,0.25,COL.stone2,0,bld);
+      mb.box(cx,h+0.4,cz-d/2-0.1,w+0.5,0.5,0.25,COL.stone2,0,bld);mb.box(cx,h+0.4,cz+d/2+0.1,w+0.5,0.5,0.25,COL.stone2,0,bld);
       mb.box(cx-w/2-0.1,h+0.4,cz,0.25,0.5,d+0.5,COL.stone2,0,bld);mb.box(cx+w/2+0.1,h+0.4,cz,0.25,0.5,d+0.5,COL.stone2,0,bld);
       const units=Math.min(3,Math.max(1,Math.floor(w*d/220)));
       for(let u=0;u<units;u++){mb.box(cx+rr(-w*0.25,w*0.25),h+0.4,cz+rr(-d*0.25,d*0.25),rr(1.5,3),rr(0.8,1.6),rr(1.5,3),COL.metal,2,bld);}}
@@ -873,6 +897,96 @@ function addField(mb,b,p,cx,cz,w,d){
 
 /* ---- 环境 ---- */
 const BOUNDS={x0:-168,x1:168,z0:-428,z1:328};
+/* ---- 水系几何工具 ---- */
+function chaikin(pts,iter){for(let k=0;k<iter;k++){const o=[];for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];o.push([a[0]*0.75+b[0]*0.25,a[1]*0.75+b[1]*0.25],[a[0]*0.25+b[0]*0.75,a[1]*0.25+b[1]*0.75]);}pts=o;}return pts;}
+function polyArea(p){let s=0;for(let i=0;i<p.length;i++){const a=p[i],b=p[(i+1)%p.length];s+=a[0]*b[1]-b[0]*a[1];}return s/2;}
+function earClip(p){const n=p.length;const idx=[];const ids=[...Array(n).keys()];if(polyArea(p)<0)ids.reverse();
+  const cross=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);
+  const inTri=(pt,a,b,c)=>{const d1=cross(a,b,pt),d2=cross(b,c,pt),d3=cross(c,a,pt);return !(((d1<0)||(d2<0)||(d3<0))&&((d1>0)||(d2>0)||(d3>0)));};
+  let guard=0;
+  while(ids.length>3&&guard++<6000){let done=false;
+    for(let i=0;i<ids.length;i++){const i0=ids[(i-1+ids.length)%ids.length],i1=ids[i],i2=ids[(i+1)%ids.length];const a=p[i0],b=p[i1],c=p[i2];
+      if(cross(a,b,c)<=1e-9)continue;let ok=true;
+      for(const j of ids){if(j===i0||j===i1||j===i2)continue;if(inTri(p[j],a,b,c)){ok=false;break;}}
+      if(ok){idx.push(i0,i1,i2);ids.splice(i,1);done=true;break;}}
+    if(!done)break;}
+  if(ids.length===3)idx.push(ids[0],ids[1],ids[2]);
+  return idx;}
+function distToPolyEdge(x,z,p){let m=1e9;for(let i=0;i<p.length;i++){const a=p[i],b=p[(i+1)%p.length];const d=distToSeg(x,z,a[0],a[1],b[0],b[1]);if(d<m)m=d;}return m;}
+function pointInPoly(x,z,p){let ins=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])ins=!ins;}return ins;}
+function offsetPoly(p,d){const n=p.length,out=[],sgn=polyArea(p)>0?1:-1;
+  for(let i=0;i<n;i++){const prev=p[(i-1+n)%n],cur=p[i],next=p[(i+1)%n];
+    let e1=[cur[0]-prev[0],cur[1]-prev[1]],e2=[next[0]-cur[0],next[1]-cur[1]];
+    const l1=Math.hypot(e1[0],e1[1])||1,l2=Math.hypot(e2[0],e2[1])||1;e1=[e1[0]/l1,e1[1]/l1];e2=[e2[0]/l2,e2[1]/l2];
+    const n1=[e1[1]*sgn,-e1[0]*sgn],n2=[e2[1]*sgn,-e2[0]*sgn];
+    let bx=n1[0]+n2[0],bz=n1[1]+n2[1];const bl=Math.hypot(bx,bz)||1;bx/=bl;bz/=bl;
+    const cos=Math.max(0.75,bx*n1[0]+bz*n1[1]);
+    out.push([cur[0]+bx*d/cos,cur[1]+bz*d/cos]);}
+  return out;}
+function streamOutline(reach){
+  const c=reach.pts.map(p=>[mx2x(p[0]),my2z(p[1])]),hw=reach.pts.map(p=>p[2]*S);
+  const P=[];
+  for(let i=0;i<c.length-1;i++){const p0=c[Math.max(0,i-1)],p1=c[i],p2=c[i+1],p3=c[Math.min(c.length-1,i+2)];
+    const w0=hw[Math.max(0,i-1)],w1=hw[i],w2=hw[i+1],w3=hw[Math.min(c.length-1,i+2)];
+    for(let t=0;t<1;t+=0.2){const t2=t*t,t3=t2*t;const f=(a,b,cc,d)=>0.5*((2*b)+(-a+cc)*t+(2*a-5*b+4*cc-d)*t2+(-a+3*b-3*cc+d)*t3);
+      P.push([f(p0[0],p1[0],p2[0],p3[0]),f(p0[1],p1[1],p2[1],p3[1]),f(w0,w1,w2,w3)]);}}
+  P.push([c[c.length-1][0],c[c.length-1][1],hw[hw.length-1]]);
+  const L=[],R=[];
+  for(let i=0;i<P.length;i++){const a=P[Math.max(0,i-1)],b=P[Math.min(P.length-1,i+1)];let dx=b[0]-a[0],dz=b[1]-a[1];const l=Math.hypot(dx,dz)||1;dx/=l;dz/=l;const w=P[i][2];
+    L.push([P[i][0]-dz*w,P[i][1]+dx*w]);R.push([P[i][0]+dz*w,P[i][1]-dx*w]);}
+  return L.concat(R.reverse());}
+let _ws=null,_wsCol=null;
+function waterSystem(){if(_ws)return _ws;
+  const polys=[];
+  for(const lk of WATER.lakes)polys.push(chaikin(lk.map(q=>[mx2x(q[0]),my2z(q[1])]),2));
+  for(const r of WATER.reaches)polys.push(streamOutline(r));
+  _ws=polys;_wsCol=polys.map(p=>p.filter((_,i)=>i%2===0));
+  return polys;}
+function waterCollision(){waterSystem();return _wsCol;}
+function addWaterBasin(mb){
+  for(const p of waterSystem()){
+    const sgn=polyArea(p)>0?1:-1;
+    const idx=earClip(p);
+    const vids=p.map(q=>mb.vert(q[0],-0.34,q[1],0,1,0,hex('#20302b'),0,0,0));
+    for(let i=0;i<idx.length;i+=3)mb.i.push(vids[idx[i]],vids[idx[i+1]],vids[idx[i+2]]);
+    for(let i=0;i<p.length;i++){const a=p[i],b=p[(i+1)%p.length];const dx=b[0]-a[0],dz=b[1]-a[1];const l=Math.hypot(dx,dz)||1;
+      mb.quad([a[0],-0.34,a[1]],[b[0],-0.34,b[1]],[b[0],0.10,b[1]],[a[0],0.10,a[1]],[dz/l*sgn,0,-dx/l*sgn],COL.stoneDark,0,0,0);}
+    const o1=offsetPoly(p,1.4),o2=offsetPoly(p,2.2);
+    for(let i=0;i<p.length;i++){const j=(i+1)%p.length;
+      mb.quad([p[i][0],0.10,p[i][1]],[p[j][0],0.10,p[j][1]],[o1[j][0],0.06,o1[j][1]],[o1[i][0],0.06,o1[i][1]],[0,1,0],COL.stone2,0,0,0);
+      mb.quad([o1[i][0],0.06,o1[i][1]],[o1[j][0],0.06,o1[j][1]],[o2[j][0],0.02,o2[j][1]],[o2[i][0],0.02,o2[i][1]],[0,1,0],hex('#8fae7a'),4,0,0);}}}
+function addWaterfront(mb){
+  // 亲水木平台
+  for(const [x,y,w,d] of [[320,492,10,6],[300,1164,9,5]]){
+    const cx=mx2x(x),cz=my2z(y);
+    mb.box(cx,0.10,cz,w,0.16,d,COL.trunk,0);
+    for(let i=0;i<4;i++)mb.cyl(cx-w/2+1+i*(w-2)/3,-0.3,cz+d/2-0.5,0.12,0.12,0.5,5,COL.trunk,0);
+    mb.box(cx,0.26,cz-d/2+0.1,w,0.5,0.12,COL.trunk,0);}
+  // 芦苇丛
+  for(const [x,y] of [[250,545],[242,510],[252,1200],[226,1340],[318,470],[368,660],[262,1180]]){
+    const cx=mx2x(x),cz=my2z(y);
+    for(let i=0;i<7;i++){const a=rr(0,6.28),r=rr(0,1.6);const px=cx+Math.cos(a)*r,pz=cz+Math.sin(a)*r;const h=rr(0.9,1.6);
+      mb.cyl(px,0.05,pz,0.03,0.05,h,4,hex('#7a9a4a'),0);mb.box(px,0.05+h,pz,0.09,0.3,0.09,hex('#8a6a3a'),0);}}
+  // 岸线叠石
+  for(const [x,y] of [[308,522],[296,558],[240,494],[346,1178],[332,1214],[250,1208],[366,1360],[268,1386],[348,610],[382,646]]){
+    const cx=mx2x(x),cz=my2z(y);
+    for(let i=0;i<3;i++)mb.cyl(cx+rr(-1.4,1.4),0.02,cz+rr(-1.4,1.4),rr(0.4,0.8),rr(0.7,1.2),rr(0.3,0.6),6,COL.stoneDark,0);}}
+function addBridges(mb){
+  const bridges=[[348,352,7,'x',0],[331,441,6,'x',1],[308,580,6,'x',0],[330,604,6,'x',1],[331,737,6,'x',0],[258,900,7,'x',0],[233,1052,6,'x',1],[356,1240,7,'x',0],[285,1390,8,'z',1],[371,1300,4,'x',1]];
+  for(const [x,y,ww,dir,arch] of bridges){
+    const cx=mx2x(x),cz=my2z(y);
+    const sx=dir==='x'?ww+3:5, sz=dir==='x'?5:ww+3;
+    if(arch){
+      const steps=6;
+      for(let i=0;i<steps;i++){const t0=i/steps,t1=(i+1)/steps;const y0=0.22+Math.sin(t0*Math.PI)*0.85,y1=0.22+Math.sin(t1*Math.PI)*0.85;
+        const a0=(dir==='x'?cx:cz)-(dir==='x'?sx:sz)/2+(dir==='x'?sx:sz)*t0, a1=(dir==='x'?cx:cz)-(dir==='x'?sx:sz)/2+(dir==='x'?sx:sz)*t1;
+        if(dir==='x')mb.quad([a0,y0,cz-sz/2],[a1,y1,cz-sz/2],[a1,y1,cz+sz/2],[a0,y0,cz+sz/2],[0,1,0],COL.stone2,0,0,0);
+        else mb.quad([cx-sx/2,y0,a0],[cx-sx/2,y1,a1],[cx+sx/2,y1,a1],[cx+sx/2,y0,a0],[0,1,0],COL.stone2,0,0,0);}
+      for(const s of [-1,1])for(let i=0;i<=4;i++){const t=i/4;const y=0.22+Math.sin(t*Math.PI)*0.85;const a=(dir==='x'?cx:cz)-(dir==='x'?sx:sz)/2+(dir==='x'?sx:sz)*t;
+        const px=dir==='x'?a:cx+s*sx/2, pz=dir==='x'?cz+s*sz/2:a;mb.box(px,y,pz,0.14,0.7,0.14,COL.stone,0,0,0);}
+    }else{
+      mb.box(cx,0.2,cz,sx,0.5,sz,COL.pave,0,0,0);
+      for(const s of [-1,1]){if(dir==='x')mb.box(cx,0.7,cz+s*sz/2,sx,0.9,0.3,COL.stone2,0,0,0);else mb.box(cx+s*sx/2,0.7,cz,0.3,0.9,sz,COL.stone2,0,0,0);}}}}
 function buildEnvironment(){
   const mb=new MB();
   // 底座
@@ -880,8 +994,17 @@ function buildEnvironment(){
   mb.box(cx,-7,cz,w,7,d,COL.baseSide,0);
   mb.box(cx,-0.4,cz,w+3,0.4,d+3,COL.base,0);
   mb.box(cx,-0.05,cz,w,0.05,d,COL.grass,4);
-  // 草地斑块
-  for(let i=0;i<70;i++){const x=rr(BOUNDS.x0+6,BOUNDS.x1-6),z=rr(BOUNDS.z0+6,BOUNDS.z1-6);mb.ellipse(x,z,rr(4,14),rr(4,14),0.01,rnd()>0.5?COL.grass2:hex('#9ab87e'),4,16);}
+  // 草地斑块（抬高避免与底座深度冲突；避开水体/广场/道路）
+  const patchOk=(x,z)=>{
+    for(const p of waterCollision())if(pointInPoly(x,z,p)||distToPolyEdge(x,z,p)<4)return false;
+    for(const [px,pz,rx,rz] of [[292,1326,24,24],[432,1212,30,26],[104,1152,26,22]]){const dx=(x-mx2x(px))/(rx+3),dz=(z-my2z(pz))/(rz+3);if(dx*dx+dz*dz<1)return false;}
+    for(const r of roads.concat(outerRoads)){const pts=r.pts.map(q=>[mx2x(q[0]),my2z(q[1])]);
+      for(let i=0;i<pts.length-1;i++)if(distToSeg(x,z,pts[i][0],pts[i][1],pts[i+1][0],pts[i+1][1])<r.w/2+2)return false;}
+    for(const b of buildings)if(b.kind==='field')for(const p of b.parts)
+      if(Math.abs(x-mx2x(p.x))<p.w*S/2+2&&Math.abs(z-my2z(p.y))<p.h*S/2+2)return false;
+    if(Math.abs(x-mx2x(285))<36&&Math.abs(z-my2z(1480))<26)return false;
+    return true;};
+  for(let i=0;i<70;i++){const x=rr(BOUNDS.x0+6,BOUNDS.x1-6),z=rr(BOUNDS.z0+6,BOUNDS.z1-6);if(!patchOk(x,z))continue;mb.ellipse(x,z,rr(4,14),rr(4,14),0.08,rnd()>0.5?COL.grass2:hex('#9ab87e'),4,16);}
   // 外部市政道路
   for(const r of outerRoads){const pts=r.pts.map(p=>[mx2x(p[0]),my2z(p[1])]);mb.ribbon(pts,r.w,0.02,COL.road,0);mb.ribbon(pts,0.25,0.05,COL.roadLine,0);}
   // 校园道路 + 人行道
@@ -890,23 +1013,18 @@ function buildEnvironment(){
     for(let i=0;i<pts.length-1;i++){const [x0,z0]=pts[i],[x1,z1]=pts[i+1];const l=Math.hypot(x1-x0,z1-z0);const n=Math.floor(l/6);
       for(let k=0;k<n;k++){const t0=(k+0.15)/n,t1=(k+0.55)/n;mb.ribbon([[lerp(x0,x1,t0),lerp(z0,z1,t0)],[lerp(x0,x1,t1),lerp(z0,z1,t1)]],0.22,0.1,COL.roadLine,0);}}}
   // 广场铺装
-  mb.ellipse(mx2x(285),my2z(1352),58,58,0.09,COL.pave2,0,56);
-  mb.ring(mx2x(285),my2z(1352),58,58,44,44,0.11,COL.pave,0,56);
-  mb.ellipse(mx2x(285),my2z(1352),20,20,0.13,COL.grass,4,40);
-  mb.ellipse(mx2x(285),my2z(1352),7,7,0.15,COL.pave,0,32);
+  mb.ellipse(mx2x(292),my2z(1326),24,24,0.09,COL.pave2,0,48);
+  mb.ring(mx2x(292),my2z(1326),24,24,17,17,0.11,COL.pave,0,48);
+  mb.ellipse(mx2x(292),my2z(1326),10,10,0.13,COL.grass,4,32);
+  mb.ellipse(mx2x(292),my2z(1326),3.5,3.5,0.15,COL.pave,0,24);
   mb.ellipse(mx2x(432),my2z(1212),30,26,0.09,COL.pave2,0,40);
   mb.ellipse(mx2x(104),my2z(1152),26,22,0.09,COL.pave2,0,36);
   // 南大门前广场
   mb.box(mx2x(285),0.05,my2z(1480),70,0.08,50,COL.pave2,0);
-  // 水系岸线
-  const river=riverMap.map(p=>[mx2x(p[0]),my2z(p[1])]);
-  mb.ribbon(river,13,0.03,COL.stoneDark,0);
-  mb.ribbon(river,10.5,0.05,hex('#7a8f7a'),0);
-  for(const pd of ponds){mb.ellipse(mx2x(pd.x),my2z(pd.y),pd.rx+2,pd.ry+2,0.03,COL.stoneDark,0,36);}
-  // 桥
-  const bridges=[[316,600,7],[300,680,7],[246,840,7],[232,920,7],[252,1160,6],[300,1262,7]];
-  for(const [x,y,ww] of bridges){const cx=mx2x(x),cz=my2z(y);mb.box(cx,0.2,cz,ww+3,0.5,12,COL.pave,0);
-    mb.box(cx-ww/2-1.2,0.7,cz,0.3,0.9,12,COL.stone2,0);mb.box(cx+ww/2+1.2,0.7,cz,0.3,0.9,12,COL.stone2,0);}
+  // 水系：湖盆 / 护岸 / 滨水带 / 桥
+  addWaterBasin(mb);
+  addWaterfront(mb);
+  addBridges(mb);
   // 围墙
   const wallH=1.1;
   mb.box(BOUNDS.x0+1,0,cz,0.6,wallH,d,COL.wall,0);mb.box(BOUNDS.x1-1,0,cz,0.6,wallH,d,COL.wall,0);
@@ -917,7 +1035,7 @@ function buildEnvironment(){
       for(let k=0;k<n;k++){const t=(k+0.5)/n;const x=lerp(x0,x1,t),z=lerp(z0,z1,t);const dx=(x1-x0)/l,dz=(z1-z0)/l;const sx=x-dz*(r.w/2+1.6),sz=z+dx*(r.w/2+1.6);
         mb.cyl(sx,0,sz,0.1,0.14,4.2,5,COL.metal,2);mb.box(sx,4.2,sz,0.7,0.18,0.4,COL.metal,2);mb.sphere(sx,4.1,sz,0.28,COL.lamp,3,0,1,0);}}}
   // 创业广场能源雕塑
-  const scx=mx2x(285),scz=my2z(1352);
+  const scx=mx2x(292),scz=my2z(1326);
   mb.cyl(scx,0.15,scz,3.2,3.8,0.8,24,COL.stoneDark,0);
   mb.cyl(scx,0.95,scz,0.5,1.4,9,8,COL.copper,2,0,0.1);
   mb.sphere(scx,10.4,scz,1.5,COL.copper,2,0,0.2,1);
@@ -928,21 +1046,36 @@ function buildEnvironment(){
   mb.box(px-3,0.6,pz,1.2,4,1.2,COL.metal,2);mb.box(px+3,0.6,pz,1.2,3,1.2,COL.metal,2);
   mb.cyl(px+3,3.6,pz,1.2,1.2,0.5,12,COL.copper,2);
   // 长椅 / 自行车棚
-  for(let i=0;i<10;i++){const a=i/10*Math.PI*2;mb.box(scx+Math.cos(a)*30,0.1,scz+Math.sin(a)*30,2.4,0.5,0.7,COL.trunk,0);}
+  for(let i=0;i<10;i++){const a=i/10*Math.PI*2;mb.box(scx+Math.cos(a)*22,0.1,scz+Math.sin(a)*22,2.4,0.5,0.7,COL.trunk,0);}
   return mb.finalize();
 }
+function waterSurface(p){
+  // 岸线顶点深度恒为 0，需内部细分顶点承载深度场，否则整片水面按浅水渲染
+  const vs=p.map(q=>[q[0],q[1],0]);
+  const flat=earClip(p);let tris=[];
+  for(let i=0;i<flat.length;i+=3)tris.push([flat[i],flat[i+1],flat[i+2]]);
+  const cache=new Map();
+  const mid=(a,b)=>{const k=a<b?a+'_'+b:b+'_'+a;let m=cache.get(k);
+    if(m===undefined){const x=(vs[a][0]+vs[b][0])/2,z=(vs[a][1]+vs[b][1])/2;
+      m=vs.length;vs.push([x,z,clamp(distToPolyEdge(x,z,p)/5,0,1)]);cache.set(k,m);}
+    return m;};
+  const e2=(a,b)=>{const dx=vs[a][0]-vs[b][0],dz=vs[a][1]-vs[b][1];return dx*dx+dz*dz;};
+  for(let r=0;r<5;r++){
+    const next=[];let split=false;
+    for(const t of tris){const [a,b,c]=t;
+      if(Math.max(e2(a,b),e2(b,c),e2(c,a))>16){
+        const ab=mid(a,b),bc=mid(b,c),ca=mid(c,a);
+        next.push([a,ab,ca],[ab,b,bc],[ca,bc,c],[ab,bc,ca]);split=true;}
+      else next.push(t);}
+    tris=next;if(!split)break;}
+  return {vs,tris};
+}
 function buildWater(){
-  const mb=new MB();const river=riverMap.map(p=>[mx2x(p[0]),my2z(p[1])]);
-  // Catmull-Rom 采样
-  const pts=[];for(let i=0;i<river.length-1;i++){const p0=river[Math.max(0,i-1)],p1=river[i],p2=river[i+1],p3=river[Math.min(river.length-1,i+2)];
-    for(let t=0;t<1;t+=0.1){const t2=t*t,t3=t2*t;const x=0.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3);const z=0.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3);pts.push([x,z]);}}
-  pts.push(river[river.length-1]);
-  const hw=4.6;
-  for(let i=0;i<pts.length-1;i++){const [x0,z0]=pts[i],[x1,z1]=pts[i+1];const dx=x1-x0,dz=z1-z0,l=Math.hypot(dx,dz)||1;const nx=-dz/l*hw,nz=dx/l*hw;
-    const u0=i/pts.length,u1=(i+1)/pts.length;
-    const a=mb.vert(x0+nx,0.28,z0+nz,0,1,0,COL.water,5,0,0);const b=mb.vert(x1+nx,0.28,z1+nz,0,1,0,COL.water,5,0,0);const c=mb.vert(x1-nx,0.28,z1-nz,0,1,0,COL.water,5,0,0);const d=mb.vert(x0-nx,0.28,z0-nz,0,1,0,COL.water,5,0,0);
-    mb.i.push(a,b,c,a,c,d);}
-  for(const pd of ponds){mb.ellipse(mx2x(pd.x),my2z(pd.y),pd.rx,pd.ry,0.28,COL.water,5,36);}
+  const mb=new MB();
+  for(const p of waterSystem()){
+    const {vs,tris}=waterSurface(p);
+    const vids=vs.map(q=>mb.vert(q[0],0.02,q[1],0,1,0,COL.water,q[2],0,0));
+    for(const t of tris)mb.i.push(vids[t[0]],vids[t[1]],vids[t[2]]);}
   return mb.finalize();
 }
 /* ---- 树木 ---- */
@@ -953,11 +1086,11 @@ function buildTrees(){
   const mesh=mb.finalize();
   const roadW=roads.map(r=>({pts:r.pts.map(p=>[mx2x(p[0]),my2z(p[1])]),w:r.w}));
   const rects=[];for(const b of buildings)for(const p of b.parts){rects.push({x:mx2x(p.x),z:my2z(p.y),w:p.w*S/2+2.5,d:p.h*S/2+2.5});}
-  const river=riverMap.map(p=>[mx2x(p[0]),my2z(p[1])]);
+  const wp=waterCollision();
   function ok(x,z){for(const r of rects)if(Math.abs(x-r.x)<r.w&&Math.abs(z-r.z)<r.d)return false;
     for(const r of roadW)for(let i=0;i<r.pts.length-1;i++)if(distToSeg(x,z,...r.pts[i],...r.pts[i+1])<r.w/2+2.2)return false;
-    for(let i=0;i<river.length-1;i++)if(distToSeg(x,z,...river[i],...river[i+1])<7)return false;
-    if(Math.hypot(x-mx2x(285),z-my2z(1352))<62)return false;
+    for(const p of wp){if(pointInPoly(x,z,p))return false;if(distToPolyEdge(x,z,p)<3.2)return false;}
+    if(Math.hypot(x-mx2x(292),z-my2z(1326))<40)return false;
     return true;}
   const inst=[];let tries=0;
   while(inst.length<950&&tries<9000){tries++;const x=rr(BOUNDS.x0+4,BOUNDS.x1-4),z=rr(BOUNDS.z0+4,BOUNDS.z1-4);if(!ok(x,z))continue;
@@ -1103,23 +1236,58 @@ vec3 col=vColor*(hemi*0.42+uSunColor*diff*sh*1.2);
 if(vEmis>0.5)col+=vColor*(0.8+uNight*2.5);
 col=applyFog(col,length(uCamPos-vWorld));outColor=vec4(col,1.0);}`;
 const VS_WATER=`#version 300 es
-layout(location=0) in vec3 aPos;layout(location=1) in vec3 aNormal;layout(location=2) in vec3 aColor;
-uniform mat4 uProj,uView,uLightVP;out vec3 vWorld,vNormal,vColor;out vec4 vShadow;
-void main(){vWorld=aPos;vNormal=aNormal;vColor=aColor;vShadow=uLightVP*vec4(aPos,1.0);gl_Position=uProj*uView*vec4(aPos,1.0);}`;
+layout(location=0) in vec3 aPos;layout(location=1) in vec3 aNormal;layout(location=2) in vec3 aColor;layout(location=3) in float aDepth;
+uniform mat4 uProj,uView,uLightVP;out vec3 vWorld,vNormal,vColor;out float vDepth;out vec4 vShadow;
+void main(){vWorld=aPos;vNormal=aNormal;vColor=aColor;vDepth=aDepth;vShadow=uLightVP*vec4(aPos,1.0);gl_Position=uProj*uView*vec4(aPos,1.0);}`;
 const FS_WATER=`#version 300 es
-precision highp float;in vec3 vWorld,vNormal,vColor;in vec4 vShadow;${LIGHT_GLSL}out vec4 outColor;
-void main(){vec2 p=vWorld.xz;
-float w1=sin(p.x*0.35+uTime*0.9)*0.5+sin(p.y*0.28-uTime*0.7)*0.5;
-float w2=sin((p.x+p.y)*0.18+uTime*0.5);
-vec3 n=normalize(vec3(w1*0.06,1.0,w2*0.06));
-vec3 v=normalize(uCamPos-vWorld);float fres=pow(1.0-max(dot(n,v),0.0),3.0);
-float sh=getShadow(vShadow,n);
-vec3 deep=vColor*0.7,shallow=vColor*1.25;
-vec3 col=mix(deep,shallow,0.5+0.5*w2);
-col=mix(col,uSkyColor*0.9,fres*0.6);
-vec3 h=normalize(uSunDir+v);col+=uSunColor*pow(max(dot(n,h),0.0),90.0)*0.9*sh;
-col+=uSunColor*max(dot(n,uSunDir),0.0)*0.12*sh;
-col=applyFog(col,length(uCamPos-vWorld));outColor=vec4(col,0.94);}`;
+precision highp float;in vec3 vWorld,vNormal,vColor;in float vDepth;in vec4 vShadow;${LIGHT_GLSL}
+uniform vec3 uSkyBottom;out vec4 outColor;
+float whash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float wnoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
+return mix(mix(whash(i),whash(i+vec2(1,0)),f.x),mix(whash(i+vec2(0,1)),whash(i+vec2(1,1)),f.x),f.y);}
+float waveH(vec2 p,float t){float h=0.0;
+h+=sin(p.x*0.55+t*1.1)*0.35;
+h+=sin(p.y*0.42-t*0.8)*0.30;
+h+=sin((p.x+p.y)*0.30+t*0.6)*0.25;
+h+=sin((p.x-p.y)*0.75+t*1.7)*0.12;
+h+=(wnoise(p*0.9+vec2(t*0.25,-t*0.18))-0.5)*0.55;
+h+=(wnoise(p*2.3-vec2(t*0.4,t*0.3))-0.5)*0.25;
+return h;}
+void main(){vec2 p=vWorld.xz;float t=uTime;
+float d=clamp(vDepth,0.0,1.0);
+float e=0.25;float h0=waveH(p,t);float hx=waveH(p+vec2(e,0.0),t);float hz=waveH(p+vec2(0.0,e),t);
+float amp=mix(0.03,0.10,d);
+vec3 n=normalize(vec3(-(hx-h0)/e*amp,1.0,-(hz-h0)/e*amp));
+float lod=smoothstep(350.0,900.0,length(uCamPos-vWorld));
+n=normalize(mix(n,vec3(0.0,1.0,0.0),lod*0.85));
+vec3 v=normalize(uCamPos-vWorld);
+float sh=mix(getShadow(vShadow,n),1.0,lod*0.8);
+vec3 shallow=mix(vec3(0.22,0.38,0.34),vColor*1.5,0.5);
+vec3 deep=vColor*0.8+vec3(0.0,0.03,0.04);
+vec3 body=mix(shallow,deep,smoothstep(0.0,0.85,d));
+body+=uSkyColor*0.08;
+float ca=wnoise(p*1.7+vec2(t*0.35,t*0.22))*wnoise(p*2.6-vec2(t*0.28,t*0.4));
+ca=pow(ca*1.9,3.0);
+body+=vec3(0.35,0.5,0.45)*ca*(1.0-d)*0.25*sh;
+vec3 r=reflect(-v,n);
+float ry=clamp(r.y*0.5+0.5,0.0,1.0);
+vec3 sky=mix(uSkyBottom,uSkyColor,pow(ry,0.8));
+float fres=0.02+0.98*pow(1.0-max(dot(n,v),0.0),5.0);
+fres=mix(fres*0.55,fres,0.35+0.65*d);
+vec3 col=mix(body,sky,clamp(fres,0.0,1.0));
+vec3 hv=normalize(uSunDir+v);
+float spec=pow(max(dot(n,hv),0.0),120.0);
+float glint=pow(max(dot(n,hv),0.0),600.0);
+col+=uSunColor*(spec*0.35+glint*0.9)*sh*(1.0-uNight*0.7);
+col+=uSunColor*max(dot(n,uSunDir),0.0)*0.06*sh;
+float foamBand=1.0-smoothstep(0.0,0.10,d);
+float fn=wnoise(p*3.5+vec2(t*0.5,-t*0.35));
+float foam=foamBand*smoothstep(0.55,0.85,fn+0.25*sin(t*1.3+p.x*0.8+p.y*0.6))*(1.0-lod);
+col=mix(col,vec3(0.92,0.96,0.95),foam*0.35);
+float nl=wnoise(vec2(p.x*1.6,p.y*2.6-t*0.6));
+col+=vec3(0.9,0.85,0.7)*pow(nl,10.0)*uNight*0.6*(1.0-lod);
+col=applyFog(col,length(uCamPos-vWorld));
+outColor=vec4(col,1.0);}`;
 const VS_FULL=`#version 300 es
 layout(location=0) in vec2 aPos;out vec2 vUv;void main(){vUv=aPos*0.5+0.5;gl_Position=vec4(aPos,0.0,1.0);}`;
 const FS_SKY=`#version 300 es
@@ -1159,7 +1327,7 @@ const VS_POINT=`#version 300 es
 layout(location=0) in vec3 aPos;layout(location=1) in float aSeed;
 uniform mat4 uProj,uView;uniform float uTime,uNight;out float vA;out float vN;
 void main(){vec3 p=aPos;p.x+=sin(uTime*0.3+aSeed*6.28)*3.0;p.y+=sin(uTime*0.5+aSeed*12.0)*1.5;p.z+=cos(uTime*0.25+aSeed*9.0)*3.0;
-vec4 mv=uView*vec4(p,1.0);gl_Position=uProj*mv;gl_PointSize=clamp(90.0/-mv.z,1.0,4.0);vA=0.35+0.3*sin(uTime+aSeed*20.0);vN=uNight;}`;
+vec4 mv=uView*vec4(p,1.0);gl_Position=uProj*mv;gl_PointSize=clamp(90.0/-mv.z,1.0,4.0);vA=(0.35+0.3*sin(uTime+aSeed*20.0))*(1.0-smoothstep(400.0,900.0,-mv.z));vN=uNight;}`;
 const FS_POINT=`#version 300 es
 precision mediump float;in float vA;in float vN;out vec4 o;
 void main(){vec2 d=gl_PointCoord-0.5;float a=smoothstep(0.5,0.1,length(d))*vA;
@@ -1305,7 +1473,7 @@ function renderShadow(){
 function setLightUniforms(pr,env){
   const gl=GL.gl,u=pr.u;
   if(u.uSunDir)gl.uniform3fv(u.uSunDir,sunDir());if(u.uSunColor)gl.uniform3fv(u.uSunColor,env.sunCol);
-  if(u.uSkyColor)gl.uniform3fv(u.uSkyColor,env.top);if(u.uGroundColor)gl.uniform3fv(u.uGroundColor,[0.28,0.30,0.24]);
+  if(u.uSkyColor)gl.uniform3fv(u.uSkyColor,env.top);if(u.uSkyBottom)gl.uniform3fv(u.uSkyBottom,env.bot);if(u.uGroundColor)gl.uniform3fv(u.uGroundColor,[0.28,0.30,0.24]);
   if(u.uCamPos)gl.uniform3fv(u.uCamPos,GL.eye);if(u.uFogColor)gl.uniform3fv(u.uFogColor,env.fog);
   if(u.uFogDensity)gl.uniform1f(u.uFogDensity,state.fog/100*0.0009);if(u.uNight)gl.uniform1f(u.uNight,env.night);
   if(u.uShadowOn)gl.uniform1f(u.uShadowOn,state.shadow?1:0);if(u.uTime)gl.uniform1f(u.uTime,GL.time);
@@ -1357,8 +1525,7 @@ function renderScene(){
   // water
   if(!state.wire){gl.useProgram(GL.waterProg.p);setLightUniforms(GL.waterProg,env);
     gl.uniformMatrix4fv(GL.waterProg.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.waterProg.u.uView,false,GL.view);gl.uniformMatrix4fv(GL.waterProg.u.uLightVP,false,GL.lightVP||lightVP());
-    gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false);
-    gl.bindVertexArray(GL.waterMesh.vao);gl.drawElements(gl.TRIANGLES,GL.waterMesh.count,gl.UNSIGNED_INT,0);gl.depthMask(true);gl.disable(gl.BLEND);}
+    gl.bindVertexArray(GL.waterMesh.vao);gl.enable(gl.POLYGON_OFFSET_FILL);gl.polygonOffset(-2,-2);gl.drawElements(gl.TRIANGLES,GL.waterMesh.count,gl.UNSIGNED_INT,0);gl.disable(gl.POLYGON_OFFSET_FILL);}
   // particles
   if(!state.wire&&!state.reduced){gl.useProgram(GL.point.p);gl.uniformMatrix4fv(GL.point.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.point.u.uView,false,GL.view);gl.uniform1f(GL.point.u.uTime,GL.time);gl.uniform1f(GL.point.u.uNight,env.night);
     gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE);gl.depthMask(false);gl.bindVertexArray(GL.points.vao);gl.drawArrays(gl.POINTS,0,GL.points.count);gl.depthMask(true);gl.disable(gl.BLEND);}
@@ -1395,7 +1562,7 @@ function updateCamera(dt){
   for(let i=0;i<3;i++)cam.target[i]+=(cam.tTarget[i]-cam.target[i])*k;
   const ce=Math.cos(cam.el);GL.eye=[cam.target[0]+Math.sin(cam.az)*ce*cam.dist,cam.target[1]+Math.sin(cam.el)*cam.dist,cam.target[2]+Math.cos(cam.az)*ce*cam.dist];
   GL.view=M4.lookAt(GL.eye,cam.target,[0,1,0]);
-  GL.proj=M4.persp(38*Math.PI/180,GL.canvas.clientWidth/Math.max(1,GL.canvas.clientHeight),1,4000);
+  GL.proj=M4.persp(38*Math.PI/180,GL.canvas.clientWidth/Math.max(1,GL.canvas.clientHeight),6,4000);
   GL.vp=M4.mul(GL.proj,GL.view);
 }
 /* ---- 拾取 ---- */
@@ -1500,7 +1667,7 @@ function buildLabels(){
     labelsEl.appendChild(el);labelEls.set(it.id,{el,it});
   }
 }
-const MAJOR_LABELS=['图书馆 · 成都总馆','思学楼','行政楼','博学楼','体育馆','学生活动中心','逸夫工程训练中心','国家重点实验室','南大门','北大门','创业广场'];
+const MAJOR_LABELS=['图书馆 · 成都总馆','思学楼','行政楼','博学楼','体育馆','学生活动中心','逸夫工程训练中心','国家重点实验室','南大门','北大门','创业广场','梦溪湖','梦溪湖 · 南湾'];
 function updateLabels(){
   if(!state.labels){labelsEl.style.display='none';return;}labelsEl.style.display='';
   const cands=[];
@@ -1644,7 +1811,7 @@ function initFallback(){
   const W=620,H=1560;let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 ${W} ${H}" style="background:#e7efe8">`;
   s+=`<rect x="0" y="60" width="598" height="1476" fill="#9ab87e" stroke="#3c4a42" stroke-width="3"/>`;
   for(const r of roads){s+=`<polyline points="${r.pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#6d756f" stroke-width="${r.w*2}" stroke-linecap="round"/>`;}
-  s+=`<polyline points="${riverMap.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#4f93b8" stroke-width="12"/>`;
+  for(const p of waterSystem()){s+=`<polygon points="${p.map(q=>[(q[0]/S+MX).toFixed(1),(q[1]/S+MY).toFixed(1)].join(',')).join(' ')}" fill="#4f93b8" opacity="0.9"/>`;}
   for(const b of buildings)for(const p of b.parts){const col=p.field?'#b05a3c':(p.gate?'#c46a3a':CAT[b.cat].color);
     s+=`<rect data-id="${b.id}" x="${p.x-p.w/2}" y="${p.y-p.h/2}" width="${p.w}" height="${p.h}" fill="${col}" opacity="0.85" rx="2" style="cursor:pointer"><title>${b.name}</title></rect>`;}
   s+=`<text x="299" y="1550" text-anchor="middle" font-size="16" fill="#1d2a25">南大门 · 新都大道</text><text x="299" y="80" text-anchor="middle" font-size="14" fill="#1d2a25">北 · 绕城大道</text></svg>`;

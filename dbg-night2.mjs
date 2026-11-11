@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch({executablePath:'C:/Users/Mark/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe',args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const p=await b.newPage({viewport:{width:1280,height:860}});p.setDefaultTimeout(90000);
+await p.goto('file://'+process.cwd()+'/swpu-chengdu-campus-3d.html');
+await p.waitForFunction(()=>document.getElementById('loading').classList.contains('hide'),null,{timeout:120000});
+await p.waitForTimeout(3000);
+const set=async(o)=>{await p.evaluate(a=>{const S=window.__SWPU;const c=S.cam;c.tAz=a.az;c.tEl=a.el;c.tDist=a.dist;c.tTarget=a.t;
+  const el=document.getElementById('c-time');el.value=a.hour;el.dispatchEvent(new Event('input',{bubbles:true}));
+  if(a.shadow!==undefined)S.state.shadow=a.shadow;},o);await p.waitForTimeout(1800);};
+await set({az:0.35,el:0.35,dist:200,t:[-8.5,0,-208.5],hour:21,shadow:false});
+await p.screenshot({path:'w-dbgA.png',timeout:90000});
+await b.close();

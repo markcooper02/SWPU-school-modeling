@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>西南石油大学 · 成都校区 3D 空间导览</title>
+<style>:root{
+  --ivory:#f4efe4; --paper:#faf7ef; --ink:#1d2a25; --ink-2:#4c5a52; --ink-3:#7d8a80;
+  --jade:#1f6f5c; --jade-deep:#12463a; --jade-soft:#dcebe2; --copper:#c46a3a; --copper-soft:#f3ddcc;
+  --sky:#cfe2ea; --line:#ddd5c4; --line-2:#ebe4d5; --danger:#b4432f; --warn:#c99a2e; --ok:#2e7d5b;
+  --shadow:0 10px 30px rgba(29,42,37,.12), 0 2px 8px rgba(29,42,37,.08);
+  --radius:14px; --header:64px; --left:284px; --right:286px;
+  --font-body:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-display:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  --font-mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font-body);color:var(--ink);background:var(--ivory);font-size:13px;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:var(--jade);text-decoration:none}
+a:hover{text-decoration:underline}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--line-2);border-radius:8px}
+::-webkit-scrollbar-thumb{background:#b9c4b4;border-radius:8px;border:2px solid var(--line-2)}
+::-webkit-scrollbar-thumb:hover{background:var(--jade)}
+*{scrollbar-width:thin;scrollbar-color:#b9c4b4 var(--line-2)}
+
+#app{display:flex;flex-direction:column;height:100%}
+header{height:var(--header);flex:0 0 var(--header);display:flex;align-items:center;gap:18px;padding:0 18px;background:linear-gradient(180deg,#fbf8f0,#f1ebdd);border-bottom:1px solid var(--line);position:relative;z-index:30}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand-mark{width:38px;height:38px;flex:0 0 38px;border-radius:10px;background:radial-gradient(circle at 30% 25%,#2c8a70,#12463a 70%);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 3px 8px rgba(18,70,58,.3)}
+.brand-mark svg{width:24px;height:24px}
+.brand-text h1{font-family:var(--font-display);font-size:18px;font-weight:700;letter-spacing:.06em;line-height:1.15;white-space:nowrap}
+.brand-text p{font-size:9.5px;letter-spacing:.22em;color:var(--ink-3);text-transform:uppercase;margin-top:2px;white-space:nowrap}
+.view-tabs{display:flex;gap:4px;margin-left:12px;background:#e7e0d0;padding:4px;border-radius:11px}
+.view-tabs button{padding:7px 14px;border-radius:8px;font-size:12px;color:var(--ink-2);font-weight:600;letter-spacing:.04em;transition:all .18s}
+.view-tabs button:hover{color:var(--jade-deep)}
+.view-tabs button.active{background:var(--paper);color:var(--jade-deep);box-shadow:0 1px 4px rgba(29,42,37,.16)}
+.header-spacer{flex:1}
+.offline-pill{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--jade-deep);background:var(--jade-soft);padding:5px 10px;border-radius:20px;font-weight:600;white-space:nowrap}
+.offline-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(46,125,91,.18);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(46,125,91,.18)}50%{box-shadow:0 0 0 5px rgba(46,125,91,.08)}}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:9px;font-size:12px;font-weight:600;transition:all .16s;border:1px solid transparent;white-space:nowrap}
+.btn svg{width:15px;height:15px}
+.btn-ghost{color:var(--ink-2);border-color:var(--line)}
+.btn-ghost:hover{background:#ece5d6;color:var(--ink)}
+.btn-primary{background:linear-gradient(135deg,#27795f,#175243);color:#fff;box-shadow:0 3px 10px rgba(23,82,67,.28)}
+.btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.btn-copper{background:linear-gradient(135deg,#cf7a45,#b25a2e);color:#fff}
+.btn-sm{padding:6px 10px;font-size:11px;border-radius:7px}
+
+main{flex:1;display:flex;min-height:0;position:relative}
+/* ---------- left explorer ---------- */
+#explorer{width:var(--left);flex:0 0 var(--left);background:var(--paper);border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:20;min-height:0}
+.explorer-head{padding:18px 16px 12px;border-bottom:1px solid var(--line-2);background:linear-gradient(160deg,#fbf8f0 0%,#f3edde 100%)}
+.eyebrow{font-size:10px;letter-spacing:.24em;color:var(--copper);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.explorer-head h2{font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:.05em;line-height:1.2}
+.explorer-head .addr{display:flex;align-items:flex-start;gap:5px;margin-top:8px;font-size:11px;color:var(--ink-2);line-height:1.5}
+.explorer-head .addr svg{width:13px;height:13px;flex:0 0 13px;margin-top:2px;color:var(--copper)}
+.stat-row{display:flex;gap:8px;margin-top:12px}
+.stat{flex:1;background:rgba(255,255,255,.6);border:1px solid var(--line-2);border-radius:9px;padding:7px 8px}
+.stat b{display:block;font-family:var(--font-mono);font-size:16px;color:var(--jade-deep);line-height:1.1}
+.stat span{font-size:9.5px;color:var(--ink-3);letter-spacing:.05em}
+.search-wrap{padding:12px 14px 8px}
+.search-box{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 10px;transition:border .15s,box-shadow .15s}
+.search-box:focus-within{border-color:var(--jade);box-shadow:0 0 0 3px rgba(31,111,92,.12)}
+.search-box svg{width:14px;height:14px;color:var(--ink-3);flex:0 0 14px}
+.search-box input{border:none;outline:none;background:none;flex:1;font-size:12px;min-width:0}
+.search-box input::placeholder{color:#a9b0a6}
+.search-box kbd{font-family:var(--font-mono);font-size:9px;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:1px 4px;background:var(--ivory)}
+.chips{display:flex;gap:5px;padding:0 14px 10px;flex-wrap:wrap}
+.chip{font-size:10.5px;padding:4px 9px;border-radius:14px;border:1px solid var(--line);color:var(--ink-2);background:#fff;transition:all .14s;font-weight:600}
+.chip:hover{border-color:var(--jade)}
+.chip.active{background:var(--jade-deep);color:#fff;border-color:var(--jade-deep)}
+.building-list{flex:1;overflow-y:auto;padding:2px 10px 12px;min-height:0}
+.list-group{font-size:9.5px;letter-spacing:.18em;color:var(--ink-3);font-weight:700;padding:10px 6px 5px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.list-group::after{content:"";flex:1;height:1px;background:var(--line-2)}
+.b-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;padding:8px 8px;border-radius:9px;transition:background .13s;position:relative}
+.b-item:hover{background:#efe9db}
+.b-item.selected{background:var(--jade-soft);box-shadow:inset 0 0 0 1px rgba(31,111,92,.3)}
+.b-code{font-family:var(--font-mono);font-size:9.5px;font-weight:700;color:var(--jade-deep);background:#e4ecdf;border:1px solid #cfdcc9;border-radius:5px;padding:3px 5px;min-width:30px;text-align:center;flex:0 0 auto}
+.b-item.selected .b-code{background:var(--jade-deep);color:#fff;border-color:var(--jade-deep)}
+.b-name{flex:1;font-size:12px;font-weight:600;color:var(--ink);line-height:1.3}
+.b-name small{display:block;font-size:9.5px;color:var(--ink-3);font-weight:400;margin-top:1px}
+.b-cat{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+.cat-teach{background:#2e7d5b}.cat-public{background:#c46a3a}.cat-life{background:#3a7ca5}.cat-sport{background:#c99a2e}
+.list-empty{padding:24px 12px;text-align:center;color:var(--ink-3);font-size:12px}
+.detail-card{border-top:1px solid var(--line);background:linear-gradient(180deg,#f7f2e6,#efe7d6);padding:13px 15px;display:none}
+.detail-card.show{display:block;animation:slideUp .22s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.detail-top{display:flex;align-items:flex-start;gap:8px}
+.detail-top h3{font-family:var(--font-display);font-size:17px;flex:1;line-height:1.25}
+.detail-close{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:var(--ink-3);font-size:15px}
+.detail-close:hover{background:#e2dac8;color:var(--ink)}
+.detail-meta{display:flex;gap:6px;margin:7px 0;flex-wrap:wrap}
+.tag{font-size:9.5px;padding:2px 7px;border-radius:10px;background:#fff;border:1px solid var(--line);color:var(--ink-2);font-weight:600}
+.tag.zone{background:var(--copper-soft);border-color:#e4c4a8;color:#8a4a24}
+.detail-desc{font-size:11px;line-height:1.65;color:var(--ink-2)}
+.detail-actions{display:flex;gap:7px;margin-top:10px}
+.explorer-foot{padding:9px 14px;border-top:1px solid var(--line-2);font-size:9.5px;color:var(--ink-3);line-height:1.5;background:#f3edde}
+
+/* ---------- viewport ---------- */
+#viewport{flex:1;position:relative;min-width:0;background:#cfe2ea;overflow:hidden}
+#glcanvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#glcanvas.dragging{cursor:grabbing}
+#glcanvas.pickable{cursor:pointer}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.label{position:absolute;transform:translate(-50%,-100%);pointer-events:auto;cursor:pointer;display:flex;flex-direction:column;align-items:center;transition:opacity .2s;will-change:transform}
+.label .label-text{background:rgba(250,247,239,.92);border:1px solid rgba(29,42,37,.18);color:var(--ink);font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:6px;white-space:nowrap;box-shadow:0 2px 6px rgba(29,42,37,.18);backdrop-filter:blur(3px);letter-spacing:.03em}
+.label .label-stem{width:1px;height:10px;background:rgba(29,42,37,.4)}
+.label .label-dot{width:5px;height:5px;border-radius:50%;background:var(--copper);border:1px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.label:hover .label-text,.label.selected .label-text{background:var(--jade-deep);color:#fff;border-color:var(--jade-deep)}
+.label.selected .label-dot{background:#ffd27a}
+.label.gate .label-text{background:rgba(29,42,37,.8);color:#f4efe4;border-color:rgba(255,255,255,.2);font-size:9.5px}
+#tooltip{position:absolute;pointer-events:none;background:rgba(29,42,37,.9);color:#f4efe4;font-size:11px;padding:5px 9px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .12s;z-index:15;transform:translate(12px,-50%)}
+#tooltip.show{opacity:1}
+.viewport-top{position:absolute;top:14px;left:14px;right:14px;display:flex;align-items:flex-start;justify-content:space-between;pointer-events:none;z-index:10}
+.mode-badge{pointer-events:auto;background:rgba(250,247,239,.88);border:1px solid rgba(29,42,37,.14);border-radius:10px;padding:7px 11px;font-size:11px;color:var(--ink-2);box-shadow:var(--shadow);backdrop-filter:blur(4px);display:flex;align-items:center;gap:7px}
+.mode-badge b{color:var(--jade-deep)}
+.mode-badge .sep{width:1px;height:12px;background:var(--line)}
+.compass{pointer-events:auto;width:52px;height:52px;border-radius:50%;background:rgba(250,247,239,.9);border:1px solid rgba(29,42,37,.16);box-shadow:var(--shadow);display:grid;place-items:center;position:relative}
+.compass svg{width:40px;height:40px;transition:transform .08s linear}
+.compass .n{position:absolute;top:3px;font-size:8px;font-weight:800;color:var(--copper);letter-spacing:.05em}
+.viewport-bottom{position:absolute;left:14px;right:14px;bottom:14px;display:flex;align-items:flex-end;justify-content:space-between;pointer-events:none;z-index:10;gap:10px}
+.hint-bar{pointer-events:auto;background:rgba(250,247,239,.85);border:1px solid rgba(29,42,37,.12);border-radius:9px;padding:6px 11px;font-size:10.5px;color:var(--ink-2);display:flex;gap:12px;backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(29,42,37,.1)}
+.hint-bar span{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.hint-bar svg{width:12px;height:12px;color:var(--jade)}
+.scale-bar{pointer-events:auto;background:rgba(250,247,239,.85);border:1px solid rgba(29,42,37,.12);border-radius:9px;padding:6px 10px;font-size:9.5px;color:var(--ink-2);text-align:center;backdrop-filter:blur(4px)}
+.scale-bar .bar{height:4px;border-left:1px solid var(--ink);border-right:1px solid var(--ink);border-bottom:2px solid var(--ink);margin-top:3px;width:80px}
+.floating-tools{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:10}
+.float-btn{width:36px;height:36px;border-radius:9px;background:rgba(250,247,239,.92);border:1px solid rgba(29,42,37,.16);box-shadow:0 2px 8px rgba(29,42,37,.16);display:grid;place-items:center;color:var(--ink-2);transition:all .15s}
+.float-btn:hover{background:#fff;color:var(--jade-deep);transform:scale(1.06)}
+.float-btn svg{width:17px;height:17px}
+#loading{position:absolute;inset:0;background:linear-gradient(150deg,#e8efe9,#d4e2dc);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:25;transition:opacity .5s}
+#loading.hide{opacity:0;pointer-events:none}
+.load-mark{width:64px;height:64px;border-radius:16px;background:radial-gradient(circle at 30% 25%,#2c8a70,#12463a 70%);display:grid;place-items:center;margin-bottom:18px;animation:breathe 1.6s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.load-mark svg{width:40px;height:40px}
+#loading h3{font-family:var(--font-display);font-size:20px;letter-spacing:.1em;margin-bottom:8px}
+#loading p{font-size:11px;color:var(--ink-2);letter-spacing:.08em}
+.load-bar{width:180px;height:3px;background:#c3d2c8;border-radius:3px;margin-top:16px;overflow:hidden}
+.load-bar i{display:block;height:100%;width:40%;background:var(--jade);border-radius:3px;animation:load 1.1s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(280%)}}
+#fallback{position:absolute;inset:0;display:none;background:#e7efe8;z-index:5}
+#fallback.show{display:block}
+#fallback svg{width:100%;height:100%}
+.fallback-note{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:var(--copper-soft);border:1px solid #e0bd9d;color:#7a4520;font-size:11px;padding:7px 12px;border-radius:8px;z-index:6;max-width:90%;text-align:center;pointer-events:none}
+
+/* ---------- right controls ---------- */
+#controls{width:var(--right);flex:0 0 var(--right);background:var(--paper);border-left:1px solid var(--line);display:flex;flex-direction:column;z-index:20;min-height:0}
+.controls-head{padding:14px 16px 10px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(160deg,#fbf8f0,#f3edde)}
+.controls-head h2{font-size:13px;font-weight:700;letter-spacing:.1em;display:flex;align-items:center;gap:7px}
+.controls-head h2 svg{width:15px;height:15px;color:var(--jade)}
+.controls-head .live{font-size:9px;color:var(--ok);font-weight:700;letter-spacing:.1em;display:flex;align-items:center;gap:4px}
+.controls-head .live i{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:pulse 2s infinite}
+.controls-scroll{flex:1;overflow-y:auto;padding:6px 16px 12px;min-height:0}
+.ctrl-section{padding:10px 0 4px}
+.ctrl-section + .ctrl-section{border-top:1px dashed var(--line)}
+.ctrl-title{font-size:9.5px;letter-spacing:.2em;color:var(--ink-3);font-weight:700;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ctrl-title svg{width:12px;height:12px;color:var(--copper)}
+.ctrl-row{margin-bottom:11px}
+.ctrl-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.ctrl-label label{font-size:11.5px;font-weight:600;color:var(--ink-2)}
+.ctrl-label output{font-family:var(--font-mono);font-size:10.5px;color:var(--jade-deep);background:var(--jade-soft);padding:1px 6px;border-radius:5px;font-weight:700}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:18px;background:transparent;cursor:pointer;display:block}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(90deg,var(--jade) var(--fill,50%),#ddd5c4 var(--fill,50%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--jade);margin-top:-5px;box-shadow:0 1px 4px rgba(29,42,37,.25);transition:transform .12s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:#ddd5c4}
+input[type=range]::-moz-range-progress{height:4px;border-radius:4px;background:var(--jade)}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:12px;background:#fff;border:2px solid var(--jade)}
+input[type=range]:focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:4px}
+.range-ticks{display:flex;justify-content:space-between;font-size:8.5px;color:var(--ink-3);margin-top:1px;padding:0 2px}
+.toggle-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.toggle{display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;transition:all .14s;user-select:none}
+.toggle:hover{border-color:var(--jade)}
+.toggle input{display:none}
+.toggle .sw{width:26px;height:15px;border-radius:10px;background:#cfc8b8;position:relative;transition:background .16s;flex:0 0 26px}
+.toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:11px;height:11px;border-radius:50%;background:#fff;transition:left .16s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.toggle input:checked + .sw{background:var(--jade)}
+.toggle input:checked + .sw::after{left:13px}
+.toggle span{font-size:10.5px;font-weight:600;color:var(--ink-2)}
+.toggle:has(input:checked){background:var(--jade-soft);border-color:rgba(31,111,92,.35)}
+.toggle:has(input:checked) span{color:var(--jade-deep)}
+.controls-foot{padding:10px 16px;border-top:1px solid var(--line);display:flex;gap:8px;background:#f3edde}
+.controls-foot .btn{flex:1;justify-content:center}
+.time-display{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.time-icon{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(135deg,#f6d9a8,#e8b877);color:#7a4520;flex:0 0 30px}
+.time-icon svg{width:17px;height:17px}
+.time-display .time-text b{display:block;font-family:var(--font-mono);font-size:15px;color:var(--ink)}
+.time-display .time-text span{font-size:9.5px;color:var(--ink-3)}
+
+/* ---------- status / modal / toast ---------- */
+#statusbar{height:26px;flex:0 0 26px;background:#e9e2d2;border-top:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 16px;font-size:9.5px;color:var(--ink-3);z-index:30}
+#statusbar .st{display:flex;align-items:center;gap:5px;white-space:nowrap}
+#statusbar .st b{color:var(--ink-2);font-family:var(--font-mono);font-weight:600}
+#statusbar .st .led{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+#statusbar .right{margin-left:auto;display:flex;gap:14px}
+#modal{position:fixed;inset:0;background:rgba(20,30,26,.5);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+#modal.show{display:flex}
+.modal-card{background:var(--paper);border-radius:16px;max-width:620px;width:100%;max-height:86vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.3);border:1px solid var(--line);animation:modalIn .22s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.modal-head{padding:20px 24px 14px;border-bottom:1px solid var(--line-2);display:flex;align-items:flex-start;gap:12px}
+.modal-head h2{font-family:var(--font-display);font-size:21px;flex:1;letter-spacing:.05em}
+.modal-head p{font-size:11px;color:var(--ink-3);margin-top:4px}
+.modal-body{padding:18px 24px}
+.modal-body h3{font-size:12px;letter-spacing:.12em;color:var(--copper);margin:16px 0 8px;font-weight:700}
+.modal-body h3:first-child{margin-top:0}
+.modal-body p,.modal-body li{font-size:12px;line-height:1.75;color:var(--ink-2)}
+.modal-body ul{padding-left:18px}
+.modal-body li{margin-bottom:4px}
+.source-list{list-style:none;padding:0}
+.source-list li{display:flex;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line-2);font-size:11.5px}
+.source-list li:last-child{border-bottom:none}
+.source-list .num{font-family:var(--font-mono);color:var(--copper);font-weight:700;flex:0 0 18px}
+.notice{background:var(--copper-soft);border:1px solid #e4c4a8;border-radius:9px;padding:10px 12px;font-size:11px;color:#7a4520;line-height:1.6;margin-top:14px}
+.modal-foot{padding:14px 24px;border-top:1px solid var(--line-2);display:flex;gap:8px;justify-content:flex-end;background:#f3edde;border-radius:0 0 16px 16px}
+#toast{position:fixed;bottom:44px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(29,42,37,.94);color:#f4efe4;padding:10px 18px;border-radius:10px;font-size:12px;z-index:200;opacity:0;transition:all .25s;pointer-events:none;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast svg{width:15px;height:15px;color:#7fd6a8}
+#drawer-toggle{display:none;position:absolute;top:14px;left:14px;z-index:22;width:38px;height:38px;border-radius:10px;background:rgba(250,247,239,.94);border:1px solid var(--line);box-shadow:var(--shadow);place-items:center;color:var(--jade-deep)}
+#drawer-toggle svg{width:18px;height:18px}
+#scrim{position:fixed;inset:0;background:rgba(20,30,26,.35);z-index:19;display:none}
+#scrim.show{display:block}
+
+@media (max-width:1180px){
+  :root{--left:250px;--right:256px}
+  .brand-text p{display:none}
+  .view-tabs{margin-left:0}
+  .view-tabs button{padding:7px 10px}
+}
+@media (max-width:980px){
+  #explorer{position:absolute;left:0;top:0;bottom:0;transform:translateX(-100%);transition:transform .25s ease;box-shadow:var(--shadow);width:280px}
+  #explorer.open{transform:none}
+  #drawer-toggle{display:grid}
+  .viewport-top{left:62px}
+  .offline-pill{display:none}
+}
+@media (max-width:720px){
+  :root{--header:56px;--right:0px}
+  header{padding:0 12px;gap:10px}
+  .brand-mark{width:32px;height:32px;flex:0 0 32px}
+  .brand-text h1{font-size:15px}
+  .view-tabs{display:none}
+  .btn span{display:none}
+  .btn{padding:8px 10px}
+  main{flex-direction:column}
+  #viewport{flex:1;min-height:0}
+  #controls{width:100%;flex:0 0 232px;border-left:none;border-top:1px solid var(--line);height:232px}
+  .controls-head{padding:8px 14px 6px}
+  .controls-scroll{padding:4px 14px 8px;display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-content:start}
+  .ctrl-section{padding:6px 0 2px}
+  .ctrl-section + .ctrl-section{border-top:none}
+  .ctrl-section.env-section{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+  .ctrl-section.env-section .ctrl-title{grid-column:1/-1}
+  .ctrl-row{margin-bottom:8px}
+  .toggle-grid{grid-template-columns:1fr 1fr}
+  .controls-foot{padding:7px 14px}
+  .hint-bar{display:none}
+  .floating-tools{right:10px;top:auto;bottom:52px;transform:none}
+  .viewport-bottom{bottom:10px;left:10px;right:10px}
+  #statusbar{display:none}
+  .time-display{display:none}
+  .compass{width:44px;height:44px}
+  .compass svg{width:34px;height:34px}
+}
+@media (max-width:420px){
+  .brand-text h1{font-size:13px;letter-spacing:.02em}
+  .controls-scroll{gap:0 10px;padding:4px 10px 8px}
+  .ctrl-section.env-section{gap:0 10px}
+  .ctrl-label label{font-size:10.5px}
+  #controls{flex-basis:224px;height:224px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-logo" viewBox="0 0 24 24"><path fill="#f4efe4" d="M12 2c3.2 3.6 5.4 6.6 5.4 9.6A5.4 5.4 0 0 1 12 17a5.4 5.4 0 0 1-5.4-5.4C6.6 8.6 8.8 5.6 12 2z"/><path fill="#c46a3a" d="M12 7.2c1.5 1.8 2.5 3.3 2.5 4.7a2.5 2.5 0 1 1-5 0c0-1.4 1-2.9 2.5-4.7z"/><path fill="#f4efe4" d="M4 19h16v1.6H4zM6 21.4h12V23H6z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><path fill="currentColor" d="M10 2a8 8 0 1 0 4.9 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></symbol>
+  <symbol id="i-export" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 7 7h3v7h4V7h3l-5-5zM4 14v6h16v-6h-2v4H6v-4H4z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5h8v2H3zm12 0h6v2h-6zM3 11h4v2H3zm8 0h10v2H11zM3 17h12v2H3zm16 0h2v2h-2z"/><circle cx="13" cy="6" r="2.4" fill="currentColor"/><circle cx="9" cy="12" r="2.4" fill="currentColor"/><circle cx="17" cy="18" r="2.4" fill="currentColor"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path fill="currentColor" d="M9 3 7.6 5H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.6L15 3H9zm3 4.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2 10 5.5L12 13 2 7.5 12 2zm-7.7 9.1L12 15.3l7.7-4.2L22 12.5 12 18 2 12.5l2.3-1.4zm0 4L12 19.3l7.7-4.2L22 16.5 12 22 2 16.5l2.3-1.4z"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4V1L7 6l5 5V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></symbol>
+  <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.6" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.6" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.6" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M5 12h14"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 2 11h3v9h6v-6h2v6h6v-9h3L12 3z"/></symbol>
+  <symbol id="i-top" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 4h16v16H4z"/><path stroke="currentColor" stroke-width="2" d="M4 10h16M10 4v16"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-mouse" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" d="M12 6v4"/></symbol>
+  <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path fill="currentColor" d="M9 3a1.5 1.5 0 0 1 3 0v7h1V4.5a1.5 1.5 0 0 1 3 0V10h1V6a1.5 1.5 0 0 1 3 0v8a7 7 0 0 1-7 7h-1.2a7 7 0 0 1-5.6-2.8L3.4 14a1.6 1.6 0 0 1 2.4-2L7 13.4V5a1.5 1.5 0 0 1 2-1.4V3z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="m4 12.5 5 5L20 6.5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path fill="currentColor" d="M11 3h2v8h3l-4 5-4-5h3V3zM4 18h16v2H4z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-focus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/><circle cx="12" cy="12" r="3" fill="currentColor"/></symbol>
+</svg>
+
+<div id="app">
+  <header>
+    <div class="brand">
+      <div class="brand-mark"><svg><use href="#i-logo"/></svg></div>
+      <div class="brand-text">
+        <h1>西南石油大学 · 成都校区</h1>
+        <p>Chengdu Campus · Spatial Explorer</p>
+      </div>
+    </div>
+    <nav class="view-tabs" aria-label="视角模式">
+      <button data-view="panorama" class="active">三维全景</button>
+      <button data-view="top">平面总览</button>
+      <button data-view="gate">南门视角</button>
+    </nav>
+    <div class="header-spacer"></div>
+    <div class="offline-pill"><span class="dot"></span>离线运行 · 无外部依赖</div>
+    <button class="btn btn-ghost" id="btn-help"><svg><use href="#i-info"/></svg><span>说明 / 来源</span></button>
+    <button class="btn btn-primary" id="btn-export"><svg><use href="#i-export"/></svg><span>导出视图</span></button>
+  </header>
+
+  <main>
+    <button id="drawer-toggle" aria-label="打开建筑导览"><svg><use href="#i-menu"/></svg></button>
+    <aside id="explorer" aria-label="建筑导览">
+      <div class="explorer-head">
+        <div class="eyebrow">Southwest Petroleum University</div>
+        <h2>向能源而生<br>的校园空间</h2>
+        <div class="addr"><svg><use href="#i-pin"/></svg><span>四川省成都市新都区新都大道 8 号<br>南大门正对图书馆总馆 · 创业广场居中</span></div>
+        <div class="stat-row">
+          <div class="stat"><b id="stat-buildings">—</b><span>模型节点</span></div>
+          <div class="stat"><b>6</b><span>主要校门</span></div>
+          <div class="stat"><b>A·B·C</b><span>功能分区</span></div>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <div class="search-box">
+          <svg><use href="#i-search"/></svg>
+          <input id="search" type="search" placeholder="搜索建筑 / 编号，如 图书馆、B9" autocomplete="off">
+          <kbd>/</kbd>
+        </div>
+      </div>
+      <div class="chips" id="chips">
+        <button class="chip active" data-cat="all">全部</button>
+        <button class="chip" data-cat="teach">教学科研</button>
+        <button class="chip" data-cat="public">公共服务</button>
+        <button class="chip" data-cat="life">生活公寓</button>
+        <button class="chip" data-cat="sport">运动场馆</button>
+      </div>
+      <div class="building-list" id="building-list" role="listbox" aria-label="建筑列表"></div>
+      <div class="detail-card" id="detail-card">
+        <div class="detail-top"><h3 id="detail-name"></h3><button class="detail-close" id="detail-close" aria-label="关闭详情">×</button></div>
+        <div class="detail-meta" id="detail-meta"></div>
+        <p class="detail-desc" id="detail-desc"></p>
+        <div class="detail-actions">
+          <button class="btn btn-primary btn-sm" id="detail-focus"><svg><use href="#i-focus"/></svg>聚焦建筑</button>
+          <button class="btn btn-ghost btn-sm" id="detail-overview">返回全景</button>
+        </div>
+      </div>
+      <div class="explorer-foot">布局依据公开导览图与校方总平面图；水系岸线按校方《学校总平面图》描摹。高度、立面与景观为示意表达，非测绘 / BIM 成果。</div>
+    </aside>
+
+    <section id="viewport" aria-label="三维校园视图">
+      <canvas id="glcanvas"></canvas>
+      <div id="fallback"><div class="fallback-note">当前浏览器未启用 WebGL2，已切换为可交互平面导览。建筑列表与详情仍可使用。</div></div>
+      <div id="labels"></div>
+      <div id="tooltip"></div>
+      <div class="viewport-top">
+        <div class="mode-badge"><b id="mode-name">三维全景</b><span class="sep"></span><span id="mode-desc">拖拽旋转 · 滚轮缩放</span></div>
+        <div class="compass" title="指北针"><span class="n">N</span><svg id="compass-arrow" viewBox="0 0 40 40"><path d="M20 5 25 22 20 19 15 22Z" fill="#c46a3a"/><path d="M20 35 15 18 20 21 25 18Z" fill="#7d8a80"/><circle cx="20" cy="20" r="2.4" fill="#1d2a25"/></svg></div>
+      </div>
+      <div class="floating-tools">
+        <button class="float-btn" id="zoom-in" title="放大"><svg><use href="#i-plus"/></svg></button>
+        <button class="float-btn" id="zoom-out" title="缩小"><svg><use href="#i-minus"/></svg></button>
+        <button class="float-btn" id="view-home" title="回到全景"><svg><use href="#i-home"/></svg></button>
+        <button class="float-btn" id="view-top" title="平面总览"><svg><use href="#i-top"/></svg></button>
+      </div>
+      <div class="viewport-bottom">
+        <div class="hint-bar">
+          <span><svg><use href="#i-mouse"/></svg>左键拖拽旋转</span>
+          <span><svg><use href="#i-wheel"/></svg>滚轮缩放</span>
+          <span><svg><use href="#i-hand"/></svg>右键 / Shift 平移</span>
+          <span><svg><use href="#i-focus"/></svg>双击聚焦</span>
+        </div>
+        <div class="scale-bar"><span>100 m · 示意</span><div class="bar" id="scale-bar"></div></div>
+      </div>
+      <div id="loading">
+        <div class="load-mark"><svg><use href="#i-logo"/></svg></div>
+        <h3>正在生成校园空间</h3>
+        <p>程序化建模 · 光影烘焙 · 材质合成</p>
+        <div class="load-bar"><i></i></div>
+      </div>
+    </section>
+
+    <aside id="controls" aria-label="场景调节面板">
+      <div class="controls-head">
+        <h2><svg><use href="#i-sliders"/></svg>场景调节</h2>
+        <span class="live"><i></i>LIVE</span>
+      </div>
+      <div class="controls-scroll">
+        <div class="ctrl-section env-section">
+          <div class="ctrl-title"><svg><use href="#i-sun"/></svg>环境 · 光影</div>
+          <div class="time-display">
+            <div class="time-icon"><svg><use href="#i-sun"/></svg></div>
+            <div class="time-text"><b id="time-big">16:30</b><span id="time-phase">午后 · 暖光</span></div>
+          </div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-time">时刻</label><output id="o-time">16:30</output></div>
+            <input type="range" id="c-time" min="5" max="22" step="0.25" value="16.5">
+            <div class="range-ticks"><span>清晨</span><span>正午</span><span>黄昏</span><span>夜景</span></div>
+          </div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-sun">太阳高度</label><output id="o-sun">32°</output></div>
+            <input type="range" id="c-sun" min="8" max="80" step="1" value="32">
+          </div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-fog">氛围雾</label><output id="o-fog">12%</output></div>
+            <input type="range" id="c-fog" min="0" max="100" step="1" value="12">
+          </div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-bloom">光晕强度</label><output id="o-bloom">55%</output></div>
+            <input type="range" id="c-bloom" min="0" max="100" step="1" value="55">
+          </div>
+        </div>
+        <div class="ctrl-section">
+          <div class="ctrl-title"><svg><use href="#i-layers"/></svg>模型 · 景观</div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-height">建筑高度</label><output id="o-height">×1.60</output></div>
+            <input type="range" id="c-height" min="0.6" max="2.4" step="0.05" value="1.6">
+          </div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-trees">绿化密度</label><output id="o-trees">80%</output></div>
+            <input type="range" id="c-trees" min="0" max="100" step="1" value="80">
+          </div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-speed">漫游速度</label><output id="o-speed">1.0×</output></div>
+            <input type="range" id="c-speed" min="0" max="2" step="0.1" value="1">
+          </div>
+        </div>
+        <div class="ctrl-section">
+          <div class="ctrl-title"><svg><use href="#i-camera"/></svg>相机</div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-az">环绕角度</label><output id="o-az">35°</output></div>
+            <input type="range" id="c-az" min="-180" max="180" step="1" value="35">
+          </div>
+          <div class="ctrl-row">
+            <div class="ctrl-label"><label for="c-el">俯仰角度</label><output id="o-el">47°</output></div>
+            <input type="range" id="c-el" min="12" max="88" step="1" value="47">
+          </div>
+        </div>
+        <div class="ctrl-section">
+          <div class="ctrl-title"><svg><use href="#i-layers"/></svg>显示开关</div>
+          <div class="toggle-grid">
+            <label class="toggle"><input type="checkbox" id="t-orbit"><span class="sw"></span><span>自动环绕</span></label>
+            <label class="toggle"><input type="checkbox" id="t-labels" checked><span class="sw"></span><span>建筑标注</span></label>
+            <label class="toggle"><input type="checkbox" id="t-dynamic" checked><span class="sw"></span><span>动态人车</span></label>
+            <label class="toggle"><input type="checkbox" id="t-shadow" checked><span class="sw"></span><span>柔和阴影</span></label>
+            <label class="toggle"><input type="checkbox" id="t-wire"><span class="sw"></span><span>线框模式</span></label>
+            <label class="toggle"><input type="checkbox" id="t-grid"><span class="sw"></span><span>网格参考</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="controls-foot">
+        <button class="btn btn-ghost btn-sm" id="btn-reset"><svg><use href="#i-reset"/></svg>重置场景</button>
+        <button class="btn btn-copper btn-sm" id="btn-random"><svg><use href="#i-dice"/></svg>随机视角</button>
+      </div>
+    </aside>
+  </main>
+
+  <div id="statusbar">
+    <span class="st"><span class="led" id="st-led"></span><b id="st-render">WebGL2</b></span>
+    <span class="st">三角面 <b id="st-tris">—</b></span>
+    <span class="st">帧率 <b id="st-fps">—</b></span>
+    <span class="st">相机 <b id="st-cam">—</b></span>
+    <span class="right">
+      <span class="st">程序化建模 · 单文件 · 零网络请求</span>
+      <span class="st">© 空间示意重建</span>
+    </span>
+  </div>
+</div>
+
+<div id="scrim"></div>
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div style="flex:1"><h2 id="modal-title">使用说明与建模依据</h2><p>单文件 · 原生 WebGL2 · 无外部依赖 · 可离线打开</p></div>
+      <button class="detail-close" id="modal-close" aria-label="关闭"><svg style="width:16px;height:16px"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <h3>交互方式</h3>
+      <ul>
+        <li>左键拖拽旋转视角，滚轮缩放，右键或 Shift+拖拽平移；触屏单指旋转、双指缩放/平移。</li>
+        <li>单击建筑或左侧列表查看详情，双击建筑聚焦；<b>/</b> 聚焦搜索，<b>Esc</b> 关闭弹窗 / 取消选择。</li>
+        <li>右侧面板实时调节时刻、太阳高度、建筑高度、绿化密度、雾、光晕、相机与显示开关。</li>
+        <li>「导出视图」保存当前画面 PNG；下方可下载本离线 HTML 文件。</li>
+      </ul>
+      <h3>建模依据（公开资料）</h3>
+      <ul class="source-list">
+        <li><span class="num">1</span><span>西南石油大学官网：成都校区地址为新都区新都大道 8 号。<a href="https://www.swpu.edu.cn/" target="_blank" rel="noopener">swpu.edu.cn</a></span></li>
+        <li><span class="num">2</span><span>图书馆利用指南：成都总馆位于南大门正对面，分馆位于校园西北侧明辨楼 F 区；创业广场、思学楼、行政楼等相对位置见馆舍位置图。<a href="https://lib.swpu.edu.cn/1858.80/marx/guide.html" target="_blank" rel="noopener">lib.swpu.edu.cn</a></span></li>
+        <li><span class="num">3</span><span>公开校园导览图（A/B/C 分区、道路、水系、场馆与公寓编号）用于相对布局与功能分区。<a href="https://www.gaokao.cn/gk/39189" target="_blank" rel="noopener">校园平面图来源</a></span></li>
+        <li><span class="num">4</span><span>图书馆与思学楼外观照片用于立面材质与体量参考（浅色石材、玻璃幕墙、入口灰空间）。<a href="https://baike.baidu.com/item/%E8%A5%BF%E5%8D%97%E7%9F%B3%E6%B2%B9%E5%A4%A7%E5%AD%A6%E5%9B%BE%E4%B9%A6%E9%A6%86/689896" target="_blank" rel="noopener">外观参考</a></span></li>
+        <li><span class="num">5</span><span>校方标识系统规划资料《学校总平面图》《景观分析图》：梦溪湖水系岸线、湖面位置与环创业广场南湾水环据此描摹（用户提供图纸）。</span></li>
+        <li><span class="num">6</span><span>水系名称「梦溪湖」见校友网校园风物与科学网水质检测报道。<a href="https://news.sciencenet.cn/htmlnews/2021/12/470152.shtm" target="_blank" rel="noopener">科学网报道</a></span></li>
+      </ul>
+      <div class="notice">精度声明：本模型为基于公开导览图与校方规划图纸的<b>示意性空间重建</b>，建筑相对位置、道路骨架、功能分区与水系形态力求贴近原图；建筑高度、层数、立面细节、树木与景观小品为艺术化表达，不代表测绘数据，不可用于导航、工程或管理决策。</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="btn-download-html"><svg><use href="#i-download"/></svg>下载离线 HTML</button>
+      <button class="btn btn-primary" id="modal-ok">开始探索</button>
+    </div>
+  </div>
+</div>
+<div id="toast"><svg><use href="#i-check"/></svg><span id="toast-text"></span></div>
+
+<script>'use strict';
+/* ================= 数据：依据公开校园导览图的相对布局（map 坐标 598×1536） ================= */
+const MAP_W=598, MAP_H=1536, S=0.5;
+const MX=300, MY=915;                 // map 中心 → 世界原点
+const mx2x=mx=>(mx-MX)*S, my2z=my=>(my-MY)*S;
+const CAT={teach:{name:'教学科研',color:'#2e7d5b'},public:{name:'公共服务',color:'#c46a3a'},life:{name:'生活公寓',color:'#3a7ca5'},sport:{name:'运动场馆',color:'#c99a2e'}};
+const ZONE={A:'A · 南门核心区',B:'B · 教学科研区',C:'C · 运动生活区',N:'N · 实训科研区',W:'W · 教工生活区'};
+let _bid=0;
+const buildings=[];
+function B(code,name,en,cat,zone,parts,desc,opt={}){
+  const b={id:++_bid,code,name,en,cat,zone,parts,desc,list:opt.list!==false,label:!!opt.label,
+    labelAt:opt.labelAt||null,kind:opt.kind||'building',keywords:opt.keywords||'',group:opt.group||null};
+  buildings.push(b); return b;
+}
+const P=(x,y,w,h,f=5,o={})=>Object.assign({x,y,w,h,f},o);
+
+/* ---- N 实训科研区（绕城大道北侧） ---- */
+B('B13','逸夫工程训练中心','Engineering Training Center','teach','N',[
+  P(310,122,280,24,3),P(310,192,280,24,3),P(182,157,24,70,3),P(438,157,24,70,3)],
+  '位于校园北侧实训组团的工程训练中心，围合式厂房体量，中央为实训 courtyard。模型以低层大跨屋面与锯齿天窗表达工业实训建筑特征。',{label:true});
+B('B17','天然气水合物实验室','Gas Hydrate Laboratory','teach','N',[P(505,175,56,46,3)],
+  '海洋天然气水合物相关实验平台，毗邻工程训练中心与科研实验中心，体现学校油气能源学科特色。');
+B('B16','2#实验中心','Laboratory Center No.2','teach','N',[P(571,196,30,56,4)],'北侧实验中心组团，与危险品库房、科研实验中心共同构成实训科研带。');
+B('B14','1#科研实验中心','Research Center No.1','teach','N',[P(520,250,82,30,4)],'北大门外侧科研实验中心，沿绕城大道布置，便于对外协作与设备运输。');
+B('A2','后勤楼','Logistics Building','public','N',[P(395,325,112,28,4,{roof:'red'})],
+  '北大门内侧后勤服务楼，导览图中以暖色标识，是校园北侧重要的服务保障节点。');
+
+/* ---- B 教学科研区 ---- */
+B('B1','明德楼','Mingde Building','teach','B',[
+  P(46,470,24,104,5),P(82,430,72,22,5),P(82,470,72,22,5),P(82,510,72,22,5)],
+  '西侧教学组团，E 形平面围合内院，浅色石材立面与规整窗格呼应校园教学建筑的秩序感。',{label:true});
+B('B2','明志楼','Mingzhi Building','teach','B',[
+  P(46,610,24,104,5),P(82,570,72,22,5),P(82,610,72,22,5),P(82,650,72,22,5)],
+  '西大门南侧教学楼，与明德楼南北呼应，共同形成校园西侧的教学界面。');
+B('B3','明辨楼','Mingbian Building','teach','B',[
+  P(185,468,92,24,5),P(185,510,92,24,5),P(148,489,22,66,5),P(222,489,22,66,5)],
+  '校园西北侧教学科研楼，图书馆成都分馆设于其 F 区，承担工具书、标准规范与学位论文等文献服务。',{label:true});
+B('B6','图书馆 · 成都分馆','Library Branch','public','B',[P(282,408,104,46,4)],
+  '2016 年建成的成都分馆，位于校园西北侧明辨楼 F 区，与总馆共同构成两馆服务格局。',{label:true});
+B('—','本科综合实验楼（A区）','Undergraduate Lab Complex A','teach','B',[P(210,350,124,36,5)],
+  '本科综合实验楼 A 区，位于明辨楼北侧，是本科实验教学的重要空间。');
+B('B4','明理楼','Mingli Building','teach','B',[
+  P(215,600,152,22,5),P(215,660,152,22,5),P(148,630,22,60,5),P(282,630,22,60,5)],
+  '中环西路东侧教学楼，围合式平面面向桂湖路，与明理楼 C 区共同组成基础教学组团。',{label:true});
+B('B5','明理楼 C 区','Mingli Building C','teach','B',[P(222,720,164,56,5)],
+  '明理楼 C 区沿水系西岸展开，是 B 区南侧大体量教学空间。');
+
+/* ---- A 南门核心区 ---- */
+const LIB=B('B9','图书馆 · 成都总馆','Main Library','public','A',[
+  P(292,1286,132,46,6),P(250,1276,42,42,12,{tower:true}),P(344,1286,36,46,5),P(296,1286,30,46,3,{glass:true})],
+  '成都总馆位于南大门正对面，是校园南北轴线上的核心地标。高层塔楼与低层裙房组合，浅色石材、玻璃幕墙与入口灰空间构成庄重而开放的学术门面。',{label:true});
+B('B8','思学楼','Sixue Building','teach','A',[
+  P(526,1350,26,124,5),P(466,1300,112,26,5),P(466,1350,112,26,5),P(466,1400,112,26,5)],
+  '南门东侧大型教学组团，E 形平面面向创业广场，浅色石材立面与中央玻璃入口形成校园东南侧的教学地标。',{label:true});
+B('A1','行政楼','Administration Building','public','A',[
+  P(352,1414,104,36,5,{roof:'red'}),P(392,1442,42,30,4,{roof:'red'})],
+  '创业广场东南侧行政办公建筑，导览图中以暖色标识，与图书馆、思学楼共同围合南门核心空间。',{label:true});
+B('B7','博学楼','Boxue Building','teach','A',[P(540,1210,82,56,5)],
+  '博学广场东侧教学楼，邻近体育馆与东一门，承担大量公共课程与学术报告。',{label:true});
+B('—','研究生院 / 网信中心','Graduate School & Network Center','public','A',[P(410,1252,58,30,5)],
+  '图书馆总馆东北侧的研究生教育与网络信息服务节点。');
+B('C1','校医院','Campus Hospital','public','C',[P(160,1155,42,52,3)],
+  '为学路西侧校医院，服务师生日常医疗与健康管理。');
+B('B10','国家重点实验室','State Key Laboratory','teach','A',[P(36,1410,72,56,6)],
+  '油气藏地质及开发工程国家重点实验室相关空间，位于校园西南侧，是学校能源科研的核心平台之一。',{label:true});
+B('B11','科技大厦','Science & Technology Tower','teach','A',[P(36,1496,72,46,8)],
+  '西南门内侧科研办公高层，与国家重点实验室、石油缘宾馆共同形成西南科研服务组团。');
+B('B12','石油缘宾馆','Shiyouyuan Hotel','public','A',[P(160,1496,104,46,4)],
+  '南大门西侧接待与学术交流宾馆，导览图中以弧形体量标识。');
+B('—','研发楼','R&D Building','teach','A',[P(104,1442,62,42,5)],'校园西南侧研发办公空间，邻近国重楼与科技大厦。');
+
+/* ---- C 运动生活区 ---- */
+B('C4','学生活动中心','Student Activity Center','public','C',[P(410,766,122,62,4)],
+  '中环东路西侧学生活动中心，面向水系与公寓区，是社团活动、文艺演出与学生服务的重要场所。',{label:true});
+B('C3','创新创业及新能源研发中心','Innovation & New Energy R&D Center','teach','C',[P(410,842,122,72,5)],
+  '学生活动中心南侧的创新创业与新能源研发空间，体现学校面向能源转型的学科拓展。');
+B('C2','一食堂','Canteen No.1','life','C',[P(420,906,62,66,3)],'一期田径场东侧学生食堂，服务南侧公寓与运动组团。');
+B('C5','二食堂','Canteen No.2','life','C',[P(465,540,52,42,3)],'二期公寓区食堂，邻近二期田径场与篮球场。');
+B('C6','三食堂','Canteen No.3','life','C',[P(465,486,52,46,3)],'北侧公寓区食堂，与网羽中心、滑轮武术馆共同服务北区生活组团。');
+B('—','网羽中心','Badminton & Tennis Center','sport','C',[P(562,406,36,72,2,{roof:'arch'})],'二期公寓东侧室内网羽中心，大跨屋面覆盖运动场地。');
+B('—','滑轮 / 武术馆','Roller Skating & Wushu Hall','sport','C',[P(512,406,46,72,2,{roof:'arch'})],'特色体育教学场馆，邻近三食堂与二期运动区。');
+B('—','体育馆','Gymnasium','sport','C',[P(425,1136,58,92,2,{roof:'arch'})],
+  '博学路东侧体育馆，弧形屋面覆盖篮球、羽毛球等室内场地，是校园南侧重要的室内运动空间。',{label:true});
+B('—','一期田径场','Track Field I','sport','C',[P(327,985,78,112,0,{field:'track'})],'标准田径场与中心足球场，红色跑道环绕绿色草坪，北侧邻近游泳池。',{label:true,kind:'field'});
+B('—','游泳池','Swimming Pool','sport','C',[P(265,985,42,96,0,{field:'pool'})],'露天游泳池，蓝色水面与田径场共同构成一期运动组团。',{kind:'field'});
+B('—','一期篮球场','Basketball Courts I','sport','C',[P(327,1086,78,62,0,{field:'court'})],'多片室外篮球场，服务南侧学生公寓与体育馆。',{kind:'field'});
+B('—','二期田径场','Track Field II','sport','C',[P(545,516,72,112,0,{field:'track'})],'二期公寓区田径场，红色跑道与中心草坪。',{kind:'field'});
+B('—','二期篮球场','Basketball Courts II','sport','C',[P(545,632,78,82,0,{field:'court'})],'二期室外篮球场组团。',{kind:'field'});
+B('—','网球场','Tennis Courts','sport','C',[P(560,1356,32,132,0,{field:'tennis'})],'思学楼东侧室外网球场，沿东边界南北向布置。',{kind:'field'});
+
+/* ---- 学生公寓（东区） ---- */
+const dormDefs=[
+ [23,555,362,52,18],[21,420,406,52,18],[22,390,522,18,52],[20,420,626,52,18],
+ [24,500,720,52,16],[19,500,758,52,16],[18,500,796,52,16],[17,500,832,52,16],
+ [16,556,872,46,16],[15,556,904,46,16],[14,556,936,46,16],
+ [13,420,872,52,16],[12,420,904,52,16],[11,420,936,52,16],
+ [10,420,992,52,16],[9,420,1024,52,16],[8,420,1056,52,16],
+ [7,482,992,52,16],[6,482,1024,52,16],[5,482,1056,52,16],
+ [2,420,1112,52,16],[1,420,1144,52,16],[4,556,1112,46,16],[3,556,1144,46,16]];
+const dormIds=[];
+for(const [n,x,y,w,h] of dormDefs){
+  const b=B(String(n).padStart(2,'0'),'学生公寓 '+String(n).padStart(2,'0'),'Student Dormitory '+n,'life','C',
+    [P(x,y,w,h,6,{dorm:true})],'东区学生公寓组团，6 层板式宿舍楼，浅色墙面与暖色基座，沿中环东路与飞翔路布置。',
+    {list:false,group:'dorm'});
+  dormIds.push(b.id);
+}
+/* ---- 教工住宅（西区） ---- */
+const staffIds=[];
+for(let r=0;r<7;r++)for(let c=0;c<3;c++){
+  const x=38+c*58, y=965+r*66;
+  const b=B('W'+(r*3+c+1),'教工住宅 '+(r*3+c+1),'Staff Housing','life','W',[P(x,y,46,15,6,{dorm:true})],
+    '西侧教工住宅区，板式住宅行列式布局，邻近净心广场与西南门。',{list:false,group:'staff'});
+  staffIds.push(b.id);
+}
+
+/* ---- 校门 ---- */
+const gates=[
+ ['南大门',285,1516,64,14,'south'],['东一门',584,1282,14,44,'east'],['东二门',584,842,14,44,'east'],
+ ['西大门',6,542,14,44,'west'],['西南门',6,1152,14,44,'west'],['北大门',340,302,52,14,'north']];
+for(const [name,x,y,w,h,dir] of gates){
+  B('门',name,'Gate','public',dir==='north'?'N':(dir==='south'?'A':'C'),[P(x,y,w,h,1,{gate:dir})],
+    name+'，校园主要出入口。'+(name==='南大门'?'正对图书馆总馆与创业广场，是校园南北轴线的起点。':''),
+    {label:true,kind:'gate'});
+}
+
+/* ---- 广场（环境节点，可搜索聚焦） ---- */
+const plazas=[
+ {id:'plaza-chuangye',name:'创业广场',code:'A',cat:'public',zone:'A',x:292,y:1326,r:24,desc:'南大门正对的核心圆形广场，图书馆、思学楼、行政楼围合，梦溪湖南湾水环环抱其外，中央绿地与能源主题雕塑构成校园仪式空间。'},
+ {id:'plaza-boxue',name:'博学广场',code:'A',cat:'public',zone:'A',x:432,y:1212,r:34,desc:'博学楼前广场，连接体育馆、思学楼与东一门。'},
+ {id:'plaza-jingxin',name:'净心广场',code:'W',cat:'public',zone:'W',x:104,y:1152,r:30,desc:'教工住宅区中心广场，为西侧生活组团提供休憩空间。'}];
+
+/* ---- 列表分组 ---- */
+const listGroups=[
+ {key:'dorm',name:'学生公寓 01–24',code:'公寓',cat:'life',zone:'C',ids:dormIds,keywords:'学生宿舍 公寓 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24',desc:'东区 24 栋学生公寓，沿飞翔路、中环东路与博学路布置，邻近食堂、田径场与活动中心。'},
+ {key:'staff',name:'教工住宅区',code:'W',cat:'life',zone:'W',ids:staffIds,keywords:'教工 住宅 宿舍 家属区',desc:'西侧教工住宅组团，行列式布局，邻近净心广场与西南门。'}];
+
+/* ---- 道路（map 坐标折线，宽度 world） ---- */
+const roads=[
+ {pts:[[285,1520],[285,1390],[292,1326]],w:9,name:'创业路'},
+ {pts:[[350,1240],[350,1352]],w:7,name:'创新路'},
+ {pts:[[330,352],[330,560],[318,640],[330,720],[330,900]],w:7,name:'飞翔路'},
+ {pts:[[480,600],[480,900]],w:7,name:'中环东路'},
+ {pts:[[130,580],[130,752]],w:6,name:'中环西路'},
+ {pts:[[200,900],[200,1240]],w:6,name:'为学路'},
+ {pts:[[380,900],[380,1240]],w:6,name:'博学路'},
+ {pts:[[200,1240],[580,1240]],w:7,name:'南环北路'},
+ {pts:[[10,1462],[580,1462]],w:7,name:'南环南路'},
+ {pts:[[130,580],[330,580]],w:6,name:'桂湖路'},
+ {pts:[[200,900],[480,900]],w:7,name:'中环南路'},
+ {pts:[[280,1052],[380,1052]],w:6,name:'梦溪路'},
+ {pts:[[150,352],[356,352]],w:6,name:'中环路北段'},
+ {pts:[[340,302],[340,352]],w:7},
+ {pts:[[10,542],[130,542]],w:6},
+ {pts:[[580,842],[480,842]],w:6},
+ {pts:[[580,1282],[540,1282]],w:6},
+ {pts:[[10,1152],[200,1152]],w:6},
+ {pts:[[200,752],[330,752]],w:6},
+ {pts:[[480,600],[580,600]],w:6},
+ {pts:[[380,1136],[480,1136]],w:6},
+ {pts:[[200,1052],[280,1052]],w:6},
+ {pts:[[420,352],[420,460]],w:5},
+ {pts:[[480,460],[580,460]],w:5},
+ {pts:[[480,720],[580,720]],w:5},
+ {pts:[[480,960],[580,960]],w:5},
+ {pts:[[420,1080],[480,1080]],w:5},
+ {pts:[[200,1320],[285,1320]],w:6}
+];
+/* 南环路弧线 */
+const ringSouth=[];
+for(let i=0;i<=28;i++){const a=Math.PI*(0.05+0.9*i/28);ringSouth.push([285+168*Math.cos(a),1352+118*Math.sin(a)]);}
+roads.push({pts:ringSouth,w:7,name:'南环路'});
+const ringNorth=[];
+for(let i=0;i<=20;i++){const a=Math.PI*(1.05+0.9*i/20);ringNorth.push([285+168*Math.cos(a),1352+118*Math.sin(a)]);}
+roads.push({pts:ringNorth,w:7});
+
+/* ---- 水系：梦溪湖（依据校方《学校总平面图》《景观分析图》描摹：北湖—中湖—南湖—环创业广场南湾） ----
+   map 坐标；reaches 为变宽溪流中心线 [x,y,半宽]，lakes 为闭合岸线多边形 */
+const WATER={
+ reaches:[
+  {pts:[[342,296,2.2],[348,340,2.2],[348,380,2.4],[344,412,2.6],[330,436,2.8],[316,452,3.0]]},
+  {pts:[[302,556,3.0],[308,580,2.6],[322,600,2.8],[344,610,3.0]]},
+  {pts:[[360,682,2.6],[340,720,2.4],[312,755,2.4],[300,795,2.6],[288,845,3.0],[268,885,4.5],[246,925,3.0],[228,965,2.4],[224,1005,2.4],[230,1042,4.0],[242,1078,2.6],[256,1112,2.8],[264,1146,3.2],[262,1170,3.4]]},
+  {pts:[[330,1214,2.6],[362,1246,2.4],[370,1280,2.4],[371,1320,2.6],[366,1360,2.8],[350,1388,3.2],[320,1392,3.4],[292,1390,3.4],[268,1386,3.2],[236,1384,3.0]]}
+ ],
+ lakes:[
+  // 北湖（梦溪湖主湖，西北支湾）
+  [[312,446],[318,470],[316,498],[308,522],[308,545],[296,558],[280,562],[262,556],[248,540],[240,518],[238,494],[242,472],[232,452],[214,450],[206,442],[214,434],[232,436],[246,444],[258,440],[272,436],[292,436],[310,438]],
+  // 中湖
+  [[348,606],[366,610],[382,624],[388,646],[382,668],[368,680],[352,682],[340,670],[336,648],[338,626],[342,614]],
+  // 南湖（图书馆北侧东西向湖面）
+  [[262,1168],[286,1160],[312,1158],[334,1164],[346,1178],[344,1198],[332,1214],[310,1224],[286,1228],[264,1222],[250,1208],[248,1188],[252,1176]],
+  // 南湾西池（环创业广场水环的西端死水湾）
+  [[238,1336],[242,1352],[240,1372],[232,1388],[220,1392],[214,1378],[216,1358],[222,1342],[230,1334]]
+ ]
+};
+const waterLakes=[
+ {id:'lake-mengxi',name:'梦溪湖',code:'水',cat:'public',zone:'B',x:283,y:498,r:44,desc:'校园水系主湖，依据校方总平面图描摹：北门入水蜿蜒南下，于此扩为不规则湖面，西北设支湾，湖岸叠石植苇，是教学区核心的生态景观水面。'},
+ {id:'lake-nanwan',name:'梦溪湖 · 南湾',code:'水',cat:'public',zone:'A',x:300,y:1390,r:40,desc:'南湖与环创业广场的 U 形水环：溪流自南湖东南出，沿图书馆东侧南流，折向西绕过广场南缘，再北上收为西池，形成环抱南大门核心区的连续水景。'}];
+for(const w of waterLakes)plazas.push(w);
+
+/* ---- 外部市政道路 ---- */
+const outerRoads=[
+ {pts:[[0,1532],[598,1532]],w:16,name:'新都大道'},
+ {pts:[[0,290],[598,290]],w:14,name:'绕城大道'},
+ {pts:[[596,300],[596,1530]],w:10,name:'东侧路'},
+ {pts:[[2,300],[2,1530]],w:10,name:'西侧路'}
+];
+
+const SOURCES=[
+ {t:'西南石油大学官网',u:'https://www.swpu.edu.cn/'},
+ {t:'图书馆利用指南 · 馆舍位置',u:'https://lib.swpu.edu.cn/1858.80/marx/guide.html'},
+ {t:'公开校园导览图',u:'https://www.gaokao.cn/gk/39189'},
+ {t:'图书馆 / 思学楼外观参考',u:'https://baike.baidu.com/item/西南石油大学图书馆/689896'},
+ {t:'校方《学校总平面图》《景观分析图》（标识系统规划资料，水系岸线描摹依据）',u:''},
+ {t:'梦溪湖名称 · 校友网 / 科学网报道',u:'https://news.sciencenet.cn/htmlnews/2021/12/470152.shtm'}
+];
+
+'use strict';
+/* ================= 数学与程序化几何 ================= */
+const M4={
+  ident:()=>new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]),
+  persp(fov,asp,n,f){const t=1/Math.tan(fov/2),o=new Float32Array(16);o[0]=t/asp;o[5]=t;o[10]=(f+n)/(n-f);o[11]=-1;o[14]=2*f*n/(n-f);return o;},
+  ortho(l,r,b,t,n,f){const o=new Float32Array(16);o[0]=2/(r-l);o[5]=2/(t-b);o[10]=-2/(f-n);o[12]=-(r+l)/(r-l);o[13]=-(t+b)/(t-b);o[14]=-(f+n)/(f-n);o[15]=1;return o;},
+  lookAt(e,c,u){let zx=e[0]-c[0],zy=e[1]-c[1],zz=e[2]-c[2];let l=Math.hypot(zx,zy,zz);zx/=l;zy/=l;zz/=l;
+    let xx=u[1]*zz-u[2]*zy,xy=u[2]*zx-u[0]*zz,xz=u[0]*zy-u[1]*zx;l=Math.hypot(xx,xy,xz)||1;xx/=l;xy/=l;xz/=l;
+    const yx=zy*xz-zz*xy,yy=zz*xx-zx*xz,yz=zx*xy-zy*xx;
+    return new Float32Array([xx,yx,zx,0,xy,yy,zy,0,xz,yz,zz,0,-(xx*e[0]+xy*e[1]+xz*e[2]),-(yx*e[0]+yy*e[1]+yz*e[2]),-(zx*e[0]+zy*e[1]+zz*e[2]),1]);},
+  mul(a,b){const o=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s;}return o;},
+  trans(x,y,z){const o=M4.ident();o[12]=x;o[13]=y;o[14]=z;return o;},
+  rotY(a){const c=Math.cos(a),s=Math.sin(a),o=M4.ident();o[0]=c;o[2]=-s;o[8]=s;o[10]=c;return o;},
+  rotZ(a){const c=Math.cos(a),s=Math.sin(a),o=M4.ident();o[0]=c;o[1]=s;o[4]=-s;o[5]=c;return o;},
+  scale(x,y,z){const o=M4.ident();o[0]=x;o[5]=y;o[10]=z;return o;},
+  inv(m){const o=new Float32Array(16),a=m;
+    const a00=a[0],a01=a[1],a02=a[2],a03=a[3],a10=a[4],a11=a[5],a12=a[6],a13=a[7],a20=a[8],a21=a[9],a22=a[10],a23=a[11],a30=a[12],a31=a[13],a32=a[14],a33=a[15];
+    const b00=a00*a11-a01*a10,b01=a00*a12-a02*a10,b02=a00*a13-a03*a10,b03=a01*a12-a02*a11,b04=a01*a13-a03*a11,b05=a02*a13-a03*a12,b06=a20*a31-a21*a30,b07=a20*a32-a22*a30,b08=a20*a33-a23*a30,b09=a21*a32-a22*a31,b10=a21*a33-a23*a31,b11=a22*a33-a23*a32;
+    let det=b00*b11-b01*b10+b02*b09+b03*b08-b04*b07+b05*b06;if(!det)return M4.ident();det=1/det;
+    o[0]=(a11*b11-a12*b10+a13*b09)*det;o[1]=(a02*b10-a01*b11-a03*b09)*det;o[2]=(a31*b05-a32*b04+a33*b03)*det;o[3]=(a22*b04-a21*b05-a23*b03)*det;
+    o[4]=(a12*b08-a10*b11-a13*b07)*det;o[5]=(a00*b11-a02*b08+a03*b07)*det;o[6]=(a32*b02-a30*b05-a33*b02)*det;o[7]=(a20*b05-a22*b02+a23*b02)*det;
+    o[8]=(a10*b10-a11*b08+a13*b06)*det;o[9]=(a01*b08-a00*b10-a03*b06)*det;o[10]=(a30*b04-a31*b02+a33*b01)*det;o[11]=(a21*b02-a20*b04-a23*b01)*det;
+    o[12]=(a11*b07-a10*b09-a12*b06)*det;o[13]=(a00*b09-a01*b07+a02*b06)*det;o[14]=(a31*b03-a30*b05-a32*b01)*det;o[15]=(a20*b04-a21*b03+a22*b01)*det;return o;}
+};
+function hex(h){const n=parseInt(h.slice(1),16);return [((n>>16)&255)/255,((n>>8)&255)/255,(n&255)/255].map(v=>Math.pow(v,2.2));}
+function lerp(a,b,t){return a+(b-a)*t;}
+function lerpC(a,b,t){return [lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)];}
+function clamp(v,a,b){return v<a?a:v>b?b:v;}
+function smooth(a,b,x){const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t);}
+let _seed=20261111;function rnd(){_seed=(_seed*1664525+1013904223)>>>0;return _seed/4294967296;}
+function rr(a,b){return a+rnd()*(b-a);}
+
+const COL={
+  stone:hex('#ece5d6'), stone2:hex('#d9d2c2'), stoneDark:hex('#b9b2a2'), white:hex('#f4f1e8'),
+  glass:hex('#2e4a56'), glassLight:hex('#7fa3ad'), roof:hex('#8a8f8c'), roofRed:hex('#a4573c'),
+  dorm:hex('#efe7d6'), dormBase:hex('#b98a6a'), road:hex('#5c6660'), roadLine:hex('#d8d8c8'),
+  pave:hex('#cfc9b8'), pave2:hex('#ddd6c4'), grass:hex('#5cb83e'), grass2:hex('#4fa832'),
+  track:hex('#b05a3c'), field:hex('#6f9a58'), court:hex('#4f7f8c'), pool:hex('#4f93b8'),
+  water:hex('#3f7f8c'), trunk:hex('#6b5340'), leaf:hex('#4f7a45'), leaf2:hex('#6f9450'), leaf3:hex('#8fae57'), ginkgo:hex('#c9b23f'),
+  metal:hex('#5a6266'), copper:hex('#c46a3a'), lamp:hex('#ffd9a0'), base:hex('#3c4a42'), baseSide:hex('#2c3a33'),
+  wall:hex('#c8c2b2'), car:hex('#c8ccd0'), ped:hex('#4a5a66')
+};
+
+class MB{
+  constructor(){this.v=[];this.i=[];this.n=0;}
+  vert(x,y,z,nx,ny,nz,c,mat,bld,emi){this.v.push(x,y,z,nx,ny,nz,c[0],c[1],c[2],mat,bld,emi);return this.n++;}
+  quad(a,b,c,d,n,col,mat,bld,emi){const i=this.n;this.vert(...a,...n,col,mat,bld,emi);this.vert(...b,...n,col,mat,bld,emi);this.vert(...c,...n,col,mat,bld,emi);this.vert(...d,...n,col,mat,bld,emi);this.i.push(i,i+1,i+2,i,i+2,i+3);}
+  tri(a,b,c,n,col,mat,bld,emi){const i=this.n;this.vert(...a,...n,col,mat,bld,emi);this.vert(...b,...n,col,mat,bld,emi);this.vert(...c,...n,col,mat,bld,emi);this.i.push(i,i+1,i+2);}
+  box(cx,yb,cz,w,h,d,col,mat=0,bld=0,emi=0){const x0=cx-w/2,x1=cx+w/2,z0=cz-d/2,z1=cz+d/2,y0=yb,y1=yb+h;
+    this.quad([x0,y1,z0],[x0,y1,z1],[x1,y1,z1],[x1,y1,z0],[0,1,0],col,mat,bld,emi);
+    this.quad([x0,y0,z1],[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[0,-1,0],col,mat,bld,emi);
+    this.quad([x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1],[0,0,1],col,mat,bld,emi);
+    this.quad([x1,y0,z0],[x0,y0,z0],[x0,y1,z0],[x1,y1,z0],[0,0,-1],col,mat,bld,emi);
+    this.quad([x1,y0,z1],[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[1,0,0],col,mat,bld,emi);
+    this.quad([x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0],[-1,0,0],col,mat,bld,emi);}
+  cyl(cx,yb,cz,rt,rb,h,seg,col,mat=0,bld=0,emi=0){const y1=yb+h;
+    for(let i=0;i<seg;i++){const a0=i/seg*Math.PI*2,a1=(i+1)/seg*Math.PI*2;
+      const c0=Math.cos(a0),s0=Math.sin(a0),c1=Math.cos(a1),s1=Math.sin(a1);
+      const nx=(c0+c1)/2,nz=(s0+s1)/2,l=Math.hypot(nx,nz)||1;
+      this.quad([cx+rb*c0,yb,cz+rb*s0],[cx+rb*c1,yb,cz+rb*s1],[cx+rt*c1,y1,cz+rt*s1],[cx+rt*c0,y1,cz+rt*s0],[nx/l,0,nz/l],col,mat,bld,emi);
+      this.tri([cx,y1,cz],[cx+rt*c0,y1,cz+rt*s0],[cx+rt*c1,y1,cz+rt*s1],[0,1,0],col,mat,bld,emi);
+      this.tri([cx,yb,cz],[cx+rb*c1,yb,cz+rb*s1],[cx+rb*c0,yb,cz+rb*s0],[0,-1,0],col,mat,bld,emi);}}
+  sphere(cx,cy,cz,r,col,mat=0,bld=0,emi=0,detail=1){
+    const t=(1+Math.sqrt(5))/2;let vs=[[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(p=>{const l=Math.hypot(...p);return [p[0]/l,p[1]/l,p[2]/l];});
+    let fs=[[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+    const mid=(a,b)=>{const m=[(a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2];const l=Math.hypot(m[0],m[1],m[2]);return [m[0]/l,m[1]/l,m[2]/l];};
+    for(let d=0;d<detail;d++){const nf=[];for(const f of fs){const a=vs[f[0]],b=vs[f[1]],c=vs[f[2]],ab=mid(a,b),bc=mid(b,c),ca=mid(c,a);const i=vs.length;vs.push(ab,bc,ca);nf.push([f[0],i,i+2],[f[1],i+1,i],[f[2],i+2,i+1],[i,i+1,i+2]);}fs=nf;}
+    for(const f of fs){const a=vs[f[0]],b=vs[f[1]],c=vs[f[2]];const n=[(a[0]+b[0]+c[0])/3,(a[1]+b[1]+c[1])/3,(a[2]+b[2]+c[2])/3];
+      this.tri([cx+a[0]*r,cy+a[1]*r,cz+a[2]*r],[cx+b[0]*r,cy+b[1]*r,cz+b[2]*r],[cx+c[0]*r,cy+c[1]*r,cz+c[2]*r],n,col,mat,bld,emi);}}
+  ribbon(pts,width,y,col,mat=0,bld=0,emi=0){const hw=width/2;
+    for(let i=0;i<pts.length-1;i++){const [x0,z0]=pts[i],[x1,z1]=pts[i+1];const dx=x1-x0,dz=z1-z0,l=Math.hypot(dx,dz)||1;const nx=-dz/l*hw,nz=dx/l*hw;
+      this.quad([x0+nx,y,z0+nz],[x1+nx,y,z1+nz],[x1-nx,y,z1-nz],[x0-nx,y,z0-nz],[0,1,0],col,mat,bld,emi);}}
+  ellipse(cx,cz,rx,rz,y,col,mat=0,seg=40,bld=0,emi=0){for(let i=0;i<seg;i++){const a0=i/seg*Math.PI*2,a1=(i+1)/seg*Math.PI*2;
+    this.tri([cx,y,cz],[cx+rx*Math.cos(a0),y,cz+rz*Math.sin(a0)],[cx+rx*Math.cos(a1),y,cz+rz*Math.sin(a1)],[0,1,0],col,mat,bld,emi);}}
+  ring(cx,cz,rxo,rzo,rxi,rzi,y,col,mat=0,seg=48){for(let i=0;i<seg;i++){const a0=i/seg*Math.PI*2,a1=(i+1)/seg*Math.PI*2;
+    const o0=[cx+rxo*Math.cos(a0),y,cz+rzo*Math.sin(a0)],o1=[cx+rxo*Math.cos(a1),y,cz+rzo*Math.sin(a1)];
+    const i0=[cx+rxi*Math.cos(a0),y,cz+rzi*Math.sin(a0)],i1=[cx+rxi*Math.cos(a1),y,cz+rzi*Math.sin(a1)];
+    this.quad(o0,o1,i1,i0,[0,1,0],col,mat);}}
+  finalize(){return {verts:new Float32Array(this.v),idx:new Uint32Array(this.i),count:this.i.length,vcount:this.n};}
+}
+function edgesFromIdx(idx){const e=new Uint32Array(idx.length*2);for(let i=0;i<idx.length;i+=3){const a=idx[i],b=idx[i+1],c=idx[i+2];e[i*2]=a;e[i*2+1]=b;e[i*2+2]=b;e[i*2+3]=c;e[i*2+4]=c;e[i*2+5]=a;}return e;}
+
+/* ---- 建筑生成 ---- */
+function addWindows(mb,cx,cz,w,d,floors,bld,style){
+  const fh=1.8, sp=style==='dorm'?2.2:2.7, winH=style==='dorm'?0.85:1.0;
+  const glass=style==='dorm'?hex('#415a63'):COL.glass;
+  const sides=[[0,1,w,cx,cz+d/2+0.07],[0,-1,w,cx,cz-d/2-0.07],[1,1,d,cx+w/2+0.07,cz],[1,-1,d,cx-w/2-0.07,cz]];
+  for(const [axis,dir,len,px,pz] of sides){
+    const bays=Math.max(1,Math.floor(len/sp));const actual=len/bays;
+    for(let fl=0;fl<floors;fl++){const y=fl*fh+0.72;
+      for(let b=0;b<bays;b++){const off=(b+0.5-bays/2)*actual;const ww=actual*0.62;
+        if(axis===0){const x=px+off;mb.quad([x-ww/2,y,pz],[x+ww/2,y,pz],[x+ww/2,y+winH,pz],[x-ww/2,y+winH,pz],[0,0,dir],glass,1,bld,0);}
+        else{const z=pz+off;mb.quad([px,y,z-ww/2],[px,y,z+ww/2],[px,y+winH,z+ww/2],[px,y+winH,z-ww/2],[dir,0,0],glass,1,bld,0);}}}}
+}
+function addArchRoof(mb,cx,cz,w,d,yb,col,bld){
+  const seg=14,r=w/2,steps=Math.max(2,Math.floor(d/4));
+  for(let s=0;s<steps;s++){const z0=cz-d/2+s*d/steps,z1=cz-d/2+(s+1)*d/steps;
+    for(let i=0;i<seg;i++){const a0=Math.PI*i/seg,a1=Math.PI*(i+1)/seg;
+      const x0=cx-r*Math.cos(a0),x1=cx-r*Math.cos(a1);const y0=yb+r*Math.sin(a0)*0.55,y1=yb+r*Math.sin(a1)*0.55;
+      const n0=[-Math.cos(a0),Math.sin(a0)*0.55,0],n1=[-Math.cos(a1),Math.sin(a1)*0.55,0];
+      const i0=mb.n;mb.vert(x0,y0,z0,...n0,col,0,bld,0);mb.vert(x1,y1,z0,...n1,col,0,bld,0);mb.vert(x1,y1,z1,...n1,col,0,bld,0);mb.vert(x0,y0,z1,...n0,col,0,bld,0);mb.i.push(i0,i0+1,i0+2,i0,i0+2,i0+3);}}
+}
+function buildBuilding(mb,b){
+  const bld=b.id;
+  for(const p of b.parts){
+    const cx=mx2x(p.x),cz=my2z(p.y),w=p.w*S,d=p.h*S;
+    if(p.field){addField(mb,b,p,cx,cz,w,d);continue;}
+    if(p.gate){addGate(mb,b,p,cx,cz,w,d);continue;}
+    const floors=p.f||5, h=floors*1.8;
+    const isDorm=!!p.dorm, isGlass=!!p.glass;
+    const wall=isDorm?COL.dorm:(isGlass?COL.glassLight:COL.stone);
+    mb.box(cx,0,cz,w+0.8,0.5,d+0.8,isDorm?COL.dormBase:COL.stoneDark,0,bld);
+    mb.box(cx,0.5,cz,w,h-0.5,d,wall,isGlass?1:0,bld);
+    if(!isGlass)addWindows(mb,cx,cz,w,d,floors,bld,isDorm?'dorm':'office');
+    // 层间线脚
+    for(let fl=1;fl<floors;fl++){mb.box(cx,fl*1.8-0.09,cz,w+0.18,0.16,d+0.18,COL.stone2,0,bld);}
+    // 屋顶
+    const roofCol=p.roof==='red'?COL.roofRed:COL.roof;
+    if(p.roof==='arch'){addArchRoof(mb,cx,cz,w,d,h,roofCol,bld);}
+    else{mb.box(cx,h,cz,w+0.5,0.4,d+0.5,roofCol,0,bld);
+      mb.box(cx,h+0.4,cz-d/2-0.1,w+0.5,0.5,0.25,COL.stone2,0,bld);mb.box(cx,h+0.4,cz+d/2+0.1,w+0.5,0.5,0.25,COL.stone2,0,bld);
+      mb.box(cx-w/2-0.1,h+0.4,cz,0.25,0.5,d+0.5,COL.stone2,0,bld);mb.box(cx+w/2+0.1,h+0.4,cz,0.25,0.5,d+0.5,COL.stone2,0,bld);
+      const units=Math.min(3,Math.max(1,Math.floor(w*d/220)));
+      for(let u=0;u<units;u++){mb.box(cx+rr(-w*0.25,w*0.25),h+0.4,cz+rr(-d*0.25,d*0.25),rr(1.5,3),rr(0.8,1.6),rr(1.5,3),COL.metal,2,bld);}}
+    if(p.tower){for(let i=0;i<5;i++){mb.box(cx-w/2+ (i+0.5)*w/5,h+0.4,cz,0.25,3.2,d*0.7,COL.white,0,bld);}mb.cyl(cx,h+3.6,cz,0.12,0.12,4,6,COL.metal,2,bld);}
+    // 入口雨棚（南侧）
+    if(!isDorm && floors>=3){const cw=Math.min(w*0.42,12);mb.box(cx,2.9,cz+d/2+1.6,cw,0.28,3.2,COL.white,0,bld);
+      mb.cyl(cx-cw/2+0.6,0,cz+d/2+2.6,0.18,0.18,2.9,6,COL.stone2,0,bld);mb.cyl(cx+cw/2-0.6,0,cz+d/2+2.6,0.18,0.18,2.9,6,COL.stone2,0,bld);
+      mb.box(cx,1.6,cz+d/2+0.1,cw*0.7,1.4,0.15,COL.glass,1,bld,0.25);}
+  }
+}
+function addGate(mb,b,p,cx,cz,w,d){
+  const dir=p.gate,h=4.2,col=COL.stone;
+  const alongX=(dir==='south'||dir==='north');
+  const pw=alongX?w:2.2, pd=alongX?2.2:d;
+  const off=alongX?w/2-2:d/2-2;
+  const p1=alongX?[cx-off,cz]:[cx,cz-off], p2=alongX?[cx+off,cz]:[cx,cz+off];
+  mb.box(p1[0],0,p1[1],alongX?2.4:pw,h,alongX?pd:2.4,col,0,b.id);
+  mb.box(p2[0],0,p2[1],alongX?2.4:pw,h,alongX?pd:2.4,col,0,b.id);
+  mb.box(cx,h-0.8,cz,alongX?w:2.6,0.9,alongX?2.6:d,COL.stoneDark,0,b.id);
+  mb.box(cx,h-0.4,cz,alongX?w*0.7:2.8,0.5,alongX?2.8:d*0.7,COL.copper,0,b.id,0.15);
+  mb.box(cx,0,cz,alongX?w+6:6,0.25,alongX?6:d+6,COL.pave,0,0);
+}
+function addField(mb,b,p,cx,cz,w,d){
+  const t=p.field;
+  if(t==='track'){mb.ring(cx,cz,w/2,d/2,w/2-5,d/2-5,0.12,COL.track,6);mb.ellipse(cx,cz,w/2-5.5,d/2-5.5,0.14,COL.field,4);
+    for(let l=1;l<=4;l++){const f=l/5;mb.ring(cx,cz,w/2-5*f,d/2-5*f,w/2-5*f-0.18,d/2-5*f-0.18,0.16,COL.roadLine,0);}
+    mb.box(cx,0.16,cz,w*0.35,0.05,d*0.5,COL.field,4);
+  }else if(t==='pool'){mb.box(cx,0,cz,w+3,0.3,d+3,COL.pave,0);mb.box(cx,0.3,cz,w,0.2,d,COL.pool,5);
+    for(let l=1;l<5;l++){mb.box(cx-w/2+l*w/5,0.52,cz,0.12,0.03,d*0.9,COL.white,0);}
+  }else if(t==='court'||t==='tennis'){const n=t==='tennis'?4:3;const gap=1.2;const ch=(d-gap*(n-1))/n;
+    mb.box(cx,0,cz,w+2,0.15,d+2,COL.pave,0);
+    for(let i=0;i<n;i++){const z=cz-d/2+ch/2+i*(ch+gap);mb.box(cx,0.15,z,w,ch,t==='tennis'?hex('#3f6f52'):COL.court,6);
+      mb.box(cx,0.31,z,w-0.6,0.03,0.15,COL.white,0);mb.box(cx,0.31,z-ch/2+0.4,w-0.6,0.03,0.15,COL.white,0);mb.box(cx,0.31,z+ch/2-0.4,w-0.6,0.03,0.15,COL.white,0);
+      mb.box(cx-w/2+0.4,0.31,z,0.15,0.03,ch-0.8,COL.white,0);mb.box(cx+w/2-0.4,0.31,z,0.15,0.03,ch-0.8,COL.white,0);
+      if(t==='court'){mb.cyl(cx-w/2+0.8,0.3,z,0.08,0.08,2.2,5,COL.metal,2);mb.box(cx-w/2+1.2,2.3,z,0.8,0.5,0.1,COL.white,0);}}}
+}
+
+/* ---- 环境 ---- */
+const BOUNDS={x0:-168,x1:168,z0:-428,z1:328};
+/* ---- 水系几何工具 ---- */
+function chaikin(pts,iter){for(let k=0;k<iter;k++){const o=[];for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];o.push([a[0]*0.75+b[0]*0.25,a[1]*0.75+b[1]*0.25],[a[0]*0.25+b[0]*0.75,a[1]*0.25+b[1]*0.75]);}pts=o;}return pts;}
+function polyArea(p){let s=0;for(let i=0;i<p.length;i++){const a=p[i],b=p[(i+1)%p.length];s+=a[0]*b[1]-b[0]*a[1];}return s/2;}
+function earClip(p){const n=p.length;const idx=[];const ids=[...Array(n).keys()];if(polyArea(p)<0)ids.reverse();
+  const cross=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);
+  const inTri=(pt,a,b,c)=>{const d1=cross(a,b,pt),d2=cross(b,c,pt),d3=cross(c,a,pt);return !(((d1<0)||(d2<0)||(d3<0))&&((d1>0)||(d2>0)||(d3>0)));};
+  let guard=0;
+  while(ids.length>3&&guard++<6000){let done=false;
+    for(let i=0;i<ids.length;i++){const i0=ids[(i-1+ids.length)%ids.length],i1=ids[i],i2=ids[(i+1)%ids.length];const a=p[i0],b=p[i1],c=p[i2];
+      if(cross(a,b,c)<=1e-9)continue;let ok=true;
+      for(const j of ids){if(j===i0||j===i1||j===i2)continue;if(inTri(p[j],a,b,c)){ok=false;break;}}
+      if(ok){idx.push(i0,i1,i2);ids.splice(i,1);done=true;break;}}
+    if(!done)break;}
+  if(ids.length===3)idx.push(ids[0],ids[1],ids[2]);
+  return idx;}
+function distToPolyEdge(x,z,p){let m=1e9;for(let i=0;i<p.length;i++){const a=p[i],b=p[(i+1)%p.length];const d=distToSeg(x,z,a[0],a[1],b[0],b[1]);if(d<m)m=d;}return m;}
+function pointInPoly(x,z,p){let ins=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])ins=!ins;}return ins;}
+function offsetPoly(p,d){const n=p.length,out=[],sgn=polyArea(p)>0?1:-1;
+  for(let i=0;i<n;i++){const prev=p[(i-1+n)%n],cur=p[i],next=p[(i+1)%n];
+    let e1=[cur[0]-prev[0],cur[1]-prev[1]],e2=[next[0]-cur[0],next[1]-cur[1]];
+    const l1=Math.hypot(e1[0],e1[1])||1,l2=Math.hypot(e2[0],e2[1])||1;e1=[e1[0]/l1,e1[1]/l1];e2=[e2[0]/l2,e2[1]/l2];
+    const n1=[e1[1]*sgn,-e1[0]*sgn],n2=[e2[1]*sgn,-e2[0]*sgn];
+    let bx=n1[0]+n2[0],bz=n1[1]+n2[1];const bl=Math.hypot(bx,bz)||1;bx/=bl;bz/=bl;
+    const cos=Math.max(0.75,bx*n1[0]+bz*n1[1]);
+    out.push([cur[0]+bx*d/cos,cur[1]+bz*d/cos]);}
+  return out;}
+function streamOutline(reach){
+  const c=reach.pts.map(p=>[mx2x(p[0]),my2z(p[1])]),hw=reach.pts.map(p=>p[2]*S);
+  const P=[];
+  for(let i=0;i<c.length-1;i++){const p0=c[Math.max(0,i-1)],p1=c[i],p2=c[i+1],p3=c[Math.min(c.length-1,i+2)];
+    const w0=hw[Math.max(0,i-1)],w1=hw[i],w2=hw[i+1],w3=hw[Math.min(c.length-1,i+2)];
+    for(let t=0;t<1;t+=0.2){const t2=t*t,t3=t2*t;const f=(a,b,cc,d)=>0.5*((2*b)+(-a+cc)*t+(2*a-5*b+4*cc-d)*t2+(-a+3*b-3*cc+d)*t3);
+      P.push([f(p0[0],p1[0],p2[0],p3[0]),f(p0[1],p1[1],p2[1],p3[1]),f(w0,w1,w2,w3)]);}}
+  P.push([c[c.length-1][0],c[c.length-1][1],hw[hw.length-1]]);
+  const L=[],R=[];
+  for(let i=0;i<P.length;i++){const a=P[Math.max(0,i-1)],b=P[Math.min(P.length-1,i+1)];let dx=b[0]-a[0],dz=b[1]-a[1];const l=Math.hypot(dx,dz)||1;dx/=l;dz/=l;const w=P[i][2];
+    L.push([P[i][0]-dz*w,P[i][1]+dx*w]);R.push([P[i][0]+dz*w,P[i][1]-dx*w]);}
+  return L.concat(R.reverse());}
+let _ws=null,_wsCol=null;
+function waterSystem(){if(_ws)return _ws;
+  const polys=[];
+  for(const lk of WATER.lakes)polys.push(chaikin(lk.map(q=>[mx2x(q[0]),my2z(q[1])]),2));
+  for(const r of WATER.reaches)polys.push(streamOutline(r));
+  _ws=polys;_wsCol=polys.map(p=>p.filter((_,i)=>i%2===0));
+  return polys;}
+function waterCollision(){waterSystem();return _wsCol;}
+function addWaterBasin(mb){
+  for(const p of waterSystem()){
+    const sgn=polyArea(p)>0?1:-1;
+    const idx=earClip(p);
+    const vids=p.map(q=>mb.vert(q[0],-0.34,q[1],0,1,0,hex('#20302b'),0,0,0));
+    for(let i=0;i<idx.length;i+=3)mb.i.push(vids[idx[i]],vids[idx[i+1]],vids[idx[i+2]]);
+    for(let i=0;i<p.length;i++){const a=p[i],b=p[(i+1)%p.length];const dx=b[0]-a[0],dz=b[1]-a[1];const l=Math.hypot(dx,dz)||1;
+      mb.quad([a[0],-0.34,a[1]],[b[0],-0.34,b[1]],[b[0],0.10,b[1]],[a[0],0.10,a[1]],[dz/l*sgn,0,-dx/l*sgn],COL.stoneDark,0,0,0);}
+    const o1=offsetPoly(p,1.4),o2=offsetPoly(p,2.2);
+    for(let i=0;i<p.length;i++){const j=(i+1)%p.length;
+      mb.quad([p[i][0],0.10,p[i][1]],[p[j][0],0.10,p[j][1]],[o1[j][0],0.06,o1[j][1]],[o1[i][0],0.06,o1[i][1]],[0,1,0],COL.stone2,0,0,0);
+      mb.quad([o1[i][0],0.06,o1[i][1]],[o1[j][0],0.06,o1[j][1]],[o2[j][0],0.02,o2[j][1]],[o2[i][0],0.02,o2[i][1]],[0,1,0],hex('#8fae7a'),4,0,0);}}}
+function addWaterfront(mb){
+  // 亲水木平台
+  for(const [x,y,w,d] of [[320,492,10,6],[300,1164,9,5]]){
+    const cx=mx2x(x),cz=my2z(y);
+    mb.box(cx,0.10,cz,w,0.16,d,COL.trunk,0);
+    for(let i=0;i<4;i++)mb.cyl(cx-w/2+1+i*(w-2)/3,-0.3,cz+d/2-0.5,0.12,0.12,0.5,5,COL.trunk,0);
+    mb.box(cx,0.26,cz-d/2+0.1,w,0.5,0.12,COL.trunk,0);}
+  // 芦苇丛
+  for(const [x,y] of [[250,545],[242,510],[252,1200],[226,1340],[318,470],[368,660],[262,1180]]){
+    const cx=mx2x(x),cz=my2z(y);
+    for(let i=0;i<7;i++){const a=rr(0,6.28),r=rr(0,1.6);const px=cx+Math.cos(a)*r,pz=cz+Math.sin(a)*r;const h=rr(0.9,1.6);
+      mb.cyl(px,0.05,pz,0.03,0.05,h,4,hex('#7a9a4a'),0);mb.box(px,0.05+h,pz,0.09,0.3,0.09,hex('#8a6a3a'),0);}}
+  // 岸线叠石
+  for(const [x,y] of [[308,522],[296,558],[240,494],[346,1178],[332,1214],[250,1208],[366,1360],[268,1386],[348,610],[382,646]]){
+    const cx=mx2x(x),cz=my2z(y);
+    for(let i=0;i<3;i++)mb.cyl(cx+rr(-1.4,1.4),0.02,cz+rr(-1.4,1.4),rr(0.4,0.8),rr(0.7,1.2),rr(0.3,0.6),6,COL.stoneDark,0);}}
+function addBridges(mb){
+  const bridges=[[348,352,7,'x',0],[331,441,6,'x',1],[308,580,6,'x',0],[330,604,6,'x',1],[331,737,6,'x',0],[258,900,7,'x',0],[233,1052,6,'x',1],[356,1240,7,'x',0],[285,1390,8,'z',1],[371,1300,4,'x',1]];
+  for(const [x,y,ww,dir,arch] of bridges){
+    const cx=mx2x(x),cz=my2z(y);
+    const sx=dir==='x'?ww+3:5, sz=dir==='x'?5:ww+3;
+    if(arch){
+      const steps=6;
+      for(let i=0;i<steps;i++){const t0=i/steps,t1=(i+1)/steps;const y0=0.22+Math.sin(t0*Math.PI)*0.85,y1=0.22+Math.sin(t1*Math.PI)*0.85;
+        const a0=(dir==='x'?cx:cz)-(dir==='x'?sx:sz)/2+(dir==='x'?sx:sz)*t0, a1=(dir==='x'?cx:cz)-(dir==='x'?sx:sz)/2+(dir==='x'?sx:sz)*t1;
+        if(dir==='x')mb.quad([a0,y0,cz-sz/2],[a1,y1,cz-sz/2],[a1,y1,cz+sz/2],[a0,y0,cz+sz/2],[0,1,0],COL.stone2,0,0,0);
+        else mb.quad([cx-sx/2,y0,a0],[cx-sx/2,y1,a1],[cx+sx/2,y1,a1],[cx+sx/2,y0,a0],[0,1,0],COL.stone2,0,0,0);}
+      for(const s of [-1,1])for(let i=0;i<=4;i++){const t=i/4;const y=0.22+Math.sin(t*Math.PI)*0.85;const a=(dir==='x'?cx:cz)-(dir==='x'?sx:sz)/2+(dir==='x'?sx:sz)*t;
+        const px=dir==='x'?a:cx+s*sx/2, pz=dir==='x'?cz+s*sz/2:a;mb.box(px,y,pz,0.14,0.7,0.14,COL.stone,0,0,0);}
+    }else{
+      mb.box(cx,0.2,cz,sx,0.5,sz,COL.pave,0,0,0);
+      for(const s of [-1,1]){if(dir==='x')mb.box(cx,0.7,cz+s*sz/2,sx,0.9,0.3,COL.stone2,0,0,0);else mb.box(cx+s*sx/2,0.7,cz,0.3,0.9,sz,COL.stone2,0,0,0);}}}}
+function buildEnvironment(){
+  const mb=new MB();
+  // 底座
+  const w=BOUNDS.x1-BOUNDS.x0,d=BOUNDS.z1-BOUNDS.z0,cx=(BOUNDS.x0+BOUNDS.x1)/2,cz=(BOUNDS.z0+BOUNDS.z1)/2;
+  mb.box(cx,-7,cz,w,7,d,COL.baseSide,0);
+  mb.box(cx,-0.4,cz,w+3,0.4,d+3,COL.base,0);
+  mb.box(cx,-0.05,cz,w,0.05,d,COL.grass,4);
+  // 草地斑块（抬高避免与底座深度冲突；避开水体/广场/道路）
+  const patchOk=(x,z)=>{
+    for(const p of waterCollision())if(pointInPoly(x,z,p)||distToPolyEdge(x,z,p)<4)return false;
+    for(const [px,pz,rx,rz] of [[292,1326,24,24],[432,1212,30,26],[104,1152,26,22]]){const dx=(x-mx2x(px))/(rx+3),dz=(z-my2z(pz))/(rz+3);if(dx*dx+dz*dz<1)return false;}
+    for(const r of roads.concat(outerRoads)){const pts=r.pts.map(q=>[mx2x(q[0]),my2z(q[1])]);
+      for(let i=0;i<pts.length-1;i++)if(distToSeg(x,z,pts[i][0],pts[i][1],pts[i+1][0],pts[i+1][1])<r.w/2+2)return false;}
+    for(const b of buildings)if(b.kind==='field')for(const p of b.parts)
+      if(Math.abs(x-mx2x(p.x))<p.w*S/2+2&&Math.abs(z-my2z(p.y))<p.h*S/2+2)return false;
+    if(Math.abs(x-mx2x(285))<36&&Math.abs(z-my2z(1480))<26)return false;
+    return true;};
+  for(let i=0;i<70;i++){const x=rr(BOUNDS.x0+6,BOUNDS.x1-6),z=rr(BOUNDS.z0+6,BOUNDS.z1-6);if(!patchOk(x,z))continue;mb.ellipse(x,z,rr(4,14),rr(4,14),0.08,rnd()>0.5?COL.grass2:hex('#9ab87e'),4,16);}
+  // 外部市政道路
+  for(const r of outerRoads){const pts=r.pts.map(p=>[mx2x(p[0]),my2z(p[1])]);mb.ribbon(pts,r.w,0.02,COL.road,0);mb.ribbon(pts,0.25,0.05,COL.roadLine,0);}
+  // 校园道路 + 人行道
+  for(const r of roads){const pts=r.pts.map(p=>[mx2x(p[0]),my2z(p[1])]);mb.ribbon(pts,r.w+2.4,0.04,COL.pave,0);mb.ribbon(pts,r.w,0.08,COL.road,0);
+    // 中心虚线
+    for(let i=0;i<pts.length-1;i++){const [x0,z0]=pts[i],[x1,z1]=pts[i+1];const l=Math.hypot(x1-x0,z1-z0);const n=Math.floor(l/6);
+      for(let k=0;k<n;k++){const t0=(k+0.15)/n,t1=(k+0.55)/n;mb.ribbon([[lerp(x0,x1,t0),lerp(z0,z1,t0)],[lerp(x0,x1,t1),lerp(z0,z1,t1)]],0.22,0.1,COL.roadLine,0);}}}
+  // 广场铺装
+  mb.ellipse(mx2x(292),my2z(1326),24,24,0.09,COL.pave2,0,48);
+  mb.ring(mx2x(292),my2z(1326),24,24,17,17,0.11,COL.pave,0,48);
+  mb.ellipse(mx2x(292),my2z(1326),10,10,0.13,COL.grass,4,32);
+  mb.ellipse(mx2x(292),my2z(1326),3.5,3.5,0.15,COL.pave,0,24);
+  mb.ellipse(mx2x(432),my2z(1212),30,26,0.09,COL.pave2,0,40);
+  mb.ellipse(mx2x(104),my2z(1152),26,22,0.09,COL.pave2,0,36);
+  // 南大门前广场
+  mb.box(mx2x(285),0.05,my2z(1480),70,0.08,50,COL.pave2,0);
+  // 水系：湖盆 / 护岸 / 滨水带 / 桥
+  addWaterBasin(mb);
+  addWaterfront(mb);
+  addBridges(mb);
+  // 围墙
+  const wallH=1.1;
+  mb.box(BOUNDS.x0+1,0,cz,0.6,wallH,d,COL.wall,0);mb.box(BOUNDS.x1-1,0,cz,0.6,wallH,d,COL.wall,0);
+  mb.box(cx,0,BOUNDS.z0+1,w,wallH,0.6,COL.wall,0);mb.box(cx,0,BOUNDS.z1-1,w,wallH,0.6,COL.wall,0);
+  // 路灯
+  for(const r of roads){const pts=r.pts.map(p=>[mx2x(p[0]),my2z(p[1])]);
+    for(let i=0;i<pts.length-1;i++){const [x0,z0]=pts[i],[x1,z1]=pts[i+1];const l=Math.hypot(x1-x0,z1-z0);const n=Math.max(1,Math.floor(l/26));
+      for(let k=0;k<n;k++){const t=(k+0.5)/n;const x=lerp(x0,x1,t),z=lerp(z0,z1,t);const dx=(x1-x0)/l,dz=(z1-z0)/l;const sx=x-dz*(r.w/2+1.6),sz=z+dx*(r.w/2+1.6);
+        mb.cyl(sx,0,sz,0.1,0.14,4.2,5,COL.metal,2);mb.box(sx,4.2,sz,0.7,0.18,0.4,COL.metal,2);mb.sphere(sx,4.1,sz,0.28,COL.lamp,3,0,1,0);}}}
+  // 创业广场能源雕塑
+  const scx=mx2x(292),scz=my2z(1326);
+  mb.cyl(scx,0.15,scz,3.2,3.8,0.8,24,COL.stoneDark,0);
+  mb.cyl(scx,0.95,scz,0.5,1.4,9,8,COL.copper,2,0,0.1);
+  mb.sphere(scx,10.4,scz,1.5,COL.copper,2,0,0.2,1);
+  for(let i=0;i<4;i++){const a=i*Math.PI/2;mb.box(scx+Math.cos(a)*2.4,0.95,scz+Math.sin(a)*2.4,0.25,6,0.25,COL.metal,2);}
+  // 实训中心抽油机雕塑（基座）
+  const px=mx2x(310),pz=my2z(157);
+  mb.box(px,0,pz,14,0.6,8,COL.pave,0);
+  mb.box(px-3,0.6,pz,1.2,4,1.2,COL.metal,2);mb.box(px+3,0.6,pz,1.2,3,1.2,COL.metal,2);
+  mb.cyl(px+3,3.6,pz,1.2,1.2,0.5,12,COL.copper,2);
+  // 长椅 / 自行车棚
+  for(let i=0;i<10;i++){const a=i/10*Math.PI*2;mb.box(scx+Math.cos(a)*22,0.1,scz+Math.sin(a)*22,2.4,0.5,0.7,COL.trunk,0);}
+  return mb.finalize();
+}
+function waterSurface(p){
+  // 岸线顶点深度恒为 0，需内部细分顶点承载深度场，否则整片水面按浅水渲染
+  const vs=p.map(q=>[q[0],q[1],0]);
+  const flat=earClip(p);let tris=[];
+  for(let i=0;i<flat.length;i+=3)tris.push([flat[i],flat[i+1],flat[i+2]]);
+  const cache=new Map();
+  const mid=(a,b)=>{const k=a<b?a+'_'+b:b+'_'+a;let m=cache.get(k);
+    if(m===undefined){const x=(vs[a][0]+vs[b][0])/2,z=(vs[a][1]+vs[b][1])/2;
+      m=vs.length;vs.push([x,z,clamp(distToPolyEdge(x,z,p)/5,0,1)]);cache.set(k,m);}
+    return m;};
+  const e2=(a,b)=>{const dx=vs[a][0]-vs[b][0],dz=vs[a][1]-vs[b][1];return dx*dx+dz*dz;};
+  for(let r=0;r<5;r++){
+    const next=[];let split=false;
+    for(const t of tris){const [a,b,c]=t;
+      if(Math.max(e2(a,b),e2(b,c),e2(c,a))>16){
+        const ab=mid(a,b),bc=mid(b,c),ca=mid(c,a);
+        next.push([a,ab,ca],[ab,b,bc],[ca,bc,c],[ab,bc,ca]);split=true;}
+      else next.push(t);}
+    tris=next;if(!split)break;}
+  return {vs,tris};
+}
+function buildWater(){
+  const mb=new MB();
+  for(const p of waterSystem()){
+    const {vs,tris}=waterSurface(p);
+    const vids=vs.map(q=>mb.vert(q[0],0.02,q[1],0,1,0,COL.water,q[2],0,0));
+    for(const t of tris)mb.i.push(vids[t[0]],vids[t[1]],vids[t[2]]);}
+  return mb.finalize();
+}
+/* ---- 树木 ---- */
+function distToSeg(px,pz,ax,az,bx,bz){const dx=bx-ax,dz=bz-az;const l2=dx*dx+dz*dz||1;let t=((px-ax)*dx+(pz-az)*dz)/l2;t=clamp(t,0,1);return Math.hypot(px-(ax+dx*t),pz-(az+dz*t));}
+function buildTrees(){
+  const mb=new MB();mb.cyl(0,0,0,0.16,0.24,1.6,5,COL.trunk,0);
+  mb.sphere(0,2.3,0,1.05,COL.leaf,0,0,0,0);mb.sphere(0.5,2.9,0.2,0.75,COL.leaf2,0,0,0,0);mb.sphere(-0.45,2.7,-0.3,0.7,COL.leaf3,0,0,0,0);
+  const mesh=mb.finalize();
+  const roadW=roads.map(r=>({pts:r.pts.map(p=>[mx2x(p[0]),my2z(p[1])]),w:r.w}));
+  const rects=[];for(const b of buildings)for(const p of b.parts){rects.push({x:mx2x(p.x),z:my2z(p.y),w:p.w*S/2+2.5,d:p.h*S/2+2.5});}
+  const wp=waterCollision();
+  function ok(x,z){for(const r of rects)if(Math.abs(x-r.x)<r.w&&Math.abs(z-r.z)<r.d)return false;
+    for(const r of roadW)for(let i=0;i<r.pts.length-1;i++)if(distToSeg(x,z,...r.pts[i],...r.pts[i+1])<r.w/2+2.2)return false;
+    for(const p of wp){if(pointInPoly(x,z,p))return false;if(distToPolyEdge(x,z,p)<3.2)return false;}
+    if(Math.hypot(x-mx2x(292),z-my2z(1326))<40)return false;
+    return true;}
+  const inst=[];let tries=0;
+  while(inst.length<950&&tries<9000){tries++;const x=rr(BOUNDS.x0+4,BOUNDS.x1-4),z=rr(BOUNDS.z0+4,BOUNDS.z1-4);if(!ok(x,z))continue;
+    const s=rr(2.0,3.8);const g=rnd();const col=g<0.12?COL.ginkgo:(g<0.5?COL.leaf:(g<0.8?COL.leaf2:COL.leaf3));
+    inst.push(x,0,z,s,s*rr(0.9,1.3),s,col[0],col[1],col[2],rr(0,6.28));}
+  // 沿主要道路行道树
+  for(const r of roads.slice(0,13)){const pts=r.pts.map(p=>[mx2x(p[0]),my2z(p[1])]);
+    for(let i=0;i<pts.length-1;i++){const [x0,z0]=pts[i],[x1,z1]=pts[i+1];const l=Math.hypot(x1-x0,z1-z0);const n=Math.floor(l/9);
+      for(let k=0;k<n;k++){const t=(k+0.5)/n;const x=lerp(x0,x1,t),z=lerp(z0,z1,t);const dx=(x1-x0)/l,dz=(z1-z0)/l;
+        for(const side of [-1,1]){const sx=x-dz*(r.w/2+3.4)*side,sz=z+dx*(r.w/2+3.4)*side;if(!ok(sx,sz))continue;const s=rr(1.8,2.8);inst.push(sx,0,sz,s,s*1.15,s,COL.leaf2[0],COL.leaf2[1],COL.leaf2[2],rr(0,6.28));}}}}
+  return {mesh,inst:new Float32Array(inst),count:inst.length/10};
+}
+/* ---- 动态人车 ---- */
+function buildAgents(){
+  const carMB=new MB();carMB.box(0,0.25,0,1.7,0.6,3.6,COL.car,0);carMB.box(0,0.85,-0.2,1.4,0.55,1.9,COL.glass,1);
+  carMB.box(-0.55,0.4,1.81,0.35,0.2,0.06,COL.lamp,3,0,1);carMB.box(0.55,0.4,1.81,0.35,0.2,0.06,COL.lamp,3,0,1);
+  const pedMB=new MB();pedMB.cyl(0,0,0,0.22,0.26,0.9,6,COL.ped,0);pedMB.sphere(0,1.12,0,0.2,COL.stone,0,0,0,0);
+  const paths=roads.filter(r=>r.w>=6).map(r=>r.pts.map(p=>[mx2x(p[0]),my2z(p[1])]));
+  function mk(n,type){const arr=[];for(let i=0;i<n;i++){const path=paths[Math.floor(rnd()*paths.length)];let len=0;const segs=[];for(let j=0;j<path.length-1;j++){const l=Math.hypot(path[j+1][0]-path[j][0],path[j+1][1]-path[j][1]);segs.push(l);len+=l;}
+    arr.push({path,segs,len,t:rnd()*len,speed:type==='car'?rr(5,9):rr(1.2,2.4),off:type==='car'?rr(-1.2,1.2):rr(2.5,4)*(rnd()>0.5?1:-1),type});}return arr;}
+  const cars=mk(16,'car'),peds=mk(80,'ped');
+  const colors=[hex('#c8ccd0'),hex('#8a9aa5'),hex('#b05a3c'),hex('#4f7f8c'),hex('#e8e2d4'),hex('#5a6266')];
+  const pedColors=[hex('#4a5a66'),hex('#7a5a4a'),hex('#3f6f52'),hex('#8a6a9a'),hex('#c46a3a'),hex('#3a5a7a')];
+  function buf(agents,cols){const a=new Float32Array(agents.length*8);for(let i=0;i<agents.length;i++){const c=cols[Math.floor(rnd()*cols.length)];a[i*8+4]=c[0];a[i*8+5]=c[1];a[i*8+6]=c[2];}return a;}
+  return {carMesh:carMB.finalize(),pedMesh:pedMB.finalize(),cars,peds,carBuf:buf(cars,colors),pedBuf:buf(peds,pedColors)};
+}
+function updateAgents(agents,dt,speed,time){
+  function upd(list,bufArr,isCar){for(let i=0;i<list.length;i++){const a=list[i];a.t=(a.t+a.speed*speed*dt)%a.len;
+    let d=a.t,si=0;while(si<a.segs.length-1&&d>a.segs[si]){d-=a.segs[si];si++;}
+    const p0=a.path[si],p1=a.path[si+1];const l=a.segs[si]||1;const t=d/l;const dx=(p1[0]-p0[0])/l,dz=(p1[1]-p0[1])/l;
+    const x=lerp(p0[0],p1[0],t)-dz*a.off,z=lerp(p0[1],p1[1],t)+dx*a.off;const ang=Math.atan2(dx,dz);
+    const o=i*8;bufArr[o]=x;bufArr[o+1]=isCar?0.05:0.05+Math.abs(Math.sin(time*6+i))*0.04;bufArr[o+2]=z;bufArr[o+3]=ang;}}
+  upd(agents.cars,agents.carBuf,true);upd(agents.peds,agents.pedBuf,false);
+}
+/* ---- 抽油机游梁 ---- */
+function buildPumpBeam(){const mb=new MB();mb.box(0,0,0,10,0.5,0.8,COL.metal,2);mb.box(4.6,-0.4,0,1.6,1.4,1.0,COL.copper,2);mb.box(-4.4,-0.6,0,1.2,1.2,1.2,COL.stoneDark,2);return mb.finalize();}
+/* ---- AO 烘焙 ---- */
+function bakeAO(){
+  const size=1024,cv=document.createElement('canvas');cv.width=cv.height=size;const ctx=cv.getContext('2d');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,size,size);
+  const sx=size/(BOUNDS.x1-BOUNDS.x0),sz=size/(BOUNDS.z1-BOUNDS.z0);
+  ctx.filter='blur(7px)';ctx.fillStyle='rgba(0,0,0,0.42)';
+  for(const b of buildings)for(const p of b.parts){if(p.field||p.gate)continue;const x=(mx2x(p.x)-BOUNDS.x0)*sx,z=(my2z(p.y)-BOUNDS.z0)*sz;const w=p.w*S*sx,d=p.h*S*sz;ctx.fillRect(x-w/2,z-d/2,w,d);}
+  ctx.filter='blur(3px)';ctx.fillStyle='rgba(0,0,0,0.25)';
+  for(const r of roads){const pts=r.pts.map(p=>[(mx2x(p[0])-BOUNDS.x0)*sx,(my2z(p[1])-BOUNDS.z0)*sz]);ctx.strokeStyle='rgba(0,0,0,0.18)';ctx.lineWidth=r.w*sx+4;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.stroke();}
+  return cv;
+}
+/* ---- 网格参考线 ---- */
+function buildGrid(){const v=[];for(let x=BOUNDS.x0;x<=BOUNDS.x1;x+=25)v.push(x,0.2,BOUNDS.z0,x,0.2,BOUNDS.z1);for(let z=BOUNDS.z0;z<=BOUNDS.z1;z+=25)v.push(BOUNDS.x0,0.2,z,BOUNDS.x1,0.2,z);return new Float32Array(v);}
+
+'use strict';
+/* ================= WebGL2 渲染引擎 ================= */
+const LIGHT_GLSL=`
+uniform vec3 uSunDir,uSunColor,uSkyColor,uGroundColor,uCamPos,uFogColor;
+uniform float uFogDensity,uNight,uShadowOn,uTime;
+uniform sampler2D uShadow,uAO;
+uniform vec4 uAOBounds;
+float hash21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+float getShadow(vec4 sc,vec3 n){
+  if(uShadowOn<0.5)return 1.0;
+  vec3 p=sc.xyz/sc.w*0.5+0.5;
+  if(p.x<0.0||p.x>1.0||p.y<0.0||p.y>1.0||p.z>1.0)return 1.0;
+  float bias=max(0.0022*(1.0-dot(n,uSunDir)),0.0007);
+  float s=0.0;vec2 tx=1.0/vec2(textureSize(uShadow,0));
+  for(int x=-1;x<=1;x++)for(int y=-1;y<=1;y++){
+    float d=texture(uShadow,p.xy+vec2(float(x),float(y))*tx*1.6).r;
+    s+=(p.z-bias)>d?0.16:1.0;}
+  return s/9.0;}
+vec3 applyFog(vec3 c,float d){float f=1.0-exp(-d*uFogDensity);return mix(c,uFogColor,clamp(f,0.0,1.0));}
+`;
+const VS_MAIN=`#version 300 es
+layout(location=0) in vec3 aPos;layout(location=1) in vec3 aNormal;layout(location=2) in vec3 aColor;
+layout(location=3) in float aMat;layout(location=4) in float aBld;layout(location=5) in float aEmis;
+uniform mat4 uProj,uView,uModel,uLightVP;uniform float uHeight;
+out vec3 vWorld,vNormal,vColor;out float vMat,vBld,vEmis;out vec4 vShadow;
+void main(){vec3 p=aPos;if(aBld>0.5)p.y*=uHeight;vec4 wp=uModel*vec4(p,1.0);
+vWorld=wp.xyz;vNormal=normalize(mat3(uModel)*aNormal);vColor=aColor;vMat=aMat;vBld=aBld;vEmis=aEmis;
+vShadow=uLightVP*wp;gl_Position=uProj*uView*wp;}`;
+const FS_MAIN=`#version 300 es
+precision highp float;
+in vec3 vWorld,vNormal,vColor;in float vMat,vBld,vEmis;in vec4 vShadow;
+${LIGHT_GLSL}
+uniform float uSelected,uHover,uWire;out vec4 outColor;
+void main(){
+  vec3 n=normalize(vNormal);vec3 v=normalize(uCamPos-vWorld);
+  float sh=getShadow(vShadow,n);
+  vec3 hemi=mix(uGroundColor,uSkyColor,n.y*0.5+0.5);
+  float diff=max(dot(n,uSunDir),0.0);
+  vec3 col=vColor*(hemi*0.38+uSunColor*diff*sh*1.25);
+  col+=vColor*uSkyColor*pow(1.0-max(dot(n,v),0.0),2.0)*0.10;
+  vec3 h=normalize(uSunDir+v);
+  float sp=0.08;float shin=16.0;
+  if(vMat>0.5&&vMat<1.5){sp=0.65;shin=64.0;}else if(vMat>1.5&&vMat<2.5){sp=0.45;shin=32.0;}
+  col+=uSunColor*pow(max(dot(n,h),0.0),shin)*sp*sh;
+  if(vMat>0.5&&vMat<1.5){
+    float fres=pow(1.0-max(dot(n,v),0.0),3.0);
+    col=mix(col,uSkyColor*0.85,fres*0.55);
+    float lit=step(0.52,hash21(floor(vWorld.xz*0.75)+vBld*13.1+floor(vWorld.y*0.55)));
+    col+=vec3(1.0,0.82,0.55)*lit*uNight*1.1;}
+  if(vMat>2.5&&vMat<3.5){col+=vColor*(1.4+uNight*3.2);}
+  if(vMat>3.5&&vMat<4.5){vec2 uv=(vWorld.xz-uAOBounds.xy)/(uAOBounds.zw-uAOBounds.xy);float ao=texture(uAO,uv).r;col*=mix(0.72,1.0,ao);}
+  if(vBld>0.5){
+    float sel=1.0-step(0.5,abs(vBld-uSelected));float hov=1.0-step(0.5,abs(vBld-uHover));
+    float rim=pow(1.0-max(dot(n,v),0.0),2.0);
+    col+=vec3(0.95,0.68,0.28)*sel*(0.16+rim*0.55)+vec3(0.25,0.85,0.6)*hov*0.14;}
+  col=applyFog(col,length(uCamPos-vWorld));
+  if(uWire>0.5)col=vec3(0.10,0.34,0.29);
+  outColor=vec4(col,1.0);}`;
+const VS_SHADOW=`#version 300 es
+layout(location=0) in vec3 aPos;layout(location=4) in float aBld;
+uniform mat4 uLightVP,uModel;uniform float uHeight;
+void main(){vec3 p=aPos;if(aBld>0.5)p.y*=uHeight;gl_Position=uLightVP*uModel*vec4(p,1.0);}`;
+const FS_EMPTY=`#version 300 es
+precision mediump float;out vec4 o;void main(){o=vec4(1.0);}`;
+const VS_TREE=`#version 300 es
+layout(location=0) in vec3 aPos;layout(location=1) in vec3 aNormal;layout(location=2) in vec3 aColor;
+layout(location=6) in vec3 iOffset;layout(location=7) in vec3 iScale;layout(location=8) in vec3 iColor;layout(location=9) in float iPhase;
+uniform mat4 uProj,uView,uLightVP;uniform float uTime,uWind;
+out vec3 vWorld,vNormal,vColor;out vec4 vShadow;
+void main(){vec3 p=aPos*iScale;p.x+=sin(uTime*0.8+iPhase+iOffset.x*0.05)*0.14*p.y*uWind;
+vec3 wp=p+iOffset;vWorld=wp;vNormal=aNormal;vColor=aPos.y<1.6?aColor:iColor;
+vShadow=uLightVP*vec4(wp,1.0);gl_Position=uProj*uView*vec4(wp,1.0);}`;
+const FS_TREE=`#version 300 es
+precision highp float;in vec3 vWorld,vNormal,vColor;in vec4 vShadow;${LIGHT_GLSL}out vec4 outColor;
+void main(){vec3 n=normalize(vNormal);float sh=getShadow(vShadow,n);
+vec3 hemi=mix(uGroundColor,uSkyColor,n.y*0.5+0.5);float diff=max(dot(n,uSunDir),0.0);
+vec3 col=vColor*(hemi*0.42+uSunColor*diff*sh*1.2);
+vec2 uv=(vWorld.xz-uAOBounds.xy)/(uAOBounds.zw-uAOBounds.xy);float ao=texture(uAO,uv).r;col*=mix(0.7,1.0,ao);
+col=applyFog(col,length(uCamPos-vWorld));outColor=vec4(col,1.0);}`;
+const VS_DYN=`#version 300 es
+layout(location=0) in vec3 aPos;layout(location=1) in vec3 aNormal;layout(location=2) in vec3 aColor;layout(location=3) in float aMat;layout(location=5) in float aEmis;
+layout(location=6) in vec3 iOffset;layout(location=7) in float iAngle;layout(location=8) in vec3 iColor;
+uniform mat4 uProj,uView,uLightVP;out vec3 vWorld,vNormal,vColor;out float vMat,vEmis;out vec4 vShadow;
+void main(){float c=cos(iAngle),s=sin(iAngle);vec3 p=vec3(aPos.x*c+aPos.z*s,aPos.y,-aPos.x*s+aPos.z*c);
+vec3 nn=vec3(aNormal.x*c+aNormal.z*s,aNormal.y,-aNormal.x*s+aNormal.z*c);
+vec3 wp=p+iOffset;vWorld=wp;vNormal=nn;vColor=aMat>2.5?aColor:iColor;vMat=aMat;vEmis=aEmis;
+vShadow=uLightVP*vec4(wp,1.0);gl_Position=uProj*uView*vec4(wp,1.0);}`;
+const FS_DYN=`#version 300 es
+precision highp float;in vec3 vWorld,vNormal,vColor;in float vMat,vEmis;in vec4 vShadow;${LIGHT_GLSL}out vec4 outColor;
+void main(){vec3 n=normalize(vNormal);float sh=getShadow(vShadow,n);
+vec3 hemi=mix(uGroundColor,uSkyColor,n.y*0.5+0.5);float diff=max(dot(n,uSunDir),0.0);
+vec3 col=vColor*(hemi*0.42+uSunColor*diff*sh*1.2);
+if(vEmis>0.5)col+=vColor*(0.8+uNight*2.5);
+col=applyFog(col,length(uCamPos-vWorld));outColor=vec4(col,1.0);}`;
+const VS_WATER=`#version 300 es
+layout(location=0) in vec3 aPos;layout(location=1) in vec3 aNormal;layout(location=2) in vec3 aColor;layout(location=3) in float aDepth;
+uniform mat4 uProj,uView,uLightVP;out vec3 vWorld,vNormal,vColor;out float vDepth;out vec4 vShadow;
+void main(){vWorld=aPos;vNormal=aNormal;vColor=aColor;vDepth=aDepth;vShadow=uLightVP*vec4(aPos,1.0);gl_Position=uProj*uView*vec4(aPos,1.0);}`;
+const FS_WATER=`#version 300 es
+precision highp float;in vec3 vWorld,vNormal,vColor;in float vDepth;in vec4 vShadow;${LIGHT_GLSL}
+uniform vec3 uSkyBottom;out vec4 outColor;
+float whash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float wnoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
+return mix(mix(whash(i),whash(i+vec2(1,0)),f.x),mix(whash(i+vec2(0,1)),whash(i+vec2(1,1)),f.x),f.y);}
+float waveH(vec2 p,float t){float h=0.0;
+h+=sin(p.x*0.55+t*1.1)*0.35;
+h+=sin(p.y*0.42-t*0.8)*0.30;
+h+=sin((p.x+p.y)*0.30+t*0.6)*0.25;
+h+=sin((p.x-p.y)*0.75+t*1.7)*0.12;
+h+=(wnoise(p*0.9+vec2(t*0.25,-t*0.18))-0.5)*0.55;
+h+=(wnoise(p*2.3-vec2(t*0.4,t*0.3))-0.5)*0.25;
+return h;}
+void main(){vec2 p=vWorld.xz;float t=uTime;
+float d=clamp(vDepth,0.0,1.0);
+float e=0.25;float h0=waveH(p,t);float hx=waveH(p+vec2(e,0.0),t);float hz=waveH(p+vec2(0.0,e),t);
+float amp=mix(0.03,0.10,d);
+vec3 n=normalize(vec3(-(hx-h0)/e*amp,1.0,-(hz-h0)/e*amp));
+float lod=smoothstep(350.0,900.0,length(uCamPos-vWorld));
+n=normalize(mix(n,vec3(0.0,1.0,0.0),lod*0.85));
+vec3 v=normalize(uCamPos-vWorld);
+float sh=mix(getShadow(vShadow,n),1.0,lod*0.8);
+vec3 shallow=mix(vec3(0.22,0.38,0.34),vColor*1.5,0.5);
+vec3 deep=vColor*0.8+vec3(0.0,0.03,0.04);
+vec3 body=mix(shallow,deep,smoothstep(0.0,0.85,d));
+body+=uSkyColor*0.08;
+float ca=wnoise(p*1.7+vec2(t*0.35,t*0.22))*wnoise(p*2.6-vec2(t*0.28,t*0.4));
+ca=pow(ca*1.9,3.0);
+body+=vec3(0.35,0.5,0.45)*ca*(1.0-d)*0.25*sh;
+vec3 r=reflect(-v,n);
+float ry=clamp(r.y*0.5+0.5,0.0,1.0);
+vec3 sky=mix(uSkyBottom,uSkyColor,pow(ry,0.8));
+float fres=0.02+0.98*pow(1.0-max(dot(n,v),0.0),5.0);
+fres=mix(fres*0.55,fres,0.35+0.65*d);
+vec3 col=mix(body,sky,clamp(fres,0.0,1.0));
+vec3 hv=normalize(uSunDir+v);
+float spec=pow(max(dot(n,hv),0.0),120.0);
+float glint=pow(max(dot(n,hv),0.0),600.0);
+col+=uSunColor*(spec*0.35+glint*0.9)*sh*(1.0-uNight*0.7);
+col+=uSunColor*max(dot(n,uSunDir),0.0)*0.06*sh;
+float foamBand=1.0-smoothstep(0.0,0.10,d);
+float fn=wnoise(p*3.5+vec2(t*0.5,-t*0.35));
+float foam=foamBand*smoothstep(0.55,0.85,fn+0.25*sin(t*1.3+p.x*0.8+p.y*0.6))*(1.0-lod);
+col=mix(col,vec3(0.92,0.96,0.95),foam*0.35);
+float nl=wnoise(vec2(p.x*1.6,p.y*2.6-t*0.6));
+col+=vec3(0.9,0.85,0.7)*pow(nl,10.0)*uNight*0.6*(1.0-lod);
+col=applyFog(col,length(uCamPos-vWorld));
+outColor=vec4(col,1.0);}`;
+const VS_FULL=`#version 300 es
+layout(location=0) in vec2 aPos;out vec2 vUv;void main(){vUv=aPos*0.5+0.5;gl_Position=vec4(aPos,0.0,1.0);}`;
+const FS_SKY=`#version 300 es
+precision highp float;in vec2 vUv;uniform vec3 uTop,uBottom;uniform vec2 uSunScreen;uniform float uNight,uTime,uAspect;out vec4 o;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+void main(){vec3 col=mix(uBottom,uTop,pow(vUv.y,0.85));
+vec2 d=(vUv-uSunScreen)*vec2(uAspect,1.0);float sun=exp(-dot(d,d)*18.0);
+col+=vec3(1.0,0.85,0.6)*sun*(1.0-uNight)*0.5;
+float st=step(0.9985,hash(floor(vUv*vec2(900.0,500.0))));
+col+=vec3(st)*uNight*0.7*(0.6+0.4*sin(uTime*2.0+hash(floor(vUv*900.0))*6.28));
+col+=(hash(vUv*vec2(1920.0,1080.0)+uTime)-0.5)*0.012;
+o=vec4(col,1.0);}`;
+const FS_BRIGHT=`#version 300 es
+precision mediump float;in vec2 vUv;uniform sampler2D uTex;out vec4 o;
+void main(){vec3 c=texture(uTex,vUv).rgb;float l=dot(c,vec3(0.299,0.587,0.114));o=vec4(c*smoothstep(0.62,1.05,l),1.0);}`;
+const FS_BLUR=`#version 300 es
+precision mediump float;in vec2 vUv;uniform sampler2D uTex;uniform vec2 uDir;out vec4 o;
+void main(){vec3 c=texture(uTex,vUv).rgb*0.227027;
+c+=(texture(uTex,vUv+uDir*1.3846).rgb+texture(uTex,vUv-uDir*1.3846).rgb)*0.316216;
+c+=(texture(uTex,vUv+uDir*3.2308).rgb+texture(uTex,vUv-uDir*3.2308).rgb)*0.070270;
+o=vec4(c,1.0);}`;
+const FS_COMP=`#version 300 es
+precision highp float;in vec2 vUv;uniform sampler2D uScene,uBloom;uniform float uBloomStr,uNight,uTime;out vec4 o;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+void main(){vec3 c=texture(uScene,vUv).rgb+texture(uBloom,vUv).rgb*uBloomStr;
+c=1.0-exp(-c*1.15);
+float luma=dot(c,vec3(0.299,0.587,0.114));c=mix(vec3(luma),c,1.30);
+vec2 q=vUv-0.5;float vig=1.0-dot(q,q)*0.55;c*=vig;
+c=pow(c,vec3(1.0/2.2));
+c+=(hash(vUv*vec2(1920.0,1080.0)+fract(uTime))-0.5)*0.015;
+o=vec4(c,1.0);}`;
+const VS_LINE=`#version 300 es
+layout(location=0) in vec3 aPos;uniform mat4 uProj,uView;void main(){gl_Position=uProj*uView*vec4(aPos,1.0);}`;
+const FS_LINE=`#version 300 es
+precision mediump float;uniform vec3 uColor;out vec4 o;void main(){o=vec4(uColor,1.0);}`;
+const VS_POINT=`#version 300 es
+layout(location=0) in vec3 aPos;layout(location=1) in float aSeed;
+uniform mat4 uProj,uView;uniform float uTime,uNight;out float vA;out float vN;
+void main(){vec3 p=aPos;p.x+=sin(uTime*0.3+aSeed*6.28)*3.0;p.y+=sin(uTime*0.5+aSeed*12.0)*1.5;p.z+=cos(uTime*0.25+aSeed*9.0)*3.0;
+vec4 mv=uView*vec4(p,1.0);gl_Position=uProj*mv;gl_PointSize=clamp(90.0/-mv.z,1.0,4.0);vA=(0.35+0.3*sin(uTime+aSeed*20.0))*(1.0-smoothstep(400.0,900.0,-mv.z));vN=uNight;}`;
+const FS_POINT=`#version 300 es
+precision mediump float;in float vA;in float vN;out vec4 o;
+void main(){vec2 d=gl_PointCoord-0.5;float a=smoothstep(0.5,0.1,length(d))*vA;
+vec3 c=mix(vec3(1.0,0.98,0.9),vec3(1.0,0.85,0.45),vN);o=vec4(c*(0.6+vN*1.5),a);}`;
+
+function makeProg(gl,vs,fs,name){
+  function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS)){const log=gl.getShaderInfoLog(o);console.error(name,t===gl.VERTEX_SHADER?'VS':'FS',log);throw new Error(name+' shader: '+log);}return o;}
+  const p=gl.createProgram();gl.attachShader(p,sh(gl.VERTEX_SHADER,vs));gl.attachShader(p,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(p);
+  if(!gl.getProgramParameter(p,gl.LINK_STATUS)){throw new Error(name+' link: '+gl.getProgramInfoLog(p));}
+  const u={};const n=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);for(let i=0;i<n;i++){const inf=gl.getActiveUniform(p,i);u[inf.name]=gl.getUniformLocation(p,inf.name);}
+  return {p,u};
+}
+function makeMeshVAO(gl,mesh,instBuf,instStride){
+  const vao=gl.createVertexArray();gl.bindVertexArray(vao);
+  const vb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,vb);gl.bufferData(gl.ARRAY_BUFFER,mesh.verts,gl.STATIC_DRAW);
+  const stride=12*4;const attrs=[[0,3,0],[1,3,12],[2,3,24],[3,1,36],[4,1,40],[5,1,44]];
+  for(const [loc,sz,off] of attrs){gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,sz,gl.FLOAT,false,stride,off);}
+  const ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,mesh.idx,gl.STATIC_DRAW);
+  let instCount=0;
+  if(instBuf){const ibuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,ibuf);gl.bufferData(gl.ARRAY_BUFFER,instBuf.data||instBuf,instBuf.dynamic?gl.DYNAMIC_DRAW:gl.STATIC_DRAW);
+    const st=instStride*4;
+    if(instStride===10){const ia=[[6,3,0],[7,3,12],[8,3,24],[9,1,36]];for(const [loc,sz,off] of ia){gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,sz,gl.FLOAT,false,st,off);gl.vertexAttribDivisor(loc,1);}instCount=(instBuf.data||instBuf).length/10;}
+    else if(instStride===8){const ia=[[6,3,0],[7,1,12],[8,3,16]];for(const [loc,sz,off] of ia){gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,sz,gl.FLOAT,false,st,off);gl.vertexAttribDivisor(loc,1);}instCount=(instBuf.data||instBuf).length/8;}
+    vao._instBuf=ibuf;}
+  gl.bindVertexArray(null);
+  return {vao,vb,ib,count:mesh.count,instCount,instBuf:vao._instBuf};
+}
+
+const GL={};
+function initGL(){
+  const canvas=document.getElementById('glcanvas');
+  const gl=canvas.getContext('webgl2',{antialias:true,alpha:false,preserveDrawingBuffer:true,powerPreference:'high-performance'});
+  if(!gl)return false;
+  GL.gl=gl;GL.canvas=canvas;
+  GL.main=makeProg(gl,VS_MAIN,FS_MAIN,'main');
+  GL.shadow=makeProg(gl,VS_SHADOW,FS_EMPTY,'shadow');
+  GL.tree=makeProg(gl,VS_TREE,FS_TREE,'tree');
+  GL.treeShadow=makeProg(gl,VS_TREE,FS_EMPTY,'treeShadow');
+  GL.dyn=makeProg(gl,VS_DYN,FS_DYN,'dyn');
+  GL.waterProg=makeProg(gl,VS_WATER,FS_WATER,'water');
+  GL.sky=makeProg(gl,VS_FULL,FS_SKY,'sky');
+  GL.bright=makeProg(gl,VS_FULL,FS_BRIGHT,'bright');
+  GL.blur=makeProg(gl,VS_FULL,FS_BLUR,'blur');
+  GL.comp=makeProg(gl,VS_FULL,FS_COMP,'comp');
+  GL.line=makeProg(gl,VS_LINE,FS_LINE,'line');
+  GL.point=makeProg(gl,VS_POINT,FS_POINT,'point');
+  // 几何
+  const env=buildEnvironment();
+  const merged=new MB();
+  // 复制 env
+  merged.v=Array.from(env.verts);merged.n=env.vcount;merged.i=Array.from(env.idx);
+  for(const b of buildings)buildBuilding(merged,b);
+  const staticMesh=merged.finalize();
+  GL.static=makeMeshVAO(gl,staticMesh);
+  GL.staticWire={vao:gl.createVertexArray(),count:staticMesh.idx.length*2};
+  gl.bindVertexArray(GL.staticWire.vao);gl.bindBuffer(gl.ARRAY_BUFFER,GL.static.vb);
+  const stride=12*4;for(const [loc,sz,off] of [[0,3,0],[1,3,12],[2,3,24],[3,1,36],[4,1,40],[5,1,44]]){gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,sz,gl.FLOAT,false,stride,off);}
+  const eib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,eib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,edgesFromIdx(staticMesh.idx),gl.STATIC_DRAW);gl.bindVertexArray(null);
+  GL.waterMesh=makeMeshVAO(gl,buildWater());
+  const trees=buildTrees();GL.trees=makeMeshVAO(gl,trees.mesh,{data:trees.inst},10);GL.treeTotal=trees.count;
+  const agents=buildAgents();GL.agents=agents;
+  GL.car=makeMeshVAO(gl,agents.carMesh,{data:agents.carBuf,dynamic:true},8);
+  GL.ped=makeMeshVAO(gl,agents.pedMesh,{data:agents.pedBuf,dynamic:true},8);
+  GL.beam=makeMeshVAO(gl,buildPumpBeam());
+  // 网格线
+  const gridData=buildGrid();GL.grid={vao:gl.createVertexArray(),count:gridData.length/3};
+  gl.bindVertexArray(GL.grid.vao);const gb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,gb);gl.bufferData(gl.ARRAY_BUFFER,gridData,gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,12,0);gl.bindVertexArray(null);
+  // 选择框线
+  GL.sel={vao:gl.createVertexArray(),count:0};gl.bindVertexArray(GL.sel.vao);GL.sel.buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,GL.sel.buf);gl.bufferData(gl.ARRAY_BUFFER,4096,gl.DYNAMIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,12,0);gl.bindVertexArray(null);
+  // 粒子
+  const pn=220,pv=new Float32Array(pn*4);for(let i=0;i<pn;i++){pv[i*4]=rr(BOUNDS.x0,BOUNDS.x1);pv[i*4+1]=rr(3,26);pv[i*4+2]=rr(BOUNDS.z0,BOUNDS.z1);pv[i*4+3]=rnd();}
+  GL.points={vao:gl.createVertexArray(),count:pn};gl.bindVertexArray(GL.points.vao);const pb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,pb);gl.bufferData(gl.ARRAY_BUFFER,pv,gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,16,0);gl.enableVertexAttribArray(1);gl.vertexAttribPointer(1,1,gl.FLOAT,false,16,12);gl.bindVertexArray(null);
+  // 全屏三角形
+  GL.full={vao:gl.createVertexArray()};gl.bindVertexArray(GL.full.vao);const fb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,fb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,8,0);gl.bindVertexArray(null);
+  // AO 纹理
+  const aoCv=bakeAO();GL.aoTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,GL.aoTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,aoCv);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  // 阴影 FBO
+  GL.shadowSize=(window.innerWidth<760?512:1024);
+  GL.shadowTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,GL.shadowTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.DEPTH_COMPONENT24,GL.shadowSize,GL.shadowSize,0,gl.DEPTH_COMPONENT,gl.UNSIGNED_INT,null);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  GL.shadowFBO=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,GL.shadowFBO);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.TEXTURE_2D,GL.shadowTex,0);gl.drawBuffers([gl.NONE]);gl.readBuffer(gl.NONE);
+  if(gl.checkFramebufferStatus(gl.FRAMEBUFFER)!==gl.FRAMEBUFFER_COMPLETE)console.warn('shadow FBO incomplete');
+  gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+  GL.tris=staticMesh.count/3+GL.waterMesh.count/3+trees.mesh.count/3*trees.count+agents.carMesh.count/3*agents.cars.length+agents.pedMesh.count/3*agents.peds.length;
+  GL.shadowDirty=true;GL.proj=M4.ident();GL.view=M4.ident();GL.vp=M4.ident();
+  return true;
+}
+function makeTarget(gl,w,h,depth){
+  const tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,w,h,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  const fbo=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,fbo);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tex,0);
+  let rb=null;if(depth){rb=gl.createRenderbuffer();gl.bindRenderbuffer(gl.RENDERBUFFER,rb);gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT24,w,h);gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rb);}
+  gl.bindFramebuffer(gl.FRAMEBUFFER,null);return {tex,fbo,rb,w,h};
+}
+function resizeGL(){
+  const gl=GL.gl,c=GL.canvas;const dpr=Math.min(window.devicePixelRatio||1,1.6);
+  const w=Math.max(2,Math.floor(c.clientWidth*dpr)),h=Math.max(2,Math.floor(c.clientHeight*dpr));
+  if(c.width===w&&c.height===h&&GL.scene)return;
+  c.width=w;c.height=h;
+  if(GL.scene){for(const t of [GL.scene,GL.bloomA,GL.bloomB]){gl.deleteTexture(t.tex);gl.deleteFramebuffer(t.fbo);if(t.rb)gl.deleteRenderbuffer(t.rb);}}
+  GL.scene=makeTarget(gl,w,h,true);const bw=Math.max(2,w>>1),bh=Math.max(2,h>>1);GL.bloomA=makeTarget(gl,bw,bh,false);GL.bloomB=makeTarget(gl,bw,bh,false);
+}
+/* ---- 状态 ---- */
+const state={
+  hour:16.5,sunEl:32,fog:12,bloom:55,height:1.6,trees:80,speed:1,
+  orbit:false,labels:true,dynamic:true,shadow:true,wire:false,grid:false,
+  selected:-1,hover:-1,view:'panorama',reduced:window.matchMedia('(prefers-reduced-motion: reduce)').matches
+};
+const cam={az:0.61,el:0.82,dist:1240,target:[0,0,-10],tAz:0.61,tEl:0.82,tDist:1240,tTarget:[0,0,-10]};
+const DEFAULT_CAM={az:0.61,el:0.82,dist:1240,target:[0,0,-10]};
+function setCamera(az,el,dist,target){cam.tAz=az;cam.tEl=el;cam.tDist=dist;cam.tTarget=target.slice();}
+function envColors(){
+  const h=state.hour;
+  const keys=[
+    [5,[0.10,0.16,0.29],[0.91,0.66,0.49]],
+    [8,[0.62,0.78,0.91],[0.96,0.90,0.82]],
+    [12,[0.62,0.80,0.92],[0.90,0.94,0.90]],
+    [17,[0.66,0.78,0.88],[0.97,0.85,0.69]],
+    [19,[0.29,0.35,0.54],[0.94,0.63,0.42]],
+    [22,[0.05,0.09,0.19],[0.14,0.20,0.31]]];
+  let a=keys[0],b=keys[keys.length-1];
+  for(let i=0;i<keys.length-1;i++)if(h>=keys[i][0]&&h<=keys[i+1][0]){a=keys[i];b=keys[i+1];break;}
+  const t=smooth(a[0],b[0],h);const top=lerpC(a[1],b[1],t),bot=lerpC(a[2],b[2],t);
+  const night=smooth(18.2,20.2,h)+smooth(7.0,5.4,h);
+  const sunI=h<7||h>19?0.12:(h<9?lerp(0.35,1,(h-7)/2):(h>17?lerp(1,0.3,(h-17)/2):1));
+  const warm=h<9||h>16?1:0.35;
+  const sunCol=[sunI*lerp(1,1.0,warm),sunI*lerp(1,0.82,warm),sunI*lerp(1,0.62,warm)];
+  return {top,bot,night:clamp(night,0,1),sunCol,fog:bot};
+}
+function sunDir(){const el=state.sunEl*Math.PI/180,az=-0.65;return [Math.cos(el)*Math.sin(az),Math.sin(el),Math.cos(el)*Math.cos(az)];}
+function lightVP(){const d=sunDir();const c=[0,0,-40];const e=[c[0]+d[0]*700,c[1]+d[1]*700,c[2]+d[2]*700];
+  const view=M4.lookAt(e,c,[0,1,0]);const proj=M4.ortho(-430,430,-540,540,1,1600);return M4.mul(proj,view);}
+function renderShadow(){
+  const gl=GL.gl;gl.bindFramebuffer(gl.FRAMEBUFFER,GL.shadowFBO);gl.viewport(0,0,GL.shadowSize,GL.shadowSize);
+  gl.clear(gl.DEPTH_BUFFER_BIT);gl.enable(gl.DEPTH_TEST);gl.depthMask(true);gl.disable(gl.BLEND);gl.disable(gl.CULL_FACE);
+  const lvp=lightVP();
+  gl.useProgram(GL.shadow.p);gl.uniformMatrix4fv(GL.shadow.u.uLightVP,false,lvp);gl.uniformMatrix4fv(GL.shadow.u.uModel,false,M4.ident());gl.uniform1f(GL.shadow.u.uHeight,state.height);
+  gl.bindVertexArray(GL.static.vao);gl.drawElements(gl.TRIANGLES,GL.static.count,gl.UNSIGNED_INT,0);
+  gl.useProgram(GL.treeShadow.p);gl.uniformMatrix4fv(GL.treeShadow.u.uProj,false,lvp);gl.uniformMatrix4fv(GL.treeShadow.u.uView,false,M4.ident());gl.uniform1f(GL.treeShadow.u.uTime,0);gl.uniform1f(GL.treeShadow.u.uWind,0);
+  gl.bindVertexArray(GL.trees.vao);gl.drawElementsInstanced(gl.TRIANGLES,GL.trees.count,gl.UNSIGNED_INT,0,Math.floor(GL.treeTotal*state.trees/100));
+  gl.bindVertexArray(null);gl.bindFramebuffer(gl.FRAMEBUFFER,null);GL.shadowDirty=false;GL.lightVP=lvp;
+}
+function setLightUniforms(pr,env){
+  const gl=GL.gl,u=pr.u;
+  if(u.uSunDir)gl.uniform3fv(u.uSunDir,sunDir());if(u.uSunColor)gl.uniform3fv(u.uSunColor,env.sunCol);
+  if(u.uSkyColor)gl.uniform3fv(u.uSkyColor,env.top);if(u.uSkyBottom)gl.uniform3fv(u.uSkyBottom,env.bot);if(u.uGroundColor)gl.uniform3fv(u.uGroundColor,[0.28,0.30,0.24]);
+  if(u.uCamPos)gl.uniform3fv(u.uCamPos,GL.eye);if(u.uFogColor)gl.uniform3fv(u.uFogColor,env.fog);
+  if(u.uFogDensity)gl.uniform1f(u.uFogDensity,state.fog/100*0.0009);if(u.uNight)gl.uniform1f(u.uNight,env.night);
+  if(u.uShadowOn)gl.uniform1f(u.uShadowOn,state.shadow?1:0);if(u.uTime)gl.uniform1f(u.uTime,GL.time);
+  if(u.uAOBounds)gl.uniform4f(u.uAOBounds,BOUNDS.x0,BOUNDS.z0,BOUNDS.x1,BOUNDS.z1);
+  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,GL.shadowTex);if(u.uShadow)gl.uniform1i(u.uShadow,0);
+  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,GL.aoTex);if(u.uAO)gl.uniform1i(u.uAO,1);
+}
+function updateSelectionLines(){
+  if(!GL.gl)return;
+  const gl=GL.gl;const b=buildings.find(x=>x.id===state.selected);const v=[];
+  if(b)for(const p of b.parts){const cx=mx2x(p.x),cz=my2z(p.y),w=p.w*S/2+1.2,d=p.h*S/2+1.2,y=0.35;
+    v.push(cx-w,y,cz-d,cx+w,y,cz-d,cx+w,y,cz-d,cx+w,y,cz+d,cx+w,y,cz+d,cx-w,y,cz+d,cx-w,y,cz+d,cx-w,y,cz-d);}
+  gl.bindBuffer(gl.ARRAY_BUFFER,GL.sel.buf);if(v.length)gl.bufferSubData(gl.ARRAY_BUFFER,0,new Float32Array(v));GL.sel.count=v.length/3;
+}
+function renderScene(){
+  const gl=GL.gl,env=envColors();
+  gl.bindFramebuffer(gl.FRAMEBUFFER,GL.scene.fbo);gl.viewport(0,0,GL.scene.w,GL.scene.h);
+  gl.depthMask(true);gl.clear(gl.DEPTH_BUFFER_BIT);
+  gl.disable(gl.DEPTH_TEST);gl.depthMask(false);gl.disable(gl.BLEND);gl.disable(gl.CULL_FACE);
+  // sky
+  gl.useProgram(GL.sky.p);gl.uniform3fv(GL.sky.u.uTop,env.top);gl.uniform3fv(GL.sky.u.uBottom,env.bot);
+  gl.uniform1f(GL.sky.u.uNight,env.night);gl.uniform1f(GL.sky.u.uTime,GL.time);gl.uniform1f(GL.sky.u.uAspect,GL.scene.w/GL.scene.h);
+  const sd=sunDir();const sp=project([GL.eye[0]+sd[0]*1500,GL.eye[1]+sd[1]*1500,GL.eye[2]+sd[2]*1500],true);
+  gl.uniform2f(GL.sky.u.uSunScreen,sp?sp.nx*0.5+0.5:0.7,sp?0.5-sp.ny*0.5:0.8);
+  gl.bindVertexArray(GL.full.vao);gl.drawArrays(gl.TRIANGLES,0,3);
+  gl.enable(gl.DEPTH_TEST);gl.depthMask(true);gl.disable(gl.CULL_FACE);
+  // static
+  gl.useProgram(GL.main.p);setLightUniforms(GL.main,env);
+  gl.uniformMatrix4fv(GL.main.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.main.u.uView,false,GL.view);
+  gl.uniformMatrix4fv(GL.main.u.uLightVP,false,GL.lightVP||lightVP());gl.uniform1f(GL.main.u.uHeight,state.height);
+  gl.uniform1f(GL.main.u.uSelected,state.selected);gl.uniform1f(GL.main.u.uHover,state.hover);gl.uniform1f(GL.main.u.uWire,state.wire?1:0);
+  gl.uniformMatrix4fv(GL.main.u.uModel,false,M4.ident());
+  if(state.wire){gl.bindVertexArray(GL.staticWire.vao);gl.drawElements(gl.LINES,GL.staticWire.count,gl.UNSIGNED_INT,0);}
+  else{gl.bindVertexArray(GL.static.vao);gl.drawElements(gl.TRIANGLES,GL.static.count,gl.UNSIGNED_INT,0);}
+  // 抽油机游梁
+  if(!state.wire){const px=mx2x(310),pz=my2z(157);const ang=Math.sin(GL.time*0.9*state.speed)*0.22;
+    const model=M4.mul(M4.trans(px,4.6*state.height,pz),M4.rotZ(ang));
+    gl.uniformMatrix4fv(GL.main.u.uModel,false,model);gl.bindVertexArray(GL.beam.vao);gl.drawElements(gl.TRIANGLES,GL.beam.count,gl.UNSIGNED_INT,0);gl.uniformMatrix4fv(GL.main.u.uModel,false,M4.ident());}
+  // trees
+  if(!state.wire){gl.useProgram(GL.tree.p);setLightUniforms(GL.tree,env);
+    gl.uniformMatrix4fv(GL.tree.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.tree.u.uView,false,GL.view);gl.uniformMatrix4fv(GL.tree.u.uLightVP,false,GL.lightVP||lightVP());
+    gl.uniform1f(GL.tree.u.uTime,GL.time);gl.uniform1f(GL.tree.u.uWind,state.reduced?0:1);
+    gl.bindVertexArray(GL.trees.vao);gl.drawElementsInstanced(gl.TRIANGLES,GL.trees.count,gl.UNSIGNED_INT,0,Math.floor(GL.treeTotal*state.trees/100));}
+  // dynamics
+  if(state.dynamic&&!state.wire){gl.useProgram(GL.dyn.p);setLightUniforms(GL.dyn,env);
+    gl.uniformMatrix4fv(GL.dyn.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.dyn.u.uView,false,GL.view);gl.uniformMatrix4fv(GL.dyn.u.uLightVP,false,GL.lightVP||lightVP());
+    gl.bindVertexArray(GL.car.vao);gl.bindBuffer(gl.ARRAY_BUFFER,GL.car.instBuf);gl.bufferSubData(gl.ARRAY_BUFFER,0,GL.agents.carBuf);gl.drawElementsInstanced(gl.TRIANGLES,GL.car.count,gl.UNSIGNED_INT,0,GL.agents.cars.length);
+    gl.bindVertexArray(GL.ped.vao);gl.bindBuffer(gl.ARRAY_BUFFER,GL.ped.instBuf);gl.bufferSubData(gl.ARRAY_BUFFER,0,GL.agents.pedBuf);gl.drawElementsInstanced(gl.TRIANGLES,GL.ped.count,gl.UNSIGNED_INT,0,GL.agents.peds.length);}
+  // water
+  if(!state.wire){gl.useProgram(GL.waterProg.p);setLightUniforms(GL.waterProg,env);
+    gl.uniformMatrix4fv(GL.waterProg.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.waterProg.u.uView,false,GL.view);gl.uniformMatrix4fv(GL.waterProg.u.uLightVP,false,GL.lightVP||lightVP());
+    gl.bindVertexArray(GL.waterMesh.vao);gl.enable(gl.POLYGON_OFFSET_FILL);gl.polygonOffset(-2,-2);gl.drawElements(gl.TRIANGLES,GL.waterMesh.count,gl.UNSIGNED_INT,0);gl.disable(gl.POLYGON_OFFSET_FILL);}
+  // particles
+  if(!state.wire&&!state.reduced){gl.useProgram(GL.point.p);gl.uniformMatrix4fv(GL.point.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.point.u.uView,false,GL.view);gl.uniform1f(GL.point.u.uTime,GL.time);gl.uniform1f(GL.point.u.uNight,env.night);
+    gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE);gl.depthMask(false);gl.bindVertexArray(GL.points.vao);gl.drawArrays(gl.POINTS,0,GL.points.count);gl.depthMask(true);gl.disable(gl.BLEND);}
+  // grid + selection
+  gl.disable(gl.CULL_FACE);
+  if(state.grid){gl.useProgram(GL.line.p);gl.uniformMatrix4fv(GL.line.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.line.u.uView,false,GL.view);gl.uniform3f(GL.line.u.uColor,0.15,0.35,0.3);gl.bindVertexArray(GL.grid.vao);gl.drawArrays(gl.LINES,0,GL.grid.count);}
+  if(GL.sel.count>0){gl.useProgram(GL.line.p);gl.uniformMatrix4fv(GL.line.u.uProj,false,GL.proj);gl.uniformMatrix4fv(GL.line.u.uView,false,GL.view);gl.uniform3f(GL.line.u.uColor,0.85,0.55,0.2);gl.bindVertexArray(GL.sel.vao);gl.drawArrays(gl.LINES,0,GL.sel.count);}
+  gl.bindVertexArray(null);
+  // post
+  gl.disable(gl.DEPTH_TEST);gl.depthMask(false);
+  gl.bindFramebuffer(gl.FRAMEBUFFER,GL.bloomA.fbo);gl.viewport(0,0,GL.bloomA.w,GL.bloomA.h);
+  gl.useProgram(GL.bright.p);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,GL.scene.tex);gl.uniform1i(GL.bright.u.uTex,0);gl.bindVertexArray(GL.full.vao);gl.drawArrays(gl.TRIANGLES,0,3);
+  gl.useProgram(GL.blur.p);gl.uniform1i(GL.blur.u.uTex,0);
+  for(let i=0;i<2;i++){
+    gl.bindFramebuffer(gl.FRAMEBUFFER,GL.bloomB.fbo);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,GL.bloomA.tex);gl.uniform2f(GL.blur.u.uDir,1.4/GL.bloomA.w,0);gl.drawArrays(gl.TRIANGLES,0,3);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,GL.bloomA.fbo);gl.bindTexture(gl.TEXTURE_2D,GL.bloomB.tex);gl.uniform2f(GL.blur.u.uDir,0,1.4/GL.bloomA.h);gl.drawArrays(gl.TRIANGLES,0,3);}
+  gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,GL.canvas.width,GL.canvas.height);
+  gl.useProgram(GL.comp.p);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,GL.scene.tex);gl.uniform1i(GL.comp.u.uScene,0);
+  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,GL.bloomA.tex);gl.uniform1i(GL.comp.u.uBloom,1);
+  gl.uniform1f(GL.comp.u.uBloomStr,state.bloom/100*0.9);gl.uniform1f(GL.comp.u.uNight,env.night);gl.uniform1f(GL.comp.u.uTime,GL.time);
+  gl.drawArrays(gl.TRIANGLES,0,3);gl.bindVertexArray(null);
+}
+function project(p,ndcOnly){
+  const m=GL.vp;const x=p[0],y=p[1],z=p[2];
+  const cw=m[3]*x+m[7]*y+m[11]*z+m[15];if(cw<=0.001)return null;
+  const cx=(m[0]*x+m[4]*y+m[8]*z+m[12])/cw,cy=(m[1]*x+m[5]*y+m[9]*z+m[13])/cw;
+  if(ndcOnly)return {nx:cx,ny:cy};
+  const c=GL.canvas;return {x:(cx*0.5+0.5)*c.clientWidth,y:(0.5-cy*0.5)*c.clientHeight,nx:cx,ny:cy};
+}
+function updateCamera(dt){
+  const k=1-Math.exp(-dt*8);
+  if(state.orbit&&!state.reduced&&!GL.dragging){cam.tAz+=dt*0.06*state.speed;}
+  cam.az+=(cam.tAz-cam.az)*k;cam.el+=(cam.tEl-cam.el)*k;cam.dist+=(cam.tDist-cam.dist)*k;
+  for(let i=0;i<3;i++)cam.target[i]+=(cam.tTarget[i]-cam.target[i])*k;
+  const ce=Math.cos(cam.el);GL.eye=[cam.target[0]+Math.sin(cam.az)*ce*cam.dist,cam.target[1]+Math.sin(cam.el)*cam.dist,cam.target[2]+Math.cos(cam.az)*ce*cam.dist];
+  GL.view=M4.lookAt(GL.eye,cam.target,[0,1,0]);
+  GL.proj=M4.persp(38*Math.PI/180,GL.canvas.clientWidth/Math.max(1,GL.canvas.clientHeight),6,4000);
+  GL.vp=M4.mul(GL.proj,GL.view);
+}
+/* ---- 拾取 ---- */
+const _aabb=[];
+function buildAABBs(){for(const b of buildings){const boxes=[];for(const p of b.parts){const cx=mx2x(p.x),cz=my2z(p.y),w=p.w*S/2,d=p.h*S/2;const h=p.field?2:(p.gate?5:(p.f||5)*1.8);boxes.push([cx-w,0,cz-d,cx+w,h,cz+d]);}_aabb.push({id:b.id,boxes});}}
+function rayFromScreen(sx,sy){
+  const c=GL.canvas;const nx=sx/c.clientWidth*2-1,ny=1-sy/c.clientHeight*2;
+  const inv=M4.inv(GL.vp);
+  function un(x,y,z){const m=inv;const w=m[3]*x+m[7]*y+m[11]*z+m[15];return [(m[0]*x+m[4]*y+m[8]*z+m[12])/w,(m[1]*x+m[5]*y+m[9]*z+m[13])/w,(m[2]*x+m[6]*y+m[10]*z+m[14])/w];}
+  const p0=un(nx,ny,-1),p1=un(nx,ny,1);const d=[p1[0]-p0[0],p1[1]-p0[1],p1[2]-p0[2]];const l=Math.hypot(...d);return {o:GL.eye,d:[d[0]/l,d[1]/l,d[2]/l]};
+}
+function pick(sx,sy){
+  const {o,d}=rayFromScreen(sx,sy);let best=null,bt=1e9;
+  for(const a of _aabb)for(const bx of a.boxes){
+    const y1=bx[4]*state.height;let tmin=-1e9,tmax=1e9;let ok=true;
+    const mn=[bx[0],bx[1],bx[2]],mx=[bx[3],y1,bx[5]];
+    for(let i=0;i<3;i++){if(Math.abs(d[i])<1e-8){if(o[i]<mn[i]||o[i]>mx[i]){ok=false;break;}}else{let t1=(mn[i]-o[i])/d[i],t2=(mx[i]-o[i])/d[i];if(t1>t2){const tmp=t1;t1=t2;t2=tmp;}tmin=Math.max(tmin,t1);tmax=Math.min(tmax,t2);if(tmin>tmax){ok=false;break;}}}
+    if(ok&&tmax>0){const t=tmin>0?tmin:tmax;if(t<bt){bt=t;best=a.id;}}}
+  return best;
+}
+
+'use strict';
+/* ================= UI / 交互 / 主循环 ================= */
+const OFFLINE_SOURCE='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+const $=s=>document.querySelector(s);
+const canvas=$('#glcanvas'),viewport=$('#viewport'),labelsEl=$('#labels'),tooltip=$('#tooltip');
+let GL_OK=false,rafId=0,lastT=0,fpsAcc=0,fpsN=0,fpsVal=0,hoverMouse=null,hoverTimer=0;
+const labelEls=new Map();
+
+function toast(msg){const t=$('#toast');$('#toast-text').textContent=msg;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2200);}
+function download(name,blob){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}
+
+/* ---- 列表 ---- */
+const zoneOrder=['A','B','C','N','W'];
+function listEntries(){
+  const arr=buildings.filter(b=>b.list).map(b=>({type:'b',b}));
+  for(const g of listGroups)arr.push({type:'g',g});
+  return arr;
+}
+function entryText(e){return e.type==='b'?(e.b.name+' '+e.b.code+' '+e.b.en+' '+e.b.keywords):(e.g.name+' '+e.g.keywords);}
+function renderList(){
+  const q=$('#search').value.trim().toLowerCase();const cat=document.querySelector('.chip.active').dataset.cat;
+  const list=$('#building-list');list.innerHTML='';let total=0;
+  for(const z of zoneOrder){
+    const items=listEntries().filter(e=>{const o=e.type==='b'?e.b:e.g;return o.zone===z&&(cat==='all'||o.cat===cat)&&(!q||entryText(e).toLowerCase().includes(q));});
+    if(!items.length)continue;
+    const gh=document.createElement('div');gh.className='list-group';gh.textContent=ZONE[z];list.appendChild(gh);
+    for(const e of items){total++;const o=e.type==='b'?e.b:e.g;
+      const btn=document.createElement('button');btn.className='b-item';btn.dataset.key=e.type==='b'?'b'+o.id:'g'+o.key;btn.setAttribute('role','option');
+      btn.innerHTML=`<span class="b-code">${o.code}</span><span class="b-name">${o.name}<small>${CAT[o.cat].name}${e.type==='b'?' · '+o.en:''}</small></span><span class="b-cat cat-${o.cat}"></span>`;
+      btn.addEventListener('click',()=>{selectEntry(e);if(window.innerWidth<=980)closeDrawer();});
+      list.appendChild(btn);}
+  }
+  if(!total)list.innerHTML='<div class="list-empty">未找到匹配的建筑或空间节点</div>';
+  $('#stat-buildings').textContent=buildings.length+plazas.length;
+}
+function markSelected(key){document.querySelectorAll('.b-item').forEach(el=>el.classList.toggle('selected',el.dataset.key===key));}
+function showDetail(o,kind){
+  $('#detail-name').textContent=o.name;
+  $('#detail-meta').innerHTML=`<span class="tag zone">${ZONE[o.zone]||o.zone}</span><span class="tag">${CAT[o.cat].name}</span>${o.code&&o.code!=='门'?`<span class="tag">编号 ${o.code}</span>`:''}${kind==='b'?`<span class="tag">${o.parts.reduce((s,p)=>s+(p.f||0),0)} 层 · 示意</span>`:''}`;
+  $('#detail-desc').textContent=o.desc;$('#detail-card').classList.add('show');
+}
+function selectEntry(e){
+  if(e.type==='b'){selectBuilding(e.b.id,true);}
+  else{const g=e.g;state.selected=-1;updateSelectionLines();markSelected('g'+g.key);showDetail(g,'g');
+    const bs=buildings.filter(b=>g.ids.includes(b.id));focusBounds(bs);toast('已聚焦 '+g.name);}
+}
+function selectBuilding(id,focus){
+  const b=buildings.find(x=>x.id===id);if(!b)return;
+  state.selected=id;updateSelectionLines();markSelected('b'+id);showDetail(b,'b');
+  document.querySelectorAll('.label').forEach(l=>l.classList.toggle('selected',l.dataset.id==String(id)));
+  if(focus)focusBounds([b]);
+}
+function focusBounds(bs){
+  let x0=1e9,x1=-1e9,z0=1e9,z1=-1e9,h=0;
+  for(const b of bs)for(const p of b.parts){const cx=mx2x(p.x),cz=my2z(p.y);x0=Math.min(x0,cx-p.w*S/2);x1=Math.max(x1,cx+p.w*S/2);z0=Math.min(z0,cz-p.h*S/2);z1=Math.max(z1,cz+p.h*S/2);h=Math.max(h,(p.f||2)*1.8);}
+  const cx=(x0+x1)/2,cz=(z0+z1)/2;const ext=Math.max(x1-x0,z1-z0);
+  setCamera(cam.tAz,0.62,clamp(ext*3.1,170,620),[cx,h*state.height*0.35,cz]);
+  setViewTab(null);$('#mode-name').textContent='建筑聚焦';$('#mode-desc').textContent=bs.length>1?'组团视角':'双击建筑可再次聚焦';
+}
+function clearSelection(){state.selected=-1;updateSelectionLines();markSelected('');$('#detail-card').classList.remove('show');document.querySelectorAll('.label').forEach(l=>l.classList.remove('selected'));}
+
+/* ---- 视角 ---- */
+function setViewTab(v){document.querySelectorAll('.view-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));}
+function fitDist(){const a=canvas.clientWidth/Math.max(1,canvas.clientHeight);return 1240*Math.max(1,1.08/a);}
+function setView(v){
+  state.view=v;setViewTab(v);clearSelection();
+  if(v==='panorama'){setCamera(DEFAULT_CAM.az,DEFAULT_CAM.el,fitDist(),DEFAULT_CAM.target);$('#mode-name').textContent='三维全景';$('#mode-desc').textContent='拖拽旋转 · 滚轮缩放';}
+  else if(v==='top'){setCamera(0.0,1.50,fitDist()*1.18,[0,0,-40]);$('#mode-name').textContent='平面总览';$('#mode-desc').textContent='正交俯视 · 布局关系';}
+  else if(v==='gate'){setCamera(0.08,0.24,300,[mx2x(290),8,my2z(1310)]);$('#mode-name').textContent='南门视角';$('#mode-desc').textContent='图书馆 · 创业广场轴线';}
+}
+
+/* ---- 标注 ---- */
+function buildLabels(){
+  labelsEl.innerHTML='';labelEls.clear();
+  const items=buildings.filter(b=>b.label).map(b=>({id:String(b.id),name:b.name,b}));
+  for(const p of plazas)items.push({id:p.id,name:p.name,plaza:p});
+  for(const it of items){
+    const el=document.createElement('div');el.className='label'+(it.gate?' gate':'');el.dataset.id=it.id;
+    el.innerHTML=`<span class="label-text">${it.name}</span><span class="label-stem"></span><span class="label-dot"></span>`;
+    el.addEventListener('click',ev=>{ev.stopPropagation();if(it.b)selectBuilding(it.b.id,true);else if(it.plaza){state.selected=-1;updateSelectionLines();showDetail(it.plaza,'p');setCamera(cam.tAz,0.7,360,[mx2x(it.plaza.x),2,my2z(it.plaza.y)]);}});
+    labelsEl.appendChild(el);labelEls.set(it.id,{el,it});
+  }
+}
+const MAJOR_LABELS=['图书馆 · 成都总馆','思学楼','行政楼','博学楼','体育馆','学生活动中心','逸夫工程训练中心','国家重点实验室','南大门','北大门','创业广场','梦溪湖','梦溪湖 · 南湾'];
+function updateLabels(){
+  if(!state.labels){labelsEl.style.display='none';return;}labelsEl.style.display='';
+  const cands=[];
+  for(const [id,{el,it}] of labelEls){
+    let pos;
+    if(it.b){const b=it.b;let cx=0,cz=0,mh=0,n=0;for(const p of b.parts){cx+=mx2x(p.x);cz+=my2z(p.y);mh=Math.max(mh,(p.f||2)*1.8);n++;}pos=[cx/n,mh*state.height+3,cz/n];}
+    else if(it.plaza)pos=[mx2x(it.plaza.x),3,my2z(it.plaza.y)];
+    else pos=it.pos;
+    const s=project(pos);
+    if(!s||s.nx<-1.1||s.nx>1.1||s.ny<-1.1||s.ny>1.1){el.style.opacity='0';el.style.pointerEvents='none';continue;}
+    const isSel=String(state.selected)===id;
+    const isMajor=it.plaza||it.gate||MAJOR_LABELS.includes(it.name);
+    if(cam.dist>980&&!isMajor&&!isSel){el.style.opacity='0';el.style.pointerEvents='none';continue;}
+    const priority=isSel?0:(isMajor?1:2);
+    cands.push({el,s,id,priority,w:it.name.length*11+22,h:26});
+  }
+  cands.sort((a,b)=>a.priority-b.priority||a.s.y-b.s.y);
+  const placed=[];
+  for(const c of cands){
+    const r={x0:c.s.x-c.w/2-4,x1:c.s.x+c.w/2+4,y0:c.s.y-c.h-6,y1:c.s.y+6};
+    let hide=false;
+    if(c.priority>0)for(const q of placed){if(r.x0<q.x1&&r.x1>q.x0&&r.y0<q.y1&&r.y1>q.y0){hide=true;break;}}
+    if(hide){c.el.style.opacity='0';c.el.style.pointerEvents='none';continue;}
+    placed.push(r);c.el.style.opacity='1';c.el.style.pointerEvents='auto';
+    c.el.style.transform=`translate(${c.s.x.toFixed(1)}px,${c.s.y.toFixed(1)}px) translate(-50%,-100%)`;
+  }
+}
+function updateCompassScale(){
+  const a=project([cam.target[0],cam.target[1],cam.target[2]]);const b=project([cam.target[0],cam.target[1],cam.target[2]-50]);
+  if(a&&b){const ang=Math.atan2(b.x-a.x,-(b.y-a.y))*180/Math.PI;$('#compass-arrow').style.transform=`rotate(${ang}deg)`;}
+  const right=[GL.view[0],GL.view[4],GL.view[8]];const p0=project(cam.target),p1=project([cam.target[0]+right[0]*50,cam.target[1]+right[1]*50,cam.target[2]+right[2]*50]);
+  if(p0&&p1){const px=Math.hypot(p1.x-p0.x,p1.y-p0.y);$('#scale-bar').style.width=clamp(px,30,180)+'px';}
+}
+
+/* ---- 控件 ---- */
+function fillRange(el){const p=(el.value-el.min)/(el.max-el.min)*100;el.style.setProperty('--fill',p+'%');}
+function fmtTime(h){const hh=Math.floor(h),mm=Math.round((h-hh)*60);return String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0');}
+function phaseName(h){if(h<7)return '清晨 · 微光';if(h<10)return '上午 · 清透';if(h<14)return '正午 · 明亮';if(h<17)return '午后 · 暖光';if(h<19)return '黄昏 · 金辉';return '夜晚 · 灯火';}
+function syncOutputs(){
+  $('#o-time').value=fmtTime(state.hour);$('#time-big').textContent=fmtTime(state.hour);$('#time-phase').textContent=phaseName(state.hour);
+  $('#o-sun').value=state.sunEl+'°';$('#o-fog').value=state.fog+'%';$('#o-bloom').value=state.bloom+'%';
+  $('#o-height').value='×'+state.height.toFixed(2);$('#o-trees').value=state.trees+'%';$('#o-speed').value=state.speed.toFixed(1)+'×';
+}
+function bindControls(){
+  const map=[['c-time','hour',v=>+v],['c-sun','sunEl',v=>+v],['c-fog','fog',v=>+v],['c-bloom','bloom',v=>+v],['c-height','height',v=>+v],['c-trees','trees',v=>+v],['c-speed','speed',v=>+v]];
+  for(const [id,key,conv] of map){const el=$('#'+id);fillRange(el);el.addEventListener('input',()=>{state[key]=conv(el.value);fillRange(el);syncOutputs();if(key==='sunEl'||key==='height'||key==='trees')GL.shadowDirty=true;});}
+  const az=$('#c-az'),el=$('#c-el');fillRange(az);fillRange(el);
+  az.addEventListener('input',()=>{cam.tAz=+az.value*Math.PI/180;fillRange(az);$('#o-az').value=az.value+'°';setViewTab(null);});
+  el.addEventListener('input',()=>{cam.tEl=+el.value*Math.PI/180;fillRange(el);$('#o-el').value=el.value+'°';setViewTab(null);});
+  const toggles=[['t-orbit','orbit'],['t-labels','labels'],['t-dynamic','dynamic'],['t-shadow','shadow'],['t-wire','wire'],['t-grid','grid']];
+  for(const [id,key] of toggles){const t=$('#'+id);t.checked=state[key];t.addEventListener('change',()=>{state[key]=t.checked;if(key==='shadow')GL.shadowDirty=true;});}
+  $('#btn-reset').addEventListener('click',resetScene);
+  $('#btn-random').addEventListener('click',()=>{setCamera(rr(-Math.PI,Math.PI),rr(0.35,1.2),rr(700,1500),[rr(-40,40),0,rr(-80,40)]);setViewTab(null);$('#mode-name').textContent='随机视角';toast('已切换随机观察视角');});
+  document.querySelectorAll('.view-tabs button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+  $('#view-home').addEventListener('click',()=>setView('panorama'));$('#view-top').addEventListener('click',()=>setView('top'));
+  $('#zoom-in').addEventListener('click',()=>{cam.tDist=clamp(cam.tDist*0.78,120,2600);});$('#zoom-out').addEventListener('click',()=>{cam.tDist=clamp(cam.tDist*1.28,120,2600);});
+  $('#search').addEventListener('input',renderList);
+  document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));c.classList.add('active');renderList();}));
+  $('#detail-close').addEventListener('click',clearSelection);
+  $('#detail-focus').addEventListener('click',()=>{const b=buildings.find(x=>x.id===state.selected);if(b)focusBounds([b]);});
+  $('#detail-overview').addEventListener('click',()=>setView('panorama'));
+  $('#btn-help').addEventListener('click',()=>$('#modal').classList.add('show'));
+  $('#modal-close').addEventListener('click',()=>$('#modal').classList.remove('show'));
+  $('#modal-ok').addEventListener('click',()=>$('#modal').classList.remove('show'));
+  $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')$('#modal').classList.remove('show');});
+  $('#btn-export').addEventListener('click',exportView);
+  $('#btn-download-html').addEventListener('click',()=>{download('西南石油大学成都校区-3D空间导览.html',new Blob([OFFLINE_SOURCE],{type:'text/html'}));toast('离线 HTML 已开始下载');});
+  $('#drawer-toggle').addEventListener('click',openDrawer);$('#scrim').addEventListener('click',closeDrawer);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();$('#search').focus();}
+    if(e.key==='Escape'){$('#modal').classList.remove('show');closeDrawer();clearSelection();}
+    if(e.key===' '&&document.activeElement.tagName!=='INPUT'){e.preventDefault();state.orbit=!state.orbit;$('#t-orbit').checked=state.orbit;}
+  });
+}
+function resetScene(){
+  Object.assign(state,{hour:16.5,sunEl:32,fog:12,bloom:55,height:1.6,trees:80,speed:1,orbit:false,labels:true,dynamic:true,shadow:true,wire:false,grid:false});
+  const vals={ 'c-time':16.5,'c-sun':32,'c-fog':12,'c-bloom':55,'c-height':1.6,'c-trees':80,'c-speed':1,'c-az':35,'c-el':47};
+  for(const [id,v] of Object.entries(vals)){const el=$('#'+id);el.value=v;fillRange(el);}
+  $('#t-orbit').checked=false;$('#t-labels').checked=true;$('#t-dynamic').checked=true;$('#t-shadow').checked=true;$('#t-wire').checked=false;$('#t-grid').checked=false;
+  syncOutputs();GL.shadowDirty=true;setView('panorama');toast('场景已重置');
+}
+function openDrawer(){$('#explorer').classList.add('open');$('#scrim').classList.add('show');}
+function closeDrawer(){$('#explorer').classList.remove('open');$('#scrim').classList.remove('show');}
+
+/* ---- 指针交互 ---- */
+const pointers=new Map();let dragMode=null,dragMoved=0,lastPinch=0,lastMid=null;
+function bindPointer(){
+  canvas.addEventListener('contextmenu',e=>e.preventDefault());
+  canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});dragMoved=0;
+    if(pointers.size===1){dragMode=(e.button===2||e.shiftKey)?'pan':'orbit';canvas.classList.add('dragging');GL.dragging=true;}
+    else if(pointers.size===2){dragMode='pinch';const ps=[...pointers.values()];lastPinch=Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y);lastMid={x:(ps[0].x+ps[1].x)/2,y:(ps[0].y+ps[1].y)/2};}});
+  canvas.addEventListener('pointermove',e=>{
+    const rect=canvas.getBoundingClientRect();hoverMouse={x:e.clientX-rect.left,y:e.clientY-rect.top};
+    if(!pointers.has(e.pointerId))return;
+    const prev=pointers.get(e.pointerId);const dx=e.clientX-prev.x,dy=e.clientY-prev.y;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});dragMoved+=Math.abs(dx)+Math.abs(dy);
+    if(dragMode==='orbit'&&pointers.size===1){cam.tAz-=dx*0.005;cam.tEl=clamp(cam.tEl+dy*0.005,0.21,1.53);setViewTab(null);}
+    else if(dragMode==='pan'&&pointers.size===1){panBy(dx,dy);}
+    else if(dragMode==='pinch'&&pointers.size===2){const ps=[...pointers.values()];const d=Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y);const mid={x:(ps[0].x+ps[1].x)/2,y:(ps[0].y+ps[1].y)/2};
+      if(lastPinch>0)cam.tDist=clamp(cam.tDist*lastPinch/d,120,2600);if(lastMid)panBy(mid.x-lastMid.x,mid.y-lastMid.y);lastPinch=d;lastMid=mid;}
+  });
+  function up(e){if(!pointers.has(e.pointerId))return;pointers.delete(e.pointerId);
+    if(pointers.size===0){canvas.classList.remove('dragging');GL.dragging=false;
+      if(dragMoved<6&&dragMode==='orbit'){const rect=canvas.getBoundingClientRect();const id=pick(e.clientX-rect.left,e.clientY-rect.top);if(id)selectBuilding(id,false);else clearSelection();}
+      dragMode=null;}
+    else if(pointers.size===1){dragMode='orbit';const p=[...pointers.values()][0];lastPinch=0;lastMid=null;}}
+  canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
+  canvas.addEventListener('pointerleave',()=>{hoverMouse=null;state.hover=-1;tooltip.classList.remove('show');canvas.classList.remove('pickable');});
+  canvas.addEventListener('wheel',e=>{e.preventDefault();cam.tDist=clamp(cam.tDist*Math.exp(e.deltaY*0.0012),120,2600);},{passive:false});
+  canvas.addEventListener('dblclick',e=>{const rect=canvas.getBoundingClientRect();const id=pick(e.clientX-rect.left,e.clientY-rect.top);if(id)selectBuilding(id,true);});
+}
+function panBy(dx,dy){
+  const wpp=cam.dist*Math.tan(19*Math.PI/180)*2/canvas.clientHeight;
+  const right=[GL.view[0],GL.view[4],GL.view[8]];const fh=[-Math.sin(cam.az),0,-Math.cos(cam.az)];
+  for(let i=0;i<3;i++)cam.tTarget[i]+=(-right[i]*dx+fh[i]*dy)*wpp;
+  cam.tTarget[0]=clamp(cam.tTarget[0],-260,260);cam.tTarget[2]=clamp(cam.tTarget[2],-520,420);
+}
+function updateHover(dt){
+  hoverTimer+=dt;if(hoverTimer<0.08||!hoverMouse||GL.dragging)return;hoverTimer=0;
+  const id=pick(hoverMouse.x,hoverMouse.y);state.hover=id||-1;
+  if(id){const b=buildings.find(x=>x.id===id);tooltip.textContent=b.name+' · '+b.code;tooltip.style.left=hoverMouse.x+'px';tooltip.style.top=hoverMouse.y+'px';tooltip.classList.add('show');canvas.classList.add('pickable');}
+  else{tooltip.classList.remove('show');canvas.classList.remove('pickable');}
+}
+
+/* ---- 导出 ---- */
+function exportView(){
+  if(!GL_OK){exportFallbackSVG();return;}
+  renderScene();
+  const src=canvas;const band=Math.round(src.height*0.075);const cv=document.createElement('canvas');cv.width=src.width;cv.height=src.height+band;const ctx=cv.getContext('2d');
+  ctx.drawImage(src,0,0);ctx.fillStyle='#f4efe4';ctx.fillRect(0,src.height,cv.width,band);
+  ctx.fillStyle='#1d2a25';ctx.font=`600 ${Math.round(band*0.34)}px "PingFang SC","Microsoft YaHei",sans-serif`;
+  ctx.fillText('西南石油大学 · 成都校区 3D 空间导览',Math.round(band*0.4),src.height+band*0.46);
+  ctx.fillStyle='#7d8a80';ctx.font=`${Math.round(band*0.22)}px sans-serif`;
+  ctx.fillText('示意性空间重建 · 非测绘成果 · '+new Date().toLocaleString('zh-CN'),Math.round(band*0.4),src.height+band*0.78);
+  cv.toBlob(b=>{download('SWPU-成都校区-'+Date.now()+'.png',b);toast('当前视图已导出为 PNG');},'image/png');
+}
+function exportFallbackSVG(){const svg=$('#fallback svg');if(!svg)return;const s=new XMLSerializer().serializeToString(svg);download('SWPU-成都校区-平面导览.svg',new Blob([s],{type:'image/svg+xml'}));toast('平面导览已导出为 SVG');}
+
+/* ---- 平面降级 ---- */
+function initFallback(){
+  const fb=$('#fallback');fb.classList.add('show');$('#loading').classList.add('hide');$('#st-render').textContent='平面导览';labelsEl.style.display='none';
+  const W=620,H=1560;let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 ${W} ${H}" style="background:#e7efe8">`;
+  s+=`<rect x="0" y="60" width="598" height="1476" fill="#9ab87e" stroke="#3c4a42" stroke-width="3"/>`;
+  for(const r of roads){s+=`<polyline points="${r.pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#6d756f" stroke-width="${r.w*2}" stroke-linecap="round"/>`;}
+  for(const p of waterSystem()){s+=`<polygon points="${p.map(q=>[(q[0]/S+MX).toFixed(1),(q[1]/S+MY).toFixed(1)].join(',')).join(' ')}" fill="#4f93b8" opacity="0.9"/>`;}
+  for(const b of buildings)for(const p of b.parts){const col=p.field?'#b05a3c':(p.gate?'#c46a3a':CAT[b.cat].color);
+    s+=`<rect data-id="${b.id}" x="${p.x-p.w/2}" y="${p.y-p.h/2}" width="${p.w}" height="${p.h}" fill="${col}" opacity="0.85" rx="2" style="cursor:pointer"><title>${b.name}</title></rect>`;}
+  s+=`<text x="299" y="1550" text-anchor="middle" font-size="16" fill="#1d2a25">南大门 · 新都大道</text><text x="299" y="80" text-anchor="middle" font-size="14" fill="#1d2a25">北 · 绕城大道</text></svg>`;
+  fb.insertAdjacentHTML('beforeend',s);
+  fb.querySelectorAll('rect[data-id]').forEach(r=>r.addEventListener('click',()=>selectBuilding(+r.dataset.id,false)));
+  document.querySelectorAll('#controls input,#controls button').forEach(el=>el.disabled=true);
+  $('#mode-name').textContent='平面导览';$('#mode-desc').textContent='WebGL2 不可用时的降级视图';
+}
+
+/* ---- 主循环 ---- */
+function frame(t){
+  rafId=requestAnimationFrame(frame);
+  const realDt=(t-lastT)/1000||0.016;const dt=Math.min(0.05,realDt);lastT=t;
+  if(document.hidden)return;
+  GL.time=(GL.time||0)+dt*(state.reduced?0:(state.speed||0.001));
+  resizeGL();updateCamera(dt);
+  if(state.dynamic)updateAgents(GL.agents,dt,state.speed,GL.time);
+  if(GL.shadowDirty)renderShadow();
+  renderScene();updateHover(dt);updateLabels();updateCompassScale();
+  if(!GL.firstFrame){GL.firstFrame=true;$('#loading').classList.add('hide');}
+  // 相机滑杆同步
+  if(document.activeElement!==$('#c-az')){const deg=Math.round(((cam.az*180/Math.PI+180)%360+360)%360-180);$('#c-az').value=deg;$('#o-az').value=deg+'°';fillRange($('#c-az'));}
+  if(document.activeElement!==$('#c-el')){const deg=Math.round(cam.el*180/Math.PI);$('#c-el').value=deg;$('#o-el').value=deg+'°';fillRange($('#c-el'));}
+  fpsAcc+=realDt;fpsN++;if(fpsAcc>=0.5){fpsVal=Math.round(fpsN/fpsAcc);fpsAcc=0;fpsN=0;$('#st-fps').textContent=fpsVal;$('#st-cam').textContent=`${Math.round(cam.az*180/Math.PI)}° / ${Math.round(cam.el*180/Math.PI)}° / ${Math.round(cam.dist)}`;}
+}
+function start(){
+  try{GL_OK=initGL();}catch(err){console.error(err);GL_OK=false;}
+  buildAABBs();renderList();buildLabels();bindControls();syncOutputs();
+  if(!GL_OK){initFallback();bindPointerFallback();return;}
+  $('#st-tris').textContent=Math.round(GL.tris).toLocaleString();
+  resizeGL();cam.dist=cam.tDist=fitDist();GL.shadowDirty=true;bindPointer();
+  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();cancelAnimationFrame(rafId);toast('图形上下文丢失，正在恢复…');});
+  canvas.addEventListener('webglcontextrestored',()=>{try{initGL();resizeGL();GL.shadowDirty=true;updateSelectionLines();lastT=performance.now();rafId=requestAnimationFrame(frame);toast('图形上下文已恢复');}catch(e){console.error(e);initFallback();}});
+  setTimeout(()=>$('#loading').classList.add('hide'),450);
+  lastT=performance.now();rafId=requestAnimationFrame(frame);
+}
+function bindPointerFallback(){$('#search').addEventListener('keydown',e=>{if(e.key==='Enter'){const first=document.querySelector('.b-item');if(first)first.click();}});}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)lastT=performance.now();});
+start();
+window.__SWPU={get state(){return state;},get cam(){return cam;},get glOK(){return GL_OK;},get GL(){return GL;},buildings,plazas,setView,selectBuilding,pick,exportView};
+</script>
+</body>
+</html>

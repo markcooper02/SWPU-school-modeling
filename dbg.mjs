@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch({executablePath:'C:/Users/Mark/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe',args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const p=await b.newPage({viewport:{width:1280,height:800}});
+const errs=[];p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error')errs.push(m.text());});
+await p.goto('file://'+process.cwd()+'/swpu-chengdu-campus-3d.html');
+await p.waitForFunction(()=>document.getElementById('loading').classList.contains('hide'),null,{timeout:120000});
+await p.evaluate(()=>{const s=window.__SWPU.state;s.fog=0;s.bloom=0;s.height=1.6;});
+await p.waitForTimeout(9000);
+const glerr=await p.evaluate(()=>{const gl=document.getElementById('glcanvas').getContext('webgl2');return gl.getError();});
+console.log('glerr',glerr,'errs',errs.slice(0,3));
+await p.screenshot({path:'dbg-nofog.png'});
+await b.close();

@@ -1,0 +1,10 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch({executablePath:'C:/Users/Mark/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe',args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const m=await b.newPage({viewport:{width:390,height:844}});m.setDefaultTimeout(90000);
+const errs=[];m.on('pageerror',e=>errs.push(e.message));
+await m.goto('file://'+process.cwd()+'/swpu-chengdu-campus-3d.html');
+await m.waitForFunction(()=>document.getElementById('loading').classList.contains('hide'),null,{timeout:120000});
+await m.waitForTimeout(4000);
+console.log(JSON.stringify(await m.evaluate(()=>({dist:Math.round(window.__SWPU.cam.dist),overflow:document.documentElement.scrollWidth>window.innerWidth+1}))),'errs',errs);
+await m.screenshot({path:'qa-mobile2.png',timeout:90000});
+await b.close();
